@@ -67,7 +67,10 @@
             ].forEach((clipData, index) => {
                 const [preset, clipFps, clipSeconds] = clipData;
                 const clipTemplate = template
-                    .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps));
+                    .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                    .replaceAll("_TRNX_", 0.2)
+                    .replaceAll("_POS_", -0.2)
+                    .replaceAll("_ZOOM_", 1.4);
                 console.log(clipTemplate);
                 
                 $("#results").append(`<details class="bg-gray-200 p-4 m-4">
