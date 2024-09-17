@@ -11,6 +11,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script>
+        const clipCount = 8;
+        const cyclicalMotionEffects = [
+            ["blc", 23, 5],
+            ["blc", 23, 5]
+        ]
+
         function hydrate() {
             document.querySelectorAll('.copy-icon').forEach(function(icon) {
                 icon.addEventListener('click', function(event) {
@@ -61,20 +67,22 @@
             template = response;
 
             // Presets into webpage
-            [
-                ["blc", 23, 5],
-                ["blc", 23, 5]
-            ].forEach((clipData, index) => {
-                const [preset, clipFps, clipSeconds] = clipData;
+            const cyclicalCount = cyclicalMotionEffects.length;
+            for (let i = 0; i < clipCount; i++) {
+                let cyclicalIndex = i % cyclicalCount;
+                const presetData = cyclicalMotionEffects[cyclicalIndex];
+                const [presetName, clipFps, clipSeconds] = presetData;
+                console.log({cyclicalIndex})
+
                 const clipTemplate = template
                     .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
                     .replaceAll("_TRNX_", 0.2)
                     .replaceAll("_POS_", -0.2)
                     .replaceAll("_ZOOM_", 1.4);
-                console.log(clipTemplate);
+                // console.log(clipTemplate);
                 
                 $("#results").append(`<details class="bg-gray-200 p-4 m-4">
-                    <summary>${clipData.toString()}</summary>
+                    <summary>dir,fps,dur: <b>${presetData.toString()}</b></summary>
 
                     <div class="container mt-5">
                         <div class="card">
@@ -92,7 +100,7 @@
 
                 hydrate();
 
-            });
+            } // for
         });
     </script>
 </head>
