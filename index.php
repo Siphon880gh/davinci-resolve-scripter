@@ -20,6 +20,7 @@
         ]
         const clipSeconds = 5;
         const clipFps = 30;
+        const generalDescription = `Before pasting into Fusion:\n- Adjust frame points with fps x clip duration. \nCurrently set to 115 (5 seconds).\n\nAfter pasting into Fusion:\n- Connect MediaIn to INPUT_MED_IN\n- Connect OUTPUT_MED_OUT to MediaOut`
 
         // Templates convert to scripts after interpolation of values
         let templates = [
@@ -29,6 +30,7 @@
                     return scriptTemplate
                         .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
                         .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
                         .replaceAll("_POS_X_", 0.2)
                         .replaceAll("_POS_Y_", -0.2)
                         .replaceAll("_ZOOM_", 1.4);
@@ -40,6 +42,7 @@
                     return scriptTemplate
                         .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
                         .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
                         .replaceAll("_POS_X_", -0.2)
                         .replaceAll("_POS_Y_", -0.2)
                         .replaceAll("_ZOOM_", 1.4);
@@ -51,6 +54,7 @@
                     return scriptTemplate
                         .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
                         .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
                         .replaceAll("_POS_X_", -0.2)
                         .replaceAll("_POS_Y_", 0.2)
                         .replaceAll("_ZOOM_", 1.4);
@@ -62,6 +66,7 @@
                     return scriptTemplate
                         .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
                         .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
                         .replaceAll("_POS_X_", 0.2)
                         .replaceAll("_POS_Y_", 0.2)
                         .replaceAll("_ZOOM_", 1.4);

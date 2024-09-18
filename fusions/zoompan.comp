@@ -3,7 +3,7 @@
 		_GROUP_NAME_ = GroupOperator {
 			CtrlWZoom = false,
 			Inputs = ordered() {
-				Comments = Input { Value = "Before pasting into Fusion:\n- Adjust frame points with fps x clip duration. \nCurrently set to 115 (5 seconds).\n\nAfter pasting into Fusion:\n- Connect MediaIn to INPUT_MED_IN\n- Connect OUTPUT_MED_OUT to MediaOut", },
+				Comments = Input { Value = "_GEN_DESC_", },
 				Input1 = InstanceInput {
 					SourceOp = "INPUT_MED_IN",
 					Source = "Background",
