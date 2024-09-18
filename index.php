@@ -99,12 +99,10 @@
             const cyclicalCount = cyclicalMotionEffects.length;
             for (let i = 0; i < clipCount; i++) {
                 let cyclicalIndex = i % cyclicalCount;
-                // const presetData = cyclicalMotionEffects[cyclicalIndex];
-                // const [presetName, clipFps, clipSeconds] = presetData;
                 const presetName = cyclicalMotionEffects[cyclicalIndex];
-                // const [presetName, clipFps, clipSeconds] = presetData;
-                console.log({cyclicalIndex})
-                console.log({presetName})
+                // console.log({cyclicalIndex})
+                // console.log({presetName})
+
                 const interpolatedScript = getInterpolatedScript(presetName);
                 const header = `Fusion Clip ${i+1}: Apply ${presetName} on ${clipSeconds} seconds clip at ${clipFps} fps`;
                 
