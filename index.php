@@ -13,6 +13,8 @@
     <script>
         const clipCount = 8;
         const cyclicalMotionEffects = [
+            "zoom140to100",
+            "zoom120to100",
             "zoom120",
             "zoom140",
             "zoompan_top",
@@ -25,11 +27,33 @@
             "zoompan_blc",
         ]
         const clipSeconds = 5;
-        const clipFps = 30;
+        const clipFps = 23;
         const generalDescription = "After pasting into Fusion screen, connect MediaIn to INPUT_MED_IN and connect OUTPUT_MED_OUT to MediaOut.";
 
         // Templates convert to scripts after interpolation of values
         let templates = [
+            {presetName:'zoom140to100', path:'./fusions/zoomzoom.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
+                        .replaceAll("_ZOOM0_", 1.4)
+                        .replaceAll("_ZOOM1_", 1.0);
+                }
+            },
+            {presetName:'zoom120to100', path:'./fusions/zoomzoom.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
+                        .replaceAll("_ZOOM0_", 1.2)
+                        .replaceAll("_ZOOM1_", 1.0);
+                }
+            },
             {presetName:'zoom120', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
                 interpolate: (scriptTemplate, params) =>{
                     const {presetName, clipFps, clipSeconds} = params;
