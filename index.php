@@ -14,9 +14,9 @@
         const clipCount = 8;
         const cyclicalMotionEffects = [
             "zoompan_top",
-            // "zoompan_right",
-            // "zoompan_bottom",
-            // "zoompan_left",
+            "zoompan_right",
+            "zoompan_bottom",
+            "zoompan_left",
             "zoompan_tlc",
             "zoompan_trc",
             "zoompan_brc",
@@ -36,7 +36,43 @@
                         .replaceAll("_GROUP_NAME_", presetName)
                         .replaceAll("_GEN_DESC_", generalDescription)
                         .replaceAll("_POS_X_", 0.0)
+                        .replaceAll("_POS_Y_", -0.2)
+                        .replaceAll("_ZOOM_", 1.4);
+                }
+            },
+            {presetName:'zoompan_right', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
+                        .replaceAll("_POS_X_", -0.2)
+                        .replaceAll("_POS_Y_", 0.0)
+                        .replaceAll("_ZOOM_", 1.4);
+                }
+            },
+            {presetName:'zoompan_bottom', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
+                        .replaceAll("_POS_X_", 0.0)
                         .replaceAll("_POS_Y_", 0.2)
+                        .replaceAll("_ZOOM_", 1.4);
+                }
+            },
+            {presetName:'zoompan_left', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
+                        .replaceAll("_POS_X_", 0.2)
+                        .replaceAll("_POS_Y_", 0.0)
                         .replaceAll("_ZOOM_", 1.4);
                 }
             },
