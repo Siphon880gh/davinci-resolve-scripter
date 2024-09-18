@@ -13,6 +13,8 @@
     <script>
         const clipCount = 8;
         const cyclicalMotionEffects = [
+            "zoom120",
+            "zoom140",
             "zoompan_top",
             "zoompan_right",
             "zoompan_bottom",
@@ -28,6 +30,30 @@
 
         // Templates convert to scripts after interpolation of values
         let templates = [
+            {presetName:'zoom120', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
+                        .replaceAll("_POS_X_", 0.0)
+                        .replaceAll("_POS_Y_", 0.0)
+                        .replaceAll("_ZOOM_", 1.2);
+                }
+            },
+            {presetName:'zoom140', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
+                        .replaceAll("_POS_X_", 0.0)
+                        .replaceAll("_POS_Y_", 0.0)
+                        .replaceAll("_ZOOM_", 1.4);
+                }
+            },
             {presetName:'zoompan_top', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
                 interpolate: (scriptTemplate, params) =>{
                     const {presetName, clipFps, clipSeconds} = params;
