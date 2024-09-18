@@ -13,18 +13,34 @@
     <script>
         const clipCount = 8;
         const cyclicalMotionEffects = [
-            "tlc",
-            "trc",
-            "brc",
-            "blc",
+            "zoompan_top",
+            // "zoompan_right",
+            // "zoompan_bottom",
+            // "zoompan_left",
+            "zoompan_tlc",
+            "zoompan_trc",
+            "zoompan_brc",
+            "zoompan_blc",
         ]
         const clipSeconds = 5;
         const clipFps = 30;
-        const generalDescription = `Before pasting into Fusion:\n- Adjust frame points with fps x clip duration. \nCurrently set to 115 (5 seconds).\n\nAfter pasting into Fusion:\n- Connect MediaIn to INPUT_MED_IN\n- Connect OUTPUT_MED_OUT to MediaOut`
+        const generalDescription = "After pasting into Fusion screen, connect MediaIn to INPUT_MED_IN and connect OUTPUT_MED_OUT to MediaOut.";
 
         // Templates convert to scripts after interpolation of values
         let templates = [
-            {presetName:'tlc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+            {presetName:'zoompan_top', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_GEN_DESC_", generalDescription)
+                        .replaceAll("_POS_X_", 0.0)
+                        .replaceAll("_POS_Y_", 0.2)
+                        .replaceAll("_ZOOM_", 1.4);
+                }
+            },
+            {presetName:'zoompan_tlc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
                 interpolate: (scriptTemplate, params) =>{
                     const {presetName, clipFps, clipSeconds} = params;
                     return scriptTemplate
@@ -36,7 +52,7 @@
                         .replaceAll("_ZOOM_", 1.4);
                 }
             },
-            {presetName:'trc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+            {presetName:'zoompan_trc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
                 interpolate: (scriptTemplate, params) =>{
                     const {presetName, clipFps, clipSeconds} = params;
                     return scriptTemplate
@@ -48,7 +64,7 @@
                         .replaceAll("_ZOOM_", 1.4);
                 }
             },            
-            {presetName:'brc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+            {presetName:'zoompan_brc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
                 interpolate: (scriptTemplate, params) =>{
                     const {presetName, clipFps, clipSeconds} = params;
                     return scriptTemplate
@@ -60,7 +76,7 @@
                         .replaceAll("_ZOOM_", 1.4);
                 }
             },
-            {presetName:'blc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+            {presetName:'zoompan_blc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
                 interpolate: (scriptTemplate, params) =>{
                     const {presetName, clipFps, clipSeconds} = params;
                     return scriptTemplate
@@ -122,10 +138,10 @@
 
                 </details>
                 `); // append
-
-                hydrate();
-
+                
             } // for
+            hydrate();
+
         })
         .catch(error => {
             // Handle errors
@@ -142,6 +158,7 @@
 
                     // Get the corresponding content
                     var content = this.closest(".card").querySelector(".card-text").textContent;
+                    console.log({contentInspect:content})
 
                     // Create a temporary input element to hold the content
                     var tempInput = document.createElement('textarea');
