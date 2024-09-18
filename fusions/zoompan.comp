@@ -1,6 +1,6 @@
 {
 	Tools = ordered() {
-		Group1 = GroupOperator {
+		_GROUP_NAME_ = GroupOperator {
 			CtrlWZoom = false,
 			Inputs = ordered() {
 				Comments = Input { Value = "Before pasting into Fusion:\n- Adjust frame points with fps x clip duration. \nCurrently set to 115 (5 seconds).\n\nAfter pasting into Fusion:\n- Connect MediaIn to INPUT_MED_IN\n- Connect OUTPUT_MED_OUT to MediaOut", },
@@ -16,7 +16,7 @@
 				}
 			},
 			ViewInfo = GroupInfo {
-				Pos = { 302.5, 106.864 },
+				Pos = { 385, 115.5 },
 				Flags = {
 					Expanded = true,
 					AllowPan = false,
@@ -32,6 +32,7 @@
 			},
 			Tools = ordered() {
 				OUTPUT_MED_OUT = Merge {
+					CtrlWShown = false,
 					NameSet = true,
 					Inputs = {
 						Background = Input {
@@ -43,6 +44,7 @@
 					ViewInfo = OperatorInfo { Pos = { 550, 181.5 } },
 				},
 				Merge1 = Merge {
+					CtrlWShown = false,
 					Inputs = {
 						Background = Input {
 							SourceOp = "GaussianBlur1",
@@ -57,6 +59,7 @@
 					ViewInfo = OperatorInfo { Pos = { 385, 247.5 } },
 				},
 				GaussianBlur1 = ofx.com.blackmagicdesign.resolvefx.GaussianBlur {
+					CtrlWShown = false,
 					Inputs = {
 						Source = Input {
 							SourceOp = "INPUT_MED_IN",
@@ -82,25 +85,11 @@
 					},
 					ViewInfo = OperatorInfo { Pos = { 220, 247.5 } },
 				},
-				TransformTranslate = Transform {
-					NameSet = true,
-					Inputs = {
-						Center = Input {
-							SourceOp = "Path1",
-							Source = "Position",
-						},
-						Input = Input {
-							SourceOp = "INPUT_MED_IN",
-							Source = "Output",
-						}
-					},
-					ViewInfo = OperatorInfo { Pos = { 385, 115.5 } },
-				},
 				TransformZoomIn = ofx.com.blackmagicdesign.resolvefx.Transform {
 					NameSet = true,
 					Inputs = {
 						Source = Input {
-							SourceOp = "TransformTranslate",
+							SourceOp = "INPUT_MED_IN",
 							Source = "Output",
 						},
 						controlMode = Input { Value = FuID { "TransformControlsSliders" }, },
@@ -174,58 +163,28 @@
 				}
 			},
 		},
-		Path1 = PolyPath {
-			DrawMode = "InsertAndModify",
-			CtrlWZoom = false,
-			Inputs = {
-				Displacement = Input {
-					SourceOp = "Path1Displacement",
-					Source = "Value",
-				},
-				PolyLine = Input {
-					Value = Polyline {
-						Points = {
-							{ Linear = true, LockY = true, X = 0, Y = 0, RX = 0.07078, RY = 0.07078 },
-							{ Linear = true, LockY = true, X = _TRNX_, Y = _TRNX_, LX = -0.07078, LY = -0.07078, RX = -0.00411333333333334, RY = -0.00411333333333334 },
-							{ Linear = true, LockY = true, X = 0.2, Y = 0.2, LX = 0.00411333333333334, LY = 0.00411333333333334 }
-						}
-					},
-				}
-			},
-		},
-		Path1Displacement = BezierSpline {
-			SplineColor = { Red = 255, Green = 0, Blue = 255 },
-			NameSet = true,
-			KeyFrames = {
-				[0] = { 0, RH = { 38.3333333333333, 0.315025814491722 }, Flags = { LockedY = true } },
-				[_END_FRAME_] = { 0.945077443475165, LH = { 76.6666666666667, 0.630051628983443 }, RH = { 116.333333333333, 0.963384962316776 }, Flags = { Linear = true, LockedY = true } },
-			}
-		},
 		TransformZoomInPositionX = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 222 },
-			NameSet = true,
 			KeyFrames = {
-				[0] = { 0, RH = { 38.3333333333333, -0.0892966666666667 }, Flags = { Linear = true } },
-				[_END_FRAME_] = { _POS_, LH = { 76.6666666666667, -0.178593333333333 }, Flags = { Linear = true } }
+				[0] = { 0, RH = { 38.3333333333333, -0.0703666666666667 }, Flags = { Linear = true } },
+				[_END_FRAME_] = { _POS_X_, LH = { 76.6666666666667, -0.140733333333333 }, Flags = { Linear = true } }
 			}
 		},
 		TransformZoomInPositionY = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 54 },
-			NameSet = true,
 			KeyFrames = {
-				[0] = { 0, RH = { 38.3333333333333, -0.0892966666666667 }, Flags = { Linear = true } },
-				[_END_FRAME_] = { _POS_, LH = { 76.6666666666667, -0.178593333333333 }, Flags = { Linear = true } }
+				[0] = { 0, RH = { 38.3333333333333, -0.0740666666666667 }, Flags = { Linear = true } },
+				[_END_FRAME_] = { _POS_Y_, LH = { 76.6666666666667, -0.148133333333333 }, Flags = { Linear = true } }
 			}
 		},
 		TransformZoomInZoom = BezierSpline {
 			SplineColor = { Red = 254, Green = 144, Blue = 123 },
 			CtrlWZoom = false,
-			NameSet = true,
 			KeyFrames = {
-				[0] = { 1, RH = { 38.3333333333333, 1.16625333333333 }, Flags = { Linear = true } },
-				[_END_FRAME_] = { _ZOOM_, LH = { 76.6666666666667, 1.33250666666667 }, Flags = { Linear = true } }
+				[0] = { 1, RH = { 38.3333333333333, 1.14443333333333 }, Flags = { Linear = true } },
+				[_END_FRAME_] = { _ZOOM_, LH = { 76.6666666666667, 1.28886666666667 }, Flags = { Linear = true } }
 			}
 		}
 	},
-	ActiveTool = "Group1"
+	ActiveTool = "_GROUP_NAME_"
 }

@@ -1,6 +1,6 @@
 {
 	Tools = ordered() {
-		Group1 = GroupOperator {
+		_GROUP_NAME_ = GroupOperator {
 			CtrlWZoom = false,
 			Inputs = ordered() {
 				Comments = Input { Value = "Before pasting into Fusion:\n- Adjust frame points with fps x clip duration. \nCurrently set to 115 (5 seconds).\n\nAfter pasting into Fusion:\n- Connect MediaIn to INPUT_MED_IN\n- Connect OUTPUT_MED_OUT to MediaOut", },
@@ -185,9 +185,9 @@
 				PolyLine = Input {
 					Value = Polyline {
 						Points = {
-							{ Linear = true, LockY = true, X = 0, Y = 0, RX = 0.0666666666666667, RY = 0.0666666666666667 },
-							{ Linear = true, LockY = true, X = 0.2, Y = 0.2, LX = -0.0666666666666667, LY = -0.0666666666666667, RX = 0, RY = 0 },
-							{ Linear = true, LockY = true, X = 0.2, Y = 0.2, LX = 0, LY = 0 }
+							{ Linear = true, LockY = true, X = 0, Y = 0, RX = 0.07078, RY = 0.07078 },
+							{ Linear = true, LockY = true, X = _TRNX_, Y = _TRNX_, LX = -0.07078, LY = -0.07078, RX = -0.00411333333333334, RY = -0.00411333333333334 },
+							{ Linear = true, LockY = true, X = 0.2, Y = 0.2, LX = 0.00411333333333334, LY = 0.00411333333333334 }
 						}
 					},
 				}
@@ -197,24 +197,24 @@
 			SplineColor = { Red = 255, Green = 0, Blue = 255 },
 			NameSet = true,
 			KeyFrames = {
-				[0] = { 0, RH = { 38.3333333333333, 0.333333333333333 }, Flags = { LockedY = true } },
-				[115] = { 1, LH = { 117.666666666667, 1 }, Flags = { Linear = true, LockedY = true } }
+				[0] = { 0, RH = { 38.3333333333333, 0.315025814491722 }, Flags = { LockedY = true } },
+				[_END_FRAME_] = { 0.945077443475165, LH = { 76.6666666666667, 0.630051628983443 }, RH = { 116.333333333333, 0.963384962316776 }, Flags = { Linear = true, LockedY = true } },
 			}
 		},
 		TransformZoomInPositionX = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 222 },
 			NameSet = true,
 			KeyFrames = {
-				[0] = { 0, RH = { 38.3333333333333, -0.0666666666666667 }, Flags = { Linear = true } },
-				[115] = { -0.2, LH = { 76.6666666666667, -0.133333333333333 }, Flags = { Linear = true } }
+				[0] = { 0, RH = { 38.3333333333333, -0.0892966666666667 }, Flags = { Linear = true } },
+				[_END_FRAME_] = { _POS_, LH = { 76.6666666666667, -0.178593333333333 }, Flags = { Linear = true } }
 			}
 		},
 		TransformZoomInPositionY = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 54 },
 			NameSet = true,
 			KeyFrames = {
-				[0] = { 0, RH = { 38.3333333333333, -0.0666666666666667 }, Flags = { Linear = true } },
-				[115] = { -0.2, LH = { 76.6666666666667, -0.133333333333333 }, Flags = { Linear = true } }
+				[0] = { 0, RH = { 38.3333333333333, -0.0892966666666667 }, Flags = { Linear = true } },
+				[_END_FRAME_] = { _POS_, LH = { 76.6666666666667, -0.178593333333333 }, Flags = { Linear = true } }
 			}
 		},
 		TransformZoomInZoom = BezierSpline {
@@ -222,10 +222,10 @@
 			CtrlWZoom = false,
 			NameSet = true,
 			KeyFrames = {
-				[0] = { 1, RH = { 38.3333333333333, 1.13333333333333 }, Flags = { Linear = true } },
-				[115] = { 1.4, LH = { 76.6666666666667, 1.26666666666667 }, Flags = { Linear = true } }
+				[0] = { 1, RH = { 38.3333333333333, 1.16625333333333 }, Flags = { Linear = true } },
+				[_END_FRAME_] = { _ZOOM_, LH = { 76.6666666666667, 1.33250666666667 }, Flags = { Linear = true } }
 			}
 		}
 	},
-	ActiveTool = "Group1"
+	ActiveTool = "_GROUP_NAME_"
 }

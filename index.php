@@ -13,10 +13,100 @@
     <script>
         const clipCount = 8;
         const cyclicalMotionEffects = [
-            ["blc", 23, 5],
-            ["blc", 23, 5]
+            "blc",
+            "brc"
         ]
+        const clipSeconds = 5;
+        const clipFps = 30;
 
+        // Templates convert to scripts after interpolation of values
+        let templates = [
+            {presetName:'blc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_POS_X_", -0.2)
+                        .replaceAll("_POS_Y_", -0.2)
+                        .replaceAll("_ZOOM_", 1.4);
+                }
+            },
+            {presetName:'brc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_POS_X_", -0.2)
+                        .replaceAll("_POS_Y_", -0.2)
+                        .replaceAll("_ZOOM_", 1.4);
+                }
+            }
+        ];
+
+        function getInterpolatedScript(presetName) {
+            const found = templates.find(template => template.presetName === presetName).script;
+            return found?found:"ERROR - NOT FOUND"
+        }
+
+        Promise.all(
+            templates.map(template => fetch(template.path)
+                .then(async (response) => { 
+                    const scriptTemplate = await response.text();
+                    template.scriptTemplate = scriptTemplate;
+
+                    const presetName = template.presetName;
+                    const params = {presetName, clipFps, clipSeconds}
+                    template.script = template.interpolate(scriptTemplate, params);
+                    return {}
+                })
+            )
+        )
+        .then(foobar => {
+            // All scripts loaded. Now go through cyclical motion effects.
+
+            // Presets into webpage
+            const cyclicalCount = cyclicalMotionEffects.length;
+            for (let i = 0; i < clipCount; i++) {
+                let cyclicalIndex = i % cyclicalCount;
+                // const presetData = cyclicalMotionEffects[cyclicalIndex];
+                // const [presetName, clipFps, clipSeconds] = presetData;
+                const presetName = cyclicalMotionEffects[cyclicalIndex];
+                // const [presetName, clipFps, clipSeconds] = presetData;
+                console.log({cyclicalIndex})
+                console.log({presetName})
+                const interpolatedScript = getInterpolatedScript(presetName);
+                const header = `Fusion Clip ${i}: Apply ${presetName} on ${clipSeconds} seconds clip at ${clipFps} fps`;
+                
+                $("#results").append(`<details class="bg-gray-200 p-4 m-4">
+                    <summary>${header}</summary>
+
+                    <div class="container mt-5">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center inline w-fit border border-gray-300 w-fit" style="width:fit-content !important;">
+                                <i class="fas fa-copy text-3xl copy-icon" style="cursor: pointer;" title="Copy to clipboard"></i>
+                            </div>
+                            <div class="card-body">
+                                <code id="card-content" class="card-text whitespace-pre-wrap">${interpolatedScript}</code>
+                            </div>
+                        </div>
+                    </div>
+
+                </details>
+                `); // append
+
+                hydrate();
+
+            } // for
+        })
+        .catch(error => {
+            // Handle errors
+            console.error('An error occurred:', error);
+        });
+
+
+    
         function hydrate() {
             document.querySelectorAll('.copy-icon').forEach(function(icon) {
                 icon.addEventListener('click', function(event) {
@@ -59,49 +149,6 @@
             }); // forEach
         } // hydrate
 
-        let template = "";
-
-        fetch("./fusions/test.lua")
-        .then(response=>response.text())
-        .then(response => {
-            template = response;
-
-            // Presets into webpage
-            const cyclicalCount = cyclicalMotionEffects.length;
-            for (let i = 0; i < clipCount; i++) {
-                let cyclicalIndex = i % cyclicalCount;
-                const presetData = cyclicalMotionEffects[cyclicalIndex];
-                const [presetName, clipFps, clipSeconds] = presetData;
-                console.log({cyclicalIndex})
-
-                const clipTemplate = template
-                    .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                    .replaceAll("_TRNX_", 0.2)
-                    .replaceAll("_POS_", -0.2)
-                    .replaceAll("_ZOOM_", 1.4);
-                // console.log(clipTemplate);
-                
-                $("#results").append(`<details class="bg-gray-200 p-4 m-4">
-                    <summary>dir,fps,dur: <b>${presetData.toString()}</b></summary>
-
-                    <div class="container mt-5">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center inline w-fit border border-gray-300 w-fit" style="width:fit-content !important;">
-                                <i class="fas fa-copy text-3xl copy-icon" style="cursor: pointer;" title="Copy to clipboard"></i>
-                            </div>
-                            <div class="card-body">
-                                <code id="card-content" class="card-text whitespace-pre-wrap">${clipTemplate}</code>
-                            </div>
-                        </div>
-                    </div>
-
-                </details>
-                `); // append
-
-                hydrate();
-
-            } // for
-        });
     </script>
 </head>
 <body>
