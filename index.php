@@ -13,15 +13,28 @@
     <script>
         const clipCount = 8;
         const cyclicalMotionEffects = [
+            "tlc",
+            "trc",
+            "brc",
             "blc",
-            "brc"
         ]
         const clipSeconds = 5;
         const clipFps = 30;
 
         // Templates convert to scripts after interpolation of values
         let templates = [
-            {presetName:'blc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+            {presetName:'tlc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_POS_X_", 0.2)
+                        .replaceAll("_POS_Y_", -0.2)
+                        .replaceAll("_ZOOM_", 1.4);
+                }
+            },
+            {presetName:'trc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
                 interpolate: (scriptTemplate, params) =>{
                     const {presetName, clipFps, clipSeconds} = params;
                     return scriptTemplate
@@ -31,7 +44,7 @@
                         .replaceAll("_POS_Y_", -0.2)
                         .replaceAll("_ZOOM_", 1.4);
                 }
-            },
+            },            
             {presetName:'brc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
                 interpolate: (scriptTemplate, params) =>{
                     const {presetName, clipFps, clipSeconds} = params;
@@ -39,10 +52,21 @@
                         .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
                         .replaceAll("_GROUP_NAME_", presetName)
                         .replaceAll("_POS_X_", -0.2)
-                        .replaceAll("_POS_Y_", -0.2)
+                        .replaceAll("_POS_Y_", 0.2)
                         .replaceAll("_ZOOM_", 1.4);
                 }
-            }
+            },
+            {presetName:'blc', path:'./fusions/zoompan.comp', scriptTemplate: '', script: '',
+                interpolate: (scriptTemplate, params) =>{
+                    const {presetName, clipFps, clipSeconds} = params;
+                    return scriptTemplate
+                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                        .replaceAll("_GROUP_NAME_", presetName)
+                        .replaceAll("_POS_X_", 0.2)
+                        .replaceAll("_POS_Y_", 0.2)
+                        .replaceAll("_ZOOM_", 1.4);
+                }
+            },
         ];
 
         function getInterpolatedScript(presetName) {
@@ -77,7 +101,7 @@
                 console.log({cyclicalIndex})
                 console.log({presetName})
                 const interpolatedScript = getInterpolatedScript(presetName);
-                const header = `Fusion Clip ${i}: Apply ${presetName} on ${clipSeconds} seconds clip at ${clipFps} fps`;
+                const header = `Fusion Clip ${i+1}: Apply ${presetName} on ${clipSeconds} seconds clip at ${clipFps} fps`;
                 
                 $("#results").append(`<details class="bg-gray-200 p-4 m-4">
                     <summary>${header}</summary>
