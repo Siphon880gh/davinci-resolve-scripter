@@ -11,8 +11,8 @@ const startTimeCode = "01:00:00:00"; // User-defined start timecode for the time
 let frame_rate = 23;
 let outputPath = "./generated_edl/generated.edl"
 
-// Additional parameter: Array of clip positions to apply crossfade
-const crossfadePositions = [1]; // For example, add crossfade between clip 1 and clip 2
+// Array of slide indexes where you want crossfade between it and the next
+const crossfadePositions = [1, 2, 3]; // No crossfade for the last clip
 
 const fs = require("fs")
 function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00", crossfadePositions = []) {
@@ -56,30 +56,31 @@ function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00", 
         let recordInTime = secondsToTimecode(startTime); 
         let recordOutTime = secondsToTimecode(endTime); 
 
-        // Check if this clip should have a crossfade transition
-        if (crossfadePositions.includes(index)) {
+        // Ignore crossfade if it's the last clip
+        if (crossfadePositions.includes(index) && index !== clipNames.length - 1) {
             let crossfadeDuration = 1; // Define the crossfade duration (in seconds)
-            let crossfadeEndTime = startTime + crossfadeDuration; 
+            let crossfadeStart = endTime - crossfadeDuration; // Start crossfade before this clip ends
 
-            // First line for cut (C) without crossfade
-            edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${secondsToTimecode(currentTimelineStart)}  \n`;
+            // Apply crossfade into the next clip
+            edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${secondsToTimecode(crossfadeStart)}\n`;
             edl += `M2   AX             000.0                ${inTime}\n`;
             edl += `* FROM CLIP NAME: ${clipName}\n\n`;
 
-            // Crossfade (D) from the current clip to the next
-            edl += `${String(index + 1).padStart(3, "0")}  AX       V     D    024 ${inTime} ${secondsToTimecode(crossfadeDuration)} ${secondsToTimecode(currentTimelineStart)} ${secondsToTimecode(crossfadeEndTime)}\n`;
+            edl += `${String(index + 1).padStart(3, "0")}  AX       V     D    024 ${inTime} ${outTime} ${secondsToTimecode(crossfadeStart)} ${recordOutTime}\n`;
             edl += `M2   AX             000.0                ${inTime}\n`;
             edl += `M2   AX             000.0                ${inTime}\n`;
             edl += `* TO CLIP NAME: ${clipNames[index + 1]}\n\n`;
 
-            currentTimelineStart += crossfadeDuration; // Move start time to account for crossfade
+            currentTimelineStart += crossfadeDuration; // Adjust the start for the next clip after crossfade
         } else {
+            // Regular clip without crossfade
             edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${recordOutTime}  \n`;
             edl += `M2   AX             000.0                ${inTime}\n`;
             edl += `* FROM CLIP NAME: ${clipName}\n\n`;
         }
 
-        currentTimelineStart += duration; 
+        // Update timeline start to match the end of the current clip
+        currentTimelineStart = endTime; 
     });
 
     return edl.trim();
