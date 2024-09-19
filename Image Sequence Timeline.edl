@@ -1,0 +1,23 @@
+TITLE: Image Sequence Timeline
+FCM: NON-DROP FRAME
+
+001  AX       V     C        00:00:00:00 00:00:05:00 01:00:00:00 01:00:05:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip01.jpg
+
+002  AX       V     C        00:00:00:00 00:00:05:00 01:00:05:00 01:00:10:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip02.jpg
+
+003  AX       V     C        00:00:00:00 00:00:05:00 01:00:10:00 01:00:15:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip04.jpg
+
+004  AX       V     C        00:00:00:00 00:00:05:00 01:00:15:00 01:00:20:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip05.jpg
+
+005  AX       V     C        00:00:00:00 00:00:05:00 01:00:20:00 01:00:25:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip07.jpg
+
