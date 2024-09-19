@@ -1,10 +1,12 @@
+let frame_rate = 23;
+
 function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00") {
     let edl = "TITLE: Example EDL for Images\nFCM: NON-DROP FRAME\n\n";
-    
+
     // Helper function to convert timecode in HH:MM:SS:FF format to seconds
     function timecodeToSeconds(timecode) {
         const [hours, mins, secs, frames] = timecode.split(":").map(Number);
-        const fps = 30; // Assuming 30 frames per second
+        const fps = typeof frame_rate!=="undefined"?frame_rate:23; // Assuming 30 frames per second
         return hours * 3600 + mins * 60 + secs + frames / fps;
     }
 
@@ -51,7 +53,7 @@ function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00") 
 
 // Example usage:
 const clipNames = ["clip01.jpg", "clip02.jpg", "clip03.jpg", "clip04.jpg", "clip05.jpg"];
-const durationPerClip = 7; // Each clip is 5 seconds
+const durationPerClip = 5; // Each clip is 5 seconds
 const startTimeCode = "01:00:00:00"; // User-defined start timecode for the timeline
 // const startTimeCode = "00:00:00:00"; // User-defined start timecode for the timeline
 
