@@ -11,11 +11,15 @@ const startTimeCode = "01:00:00:00"; // User-defined start timecode for the time
 let frame_rate = 23;
 let outputPath = "./generated_edl/generated.edl"
 
-// Array of slide indexes where you want crossfade between it and the next
-const crossfadePositions = [1, 2, 3]; // No crossfade for the last clip
+// Array of slide indexes where you want specific transitions applied
+const transitionPositions = [
+    {index: 1, type: "D", duration: 24},  // Dissolve
+    {index: 2, type: "W", duration: 48},  // Wipe
+    {index: 3, type: "C"}                 // Regular Cut
+];
 
 const fs = require("fs")
-function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00", crossfadePositions = []) {
+function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00", transitionPositions = []) {
     let edl = "TITLE: Image Sequence Timeline\nFCM: NON-DROP FRAME\n\n";
 
     // Helper function to convert timecode in HH:MM:SS:FF format to seconds
@@ -56,24 +60,41 @@ function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00", 
         let recordInTime = secondsToTimecode(startTime); 
         let recordOutTime = secondsToTimecode(endTime); 
 
-        // Ignore crossfade if it's the last clip
-        if (crossfadePositions.includes(index) && index !== clipNames.length - 1) {
-            let crossfadeDuration = 1; // Define the crossfade duration (in seconds)
-            let crossfadeStart = endTime - crossfadeDuration; // Start crossfade before this clip ends
+        // Check if this clip has a specified transition
+        const transition = transitionPositions.find(t => t.index === index);
 
-            // Apply crossfade into the next clip
-            edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${secondsToTimecode(crossfadeStart)}\n`;
-            edl += `M2   AX             000.0                ${inTime}\n`;
-            edl += `* FROM CLIP NAME: ${clipName}\n\n`;
+        if (transition) {
+            if (transition.type === "D") {
+                // Dissolve
+                let dissolveDuration = transition.duration / frame_rate;
+                let dissolveStart = endTime - dissolveDuration;
 
-            edl += `${String(index + 1).padStart(3, "0")}  AX       V     D    024 ${inTime} ${outTime} ${secondsToTimecode(crossfadeStart)} ${recordOutTime}\n`;
-            edl += `M2   AX             000.0                ${inTime}\n`;
-            edl += `M2   AX             000.0                ${inTime}\n`;
-            edl += `* TO CLIP NAME: ${clipNames[index + 1]}\n\n`;
+                edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${secondsToTimecode(dissolveStart)}\n`;
+                edl += `M2   AX             000.0                ${inTime}\n`;
+                edl += `* FROM CLIP NAME: ${clipName}\n\n`;
 
-            currentTimelineStart += crossfadeDuration; // Adjust the start for the next clip after crossfade
+                edl += `${String(index + 1).padStart(3, "0")}  AX       V     D    ${String(transition.duration).padStart(3, "0")} ${inTime} ${outTime} ${secondsToTimecode(dissolveStart)} ${recordOutTime}\n`;
+                edl += `M2   AX             000.0                ${inTime}\n`;
+                edl += `* TO CLIP NAME: ${clipNames[index + 1]}\n\n`;
+
+            } else if (transition.type === "W") {
+                // Wipe
+                edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${recordOutTime}\n`;
+                edl += `M2   AX             000.0                ${inTime}\n`;
+                edl += `* FROM CLIP NAME: ${clipName}\n\n`;
+
+                edl += `${String(index + 1).padStart(3, "0")}  AX       V     W    ${String(transition.duration).padStart(3, "0")} ${inTime} ${outTime} ${recordInTime} ${recordOutTime}\n`;
+                edl += `M2   AX             000.0                ${inTime}\n`;
+                edl += `* TO CLIP NAME: ${clipNames[index + 1]}\n\n`;
+
+            } else if (transition.type === "C") {
+                // Regular cut
+                edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${recordOutTime}  \n`;
+                edl += `M2   AX             000.0                ${inTime}\n`;
+                edl += `* FROM CLIP NAME: ${clipName}\n\n`;
+            }
         } else {
-            // Regular clip without crossfade
+            // Regular cut if no transition is defined
             edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${recordOutTime}  \n`;
             edl += `M2   AX             000.0                ${inTime}\n`;
             edl += `* FROM CLIP NAME: ${clipName}\n\n`;
@@ -87,5 +108,5 @@ function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00", 
 }
 
 // Write file
-const generatedEDL = generateEDL(IMAGE_FILES, DESIRED_CLIP_SECONDS, startTimeCode, crossfadePositions);
+const generatedEDL = generateEDL(IMAGE_FILES, DESIRED_CLIP_SECONDS, startTimeCode, transitionPositions);
 fs.writeFileSync(outputPath, generatedEDL);
