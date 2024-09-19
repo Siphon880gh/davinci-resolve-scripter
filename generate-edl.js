@@ -13,10 +13,12 @@ let outputPath = "./generated_edl/generated.edl"
 
 // Array of slide indexes where you want specific transitions applied
 const transitionPositions = [
-    {index: 1, type: "D", duration: 24},  // Dissolve
-    {index: 2, type: "W", duration: 48},  // Wipe
+    {index: 1, type: "D", duration: 24},  // Dissolve with duration
+    {index: 2, type: "D"},                // Dissolve with default duration
     {index: 3, type: "C"}                 // Regular Cut
 ];
+
+const DEFAULT_DISSOLVE_DURATION = 24; // Default duration for dissolve if not provided
 
 const fs = require("fs")
 function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00", transitionPositions = []) {
@@ -66,24 +68,14 @@ function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00", 
         if (transition) {
             if (transition.type === "D") {
                 // Dissolve
-                let dissolveDuration = transition.duration / frame_rate;
+                const dissolveDuration = (transition.duration || DEFAULT_DISSOLVE_DURATION) / frame_rate;
                 let dissolveStart = endTime - dissolveDuration;
 
                 edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${secondsToTimecode(dissolveStart)}\n`;
                 edl += `M2   AX             000.0                ${inTime}\n`;
                 edl += `* FROM CLIP NAME: ${clipName}\n\n`;
 
-                edl += `${String(index + 1).padStart(3, "0")}  AX       V     D    ${String(transition.duration).padStart(3, "0")} ${inTime} ${outTime} ${secondsToTimecode(dissolveStart)} ${recordOutTime}\n`;
-                edl += `M2   AX             000.0                ${inTime}\n`;
-                edl += `* TO CLIP NAME: ${clipNames[index + 1]}\n\n`;
-
-            } else if (transition.type === "W") {
-                // Wipe
-                edl += `${String(index + 1).padStart(3, "0")}  AX       V     C        ${inTime} ${outTime} ${recordInTime} ${recordOutTime}\n`;
-                edl += `M2   AX             000.0                ${inTime}\n`;
-                edl += `* FROM CLIP NAME: ${clipName}\n\n`;
-
-                edl += `${String(index + 1).padStart(3, "0")}  AX       V     W    ${String(transition.duration).padStart(3, "0")} ${inTime} ${outTime} ${recordInTime} ${recordOutTime}\n`;
+                edl += `${String(index + 1).padStart(3, "0")}  AX       V     D    ${String(transition.duration || DEFAULT_DISSOLVE_DURATION).padStart(3, "0")} ${inTime} ${outTime} ${secondsToTimecode(dissolveStart)} ${recordOutTime}\n`;
                 edl += `M2   AX             000.0                ${inTime}\n`;
                 edl += `* TO CLIP NAME: ${clipNames[index + 1]}\n\n`;
 
