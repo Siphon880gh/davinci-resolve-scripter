@@ -1,0 +1,22 @@
+TITLE: Example EDL for Images
+FCM: NON-DROP FRAME
+
+001  AX       V     C        00:00:00:00 00:00:10:00 01:00:00:00 01:00:10:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip01.jpg
+
+002  AX       V     C        00:00:00:00 00:00:10:00 01:00:10:00 01:00:20:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip02.jpg
+
+003  AX       V     C        00:00:00:00 00:00:10:00 01:00:20:00 01:00:30:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip03.jpg
+
+004  AX       V     C        00:00:00:00 00:00:10:00 01:00:30:00 01:00:40:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip04.jpg
+
+005  AX       V     C        00:00:00:00 00:00:10:00 01:00:40:00 01:00:50:00  
+M2   AX             000.0                00:00:00:00
+* FROM CLIP NAME: clip05.jpg

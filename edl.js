@@ -1,5 +1,18 @@
-let frame_rate = 23;
+const IMAGE_FILES = [
+    "clip01.jpg", 
+    "clip02.jpg", 
+    "clip03.jpg", 
+    "clip04.jpg", 
+    "clip05.jpg"
+];
+DESIRED_CLIP_SECONDS = 10; // Desired duration of each clip in seconds
 
+const startTimeCode = "01:00:00:00"; // User-defined start timecode for the timeline
+let frame_rate = 23;
+let outputPath = "./output-edls/generated.edl"
+// const startTimeCode = "00:00:00:00"; // User-defined start timecode for the timeline
+
+const fs = require("fs")
 function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00") {
     let edl = "TITLE: Example EDL for Images\nFCM: NON-DROP FRAME\n\n";
 
@@ -15,7 +28,7 @@ function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00") 
     
     // Helper function to convert seconds to timecode in HH:MM:SS:FF format
     function secondsToTimecode(seconds) {
-        const fps = 30; // Assuming 30 frames per second
+        const fps = frame_rate;
         let totalFrames = Math.floor(seconds * fps);
         let frames = totalFrames % fps;
         totalFrames = Math.floor(totalFrames / fps);
@@ -49,12 +62,9 @@ function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00") 
     });
 
     return edl.trim();
-}
 
-// Example usage:
-const clipNames = ["clip01.jpg", "clip02.jpg", "clip03.jpg", "clip04.jpg", "clip05.jpg"];
-const durationPerClip = 5; // Each clip is 5 seconds
-const startTimeCode = "01:00:00:00"; // User-defined start timecode for the timeline
-// const startTimeCode = "00:00:00:00"; // User-defined start timecode for the timeline
+} // generateEDL
 
-console.log(generateEDL(clipNames, durationPerClip, startTimeCode));
+// Write file
+const generatedEDL = generateEDL(IMAGE_FILES, DESIRED_CLIP_SECONDS, startTimeCode);
+fs.writeFileSync(outputPath, generatedEDL);
