@@ -1,0 +1,3 @@
+v1 original exported out from a working fusion. all file paths included
+v2 filepaths removed
+v3 media name removed

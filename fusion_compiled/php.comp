@@ -1,7 +1,8 @@
 {
 	Tools = ordered() {
-		zoompan_tlc = GroupOperator {
+		zoom140to100 = GroupOperator {
 			CtrlWZoom = false,
+			NameSet = true,
 			Inputs = ordered() {
 				Comments = Input { Value = "After pasting into Fusion screen, connect MediaIn to INPUT_MED_IN and connect OUTPUT_MED_OUT to MediaOut.", },
 				Input1 = InstanceInput {
@@ -16,7 +17,7 @@
 				}
 			},
 			ViewInfo = GroupInfo {
-				Pos = { 385, 115.5 },
+				Pos = { 440, -16.5 },
 				Flags = {
 					Expanded = true,
 					AllowPan = false,
@@ -155,6 +156,7 @@
 					ViewInfo = OperatorInfo { Pos = { 385, 181.5 } },
 				},
 				INPUT_MED_IN = Merge {
+					CtrlWShown = false,
 					NameSet = true,
 					Inputs = {
 						PerformDepthMerge = Input { Value = 0, }
@@ -166,25 +168,23 @@
 		TransformZoomInPositionX = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 222 },
 			KeyFrames = {
-				[0] = { 0, RH = { 38.3333333333333, -0.0703666666666667 }, Flags = { Linear = true } },
-				[115] = { 0.2, LH = { 76.6666666666667, -0.140733333333333 }, Flags = { Linear = true } }
+				[115] = { 0 }
 			}
 		},
 		TransformZoomInPositionY = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 54 },
 			KeyFrames = {
-				[0] = { 0, RH = { 38.3333333333333, -0.0740666666666667 }, Flags = { Linear = true } },
-				[115] = { -0.2, LH = { 76.6666666666667, -0.148133333333333 }, Flags = { Linear = true } }
+				[115] = { 0 }
 			}
 		},
 		TransformZoomInZoom = BezierSpline {
 			SplineColor = { Red = 254, Green = 144, Blue = 123 },
 			CtrlWZoom = false,
 			KeyFrames = {
-				[0] = { 1, RH = { 38.3333333333333, 1.14443333333333 }, Flags = { Linear = true } },
-				[115] = { 1.4, LH = { 76.6666666666667, 1.28886666666667 }, Flags = { Linear = true } }
+				[0] = { 1.4, RH = { 50, 1.14822133333333 }, Flags = { Linear = true } },
+				[115] = { 1, LH = { 100, 1.08525466666667 }, Flags = { Linear = true } }
 			}
 		}
 	},
-	ActiveTool = "zoompan_tlc"
+	ActiveTool = "zoom140to100"
 }

@@ -19,6 +19,13 @@ Composition {
 		TransformZoomInPositionX = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 222 },
 			CtrlWZoom = false,
+			CustomData = {
+				Path = {
+					Map = {
+						["Setting:"] = "/Users/wengffung/dev/web/temp-vid/fusion_compiled/"
+					}
+				}
+			},
 			KeyFrames = {
 				[0] = { 0, RH = { 38.3333333333333, 0.0666666666666667 }, Flags = { Linear = true } },
 				[115] = { 0.2, LH = { 76.6666666666667, 0.133333333333333 }, Flags = { Linear = true } }
@@ -27,6 +34,13 @@ Composition {
 		TransformZoomInPositionY = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 54 },
 			CtrlWZoom = false,
+			CustomData = {
+				Path = {
+					Map = {
+						["Setting:"] = "/Users/wengffung/dev/web/temp-vid/fusion_compiled/"
+					}
+				}
+			},
 			KeyFrames = {
 				[0] = { 0, RH = { 38.3333333333333, -0.0666666666666667 }, Flags = { Linear = true } },
 				[115] = { -0.2, LH = { 76.6666666666667, -0.133333333333333 }, Flags = { Linear = true } }
@@ -35,6 +49,13 @@ Composition {
 		TransformZoomInZoom = BezierSpline {
 			SplineColor = { Red = 254, Green = 144, Blue = 123 },
 			CtrlWZoom = false,
+			CustomData = {
+				Path = {
+					Map = {
+						["Setting:"] = "/Users/wengffung/dev/web/temp-vid/fusion_compiled/"
+					}
+				}
+			},
 			KeyFrames = {
 				[0] = { 1, RH = { 38.3333333333333, 1.13333333333333 }, Flags = { Linear = true } },
 				[115] = { 1.4, LH = { 76.6666666666667, 1.26666666666667 }, Flags = { Linear = true } }
@@ -74,10 +95,11 @@ Composition {
 					},
 					MEDIA_MARK_IN = 0,
 					MEDIA_MARK_OUT = 119,
-					MEDIA_NAME = "",
+					MEDIA_NAME = "clip01.jpg",
 					MEDIA_NUM_FRAMES = 120,
 					MEDIA_NUM_LAYERS = 0,
 					MEDIA_PAR = 1,
+					MEDIA_PATH = "/Users/wengffung/Downloads/DaVinci Assets 2/clip01.jpg",
 					MEDIA_SRC_FRAME_RATE = 24,
 					MEDIA_START_FRAME = 0,
 					MEDIA_WIDTH = 380
@@ -104,6 +126,7 @@ Composition {
 				Clip {
 					ID = "Clip1",
 					Multiframe = true,
+					Filename = "/Users/wengffung/Downloads/DaVinci Assets 2/clip01.jpg",
 					Length = 120,
 					LengthSetManually = true,
 					GlobalEnd = 119,
@@ -118,6 +141,13 @@ Composition {
 		},
 		zoompan_tlc = GroupOperator {
 			CtrlWZoom = false,
+			CustomData = {
+				Path = {
+					Map = {
+						["Setting:"] = "/Users/wengffung/dev/web/temp-vid/fusion_compiled/"
+					}
+				},
+			},
 			Inputs = ordered() {
 				Comments = Input { Value = "After pasting into Fusion screen, connect MediaIn to INPUT_MED_IN and connect OUTPUT_MED_OUT to MediaOut.", },
 				Input1 = InstanceInput {
@@ -413,6 +443,11 @@ Composition {
 	},
 	Prefs = {
 		Comp = {
+			Paths = {
+				Map = {
+					["ResolveCaches:"] = "/Users/wengffung/Movies/CacheClip/ca6e44d8-e6c3-42eb-9405-b6970023d792/a1e4d0bb-ecac-439e-8078-01d79fadd0d6/9cd9c203-1425-4a57-b54c-3982c7e3f1bc/Fusion"
+				},
+			},
 			Interactive = {
 				Proxy = {
 					Scale = 1,

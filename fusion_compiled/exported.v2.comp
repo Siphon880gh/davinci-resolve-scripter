@@ -74,7 +74,7 @@ Composition {
 					},
 					MEDIA_MARK_IN = 0,
 					MEDIA_MARK_OUT = 119,
-					MEDIA_NAME = "",
+					MEDIA_NAME = "clip01.jpg",
 					MEDIA_NUM_FRAMES = 120,
 					MEDIA_NUM_LAYERS = 0,
 					MEDIA_PAR = 1,
