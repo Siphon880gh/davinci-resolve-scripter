@@ -13,12 +13,20 @@ def addMotionsTo(track, positionalData):
             print("Creating nodes and connecting to media in and out: " + str(index) + ":" + fusion_path)
         
             clip = track[index]
-            clip.ImportFusionComp(fusion_path)
 
             # Retrieve the Fusion composition from the clip
-            fusion_comp = clip.GetFusionCompByName(clip.GetFusionCompNameList()[-1])  # Get most top of the stack fusion
+            fusion_comp_name_list = clip.GetFusionCompNameList()
+            if len(fusion_comp_name_list) == 0:
+                # clip.AddFusionComp()  
+                if index > len(track)-1:
+                    continue
+                else:
+                    clip = track[index+1]
 
-            print("Converted clip to fusion clip:", fusion_comp);
+            clip.ImportFusionComp(fusion_path)
+            fusion_comp = clip.GetFusionCompByName(fusion_comp_name_list[-1])  # Get most top of the stack fusion
+
+            print("Converted clip to fusion clip:", fusion_comp)
 
             # Find the MediaIn1 and MediaOut1 nodes
             media_in_node = fusion_comp.FindTool("MediaIn1")
@@ -32,6 +40,7 @@ def addMotionsTo(track, positionalData):
                 # Disconnect MediaIn1 from MediaOut1
                 # print("Disconnected MediaIn1 from MediaOut1")
                 # media_out_node.Inputs["Input"].Disconnect() # No need
+                print("MediaIn1 and MediaOut1 nodes found.")
             else:
                 # Add MediaIn1 if it's missing
                 if not media_in_node:
