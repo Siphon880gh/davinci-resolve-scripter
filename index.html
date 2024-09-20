@@ -10,9 +10,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>DaVinci Resolve Scripter</h1>
+
+        <div class="author-line mv-2">
+            <b>By Weng (Weng Fei Fung)</b>
+            <a class="px-1" href="https://github.com/Siphon880gh/" target="_blank"><i class="fab fa-github"></i></a>
+            <a class="px-1" href="https://www.linkedin.com/in/weng-fung/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a class="px-1" href="https://www.youtube.com/@WayneTeachesCode/" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+
+        <p class="my-4">Script that automates zoom and pan effects. You can copy to paste into Fusion screen (which then requires you to manually re-connect the MediaIn and MediaOut). Or you can save as fusion script files and adjust the fusion effect applier script that automatically applies the fusion scripts to timeline clip(s).</p>
+        <div class="max-w-md mx-auto p-4 text-center">
+            <form class="space-y-4" onsubmit="event.stopPropagation(); event.preventDefault(); updateSettings(); renderForEach();" >
+              <!-- Clip Duration Input -->
+              <div class="flex flex-col">
+                <label for="clip-duration" class="mb-2 text-sm font-medium text-gray-700">Clip Duration</label>
+                <input type="number" id="clip-duration" name="clip-duration" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value="5" min="1" step="1" />
+              </div>
+          
+              <!-- FPS Input -->
+              <div class="flex flex-col">
+                <label for="fps" class="mb-2 text-sm font-medium text-gray-700">FPS</label>
+                <input type="number" id="fps" name="fps" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  value="24" min="1" step="1" />
+              </div>
+          
+              <!-- Submit Button -->
+              <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Refresh Below
+              </button>
+            </form>
+          </div>
+          
+          
+
+        <main id="results"></main>
+    </div>
+
+    <!-- Notification -->
+    <div id="copy-notification" class="hidden fixed bottom-4 right-4 bg-green-100 text-green-600 px-4 py-2 rounded shadow-lg opacity-70">
+        Copied to clipboard!<br/>
+        Please paste into a Fusion Page
+    </div>
+    <div id="file-notification" class="hidden fixed bottom-4 right-4 bg-green-100 text-green-600 px-4 py-2 rounded shadow-lg opacity-70">
+        As as file!<br/>
+        Please adjust motion effects applier
+    </div>
+
+
     <script>
-        const clipCount = 12;
-        const cyclicalMotionEffects = [
+        window.clipCount = 12; // Keep 12. This is a remnant of the past
+        window.cyclicalMotionEffects = [
             "zoom140to100",
             "zoom120to100",
             "zoom120",
@@ -26,214 +78,236 @@
             "zoompan_brc",
             "zoompan_blc",
         ]
-        const clipSeconds = 5;
-        const clipFps = 24;
-        const generalDescription = "After pasting into Fusion screen, connect MediaIn to INPUT_MED_IN and connect OUTPUT_MED_OUT to MediaOut.";
+        // window.clipSeconds = 5; // Overrideable by user form
+        // window.clipFps = 24; // Overrideable by user form
 
-        // Templates convert to scripts after interpolation of values
-        let templates = [
-            {presetName:'zoom140to100', path:'./fusion_templates/zoomzoom.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_ZOOM0_", 1.4)
-                        .replaceAll("_ZOOM1_", 1.0);
-                }
-            },
-            {presetName:'zoom120to100', path:'./fusion_templates/zoomzoom.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_ZOOM0_", 1.2)
-                        .replaceAll("_ZOOM1_", 1.0);
-                }
-            },
-            {presetName:'zoom120', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", 0.0)
-                        .replaceAll("_POS_Y_", 0.0)
-                        .replaceAll("_ZOOM_", 1.2);
-                }
-            },
-            {presetName:'zoom140', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", 0.0)
-                        .replaceAll("_POS_Y_", 0.0)
-                        .replaceAll("_ZOOM_", 1.4);
-                }
-            },
-            {presetName:'zoompan_top', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", 0.0)
-                        .replaceAll("_POS_Y_", -0.2)
-                        .replaceAll("_ZOOM_", 1.4);
-                }
-            },
-            {presetName:'zoompan_right', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", -0.2)
-                        .replaceAll("_POS_Y_", 0.0)
-                        .replaceAll("_ZOOM_", 1.4);
-                }
-            },
-            {presetName:'zoompan_bottom', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", 0.0)
-                        .replaceAll("_POS_Y_", 0.2)
-                        .replaceAll("_ZOOM_", 1.4);
-                }
-            },
-            {presetName:'zoompan_left', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", 0.2)
-                        .replaceAll("_POS_Y_", 0.0)
-                        .replaceAll("_ZOOM_", 1.4);
-                }
-            },
-            {presetName:'zoompan_tlc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", 0.2)
-                        .replaceAll("_POS_Y_", -0.2)
-                        .replaceAll("_ZOOM_", 1.4);
-                }
-            },
-            {presetName:'zoompan_trc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", -0.2)
-                        .replaceAll("_POS_Y_", -0.2)
-                        .replaceAll("_ZOOM_", 1.4);
-                }
-            },            
-            {presetName:'zoompan_brc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", -0.2)
-                        .replaceAll("_POS_Y_", 0.2)
-                        .replaceAll("_ZOOM_", 1.4);
-                }
-            },
-            {presetName:'zoompan_blc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
-                interpolate: (scriptTemplate, params) =>{
-                    const {presetName, clipFps, clipSeconds} = params;
-                    return scriptTemplate
-                        .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
-                        .replaceAll("_GROUP_NAME_", presetName)
-                        .replaceAll("_GEN_DESC_", generalDescription)
-                        .replaceAll("_POS_X_", 0.2)
-                        .replaceAll("_POS_Y_", 0.2)
-                        .replaceAll("_ZOOM_", 1.4);
-                }
-            },
-        ];
 
-        function getInterpolatedScript(presetName) {
-            const found = templates.find(template => template.presetName === presetName).script;
-            return found?found:"ERROR - NOT FOUND"
+        // document.querySelector("#clip-duration").value = window.clipSeconds;
+        // document.querySelector("#fps").value = window.clipFps;
+
+        window.generalDescription = "After pasting into Fusion screen, connect MediaIn to INPUT_MED_IN and connect OUTPUT_MED_OUT to MediaOut.";
+
+
+        updateSettings();
+        function updateSettings() {
+
+            window.clipSeconds = parseInt(document.querySelector("#clip-duration").value);
+            window.clipFps = parseInt(document.querySelector("#fps").value);
+            
         }
 
-        Promise.all(
-            templates.map(template => fetch(template.path)
-                .then(async (response) => { 
-                    const scriptTemplate = await response.text();
-                    template.scriptTemplate = scriptTemplate;
+        renderForEach();
+        function renderForEach() {
 
-                    const presetName = template.presetName;
-                    const params = {presetName, clipFps, clipSeconds}
-                    template.script = template.interpolate(scriptTemplate, params);
-                    return {}
-                })
+            // Templates convert to scripts after interpolation of values
+            let templates = [
+                {presetName:'zoom140to100', path:'./fusion_templates/zoomzoom.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_ZOOM0_", 1.4)
+                            .replaceAll("_ZOOM1_", 1.0);
+                    }
+                },
+                {presetName:'zoom120to100', path:'./fusion_templates/zoomzoom.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_ZOOM0_", 1.2)
+                            .replaceAll("_ZOOM1_", 1.0);
+                    }
+                },
+                {presetName:'zoom120', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", 0.0)
+                            .replaceAll("_POS_Y_", 0.0)
+                            .replaceAll("_ZOOM_", 1.2);
+                    }
+                },
+                {presetName:'zoom140', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", 0.0)
+                            .replaceAll("_POS_Y_", 0.0)
+                            .replaceAll("_ZOOM_", 1.4);
+                    }
+                },
+                {presetName:'zoompan_top', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", 0.0)
+                            .replaceAll("_POS_Y_", -0.2)
+                            .replaceAll("_ZOOM_", 1.4);
+                    }
+                },
+                {presetName:'zoompan_right', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", -0.2)
+                            .replaceAll("_POS_Y_", 0.0)
+                            .replaceAll("_ZOOM_", 1.4);
+                    }
+                },
+                {presetName:'zoompan_bottom', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", 0.0)
+                            .replaceAll("_POS_Y_", 0.2)
+                            .replaceAll("_ZOOM_", 1.4);
+                    }
+                },
+                {presetName:'zoompan_left', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", 0.2)
+                            .replaceAll("_POS_Y_", 0.0)
+                            .replaceAll("_ZOOM_", 1.4);
+                    }
+                },
+                {presetName:'zoompan_tlc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", 0.2)
+                            .replaceAll("_POS_Y_", -0.2)
+                            .replaceAll("_ZOOM_", 1.4);
+                    }
+                },
+                {presetName:'zoompan_trc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", -0.2)
+                            .replaceAll("_POS_Y_", -0.2)
+                            .replaceAll("_ZOOM_", 1.4);
+                    }
+                },            
+                {presetName:'zoompan_brc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", -0.2)
+                            .replaceAll("_POS_Y_", 0.2)
+                            .replaceAll("_ZOOM_", 1.4);
+                    }
+                },
+                {presetName:'zoompan_blc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                    interpolate: (scriptTemplate, params) =>{
+                        const {presetName, clipFps, clipSeconds} = params;
+                        return scriptTemplate
+                            .replaceAll("_END_FRAME_", parseInt(clipSeconds*clipFps))
+                            .replaceAll("_GROUP_NAME_", presetName)
+                            .replaceAll("_GEN_DESC_", generalDescription)
+                            .replaceAll("_POS_X_", 0.2)
+                            .replaceAll("_POS_Y_", 0.2)
+                            .replaceAll("_ZOOM_", 1.4);
+                    }
+                },
+            ];
+
+            function getInterpolatedScript(presetName) {
+                const found = templates.find(template => template.presetName === presetName).script;
+                return found?found:"ERROR - NOT FOUND"
+            }
+
+            // Reset forEach rendered
+            document.querySelector("#results").innerHTML = "";
+
+            // Grab fusion script template then render into fusion script
+            Promise.all(
+                templates.map(template => fetch(template.path)
+                    .then(async (response) => { 
+                        const scriptTemplate = await response.text();
+                        template.scriptTemplate = scriptTemplate;
+
+                        const presetName = template.presetName;
+                        const params = {presetName, clipFps:window.clipFps, clipSeconds:window.clipSeconds}
+                        template.script = template.interpolate(scriptTemplate, params);
+                        return {}
+                    })
+                )
             )
-        )
-        .then(foobar => {
-            // All scripts loaded. Now go through cyclical motion effects.
+            .then(foobar => {
+                // All scripts loaded. Now go through cyclical motion effects.
 
-            // Presets into webpage
-            const cyclicalCount = cyclicalMotionEffects.length;
-            for (let i = 0; i < clipCount; i++) {
-                let cyclicalIndex = i % cyclicalCount;
-                const presetName = cyclicalMotionEffects[cyclicalIndex];
-                // console.log({cyclicalIndex})
-                // console.log({presetName})
+                // Presets into webpage
+                const cyclicalCount = cyclicalMotionEffects.length;
+                for (let i = 0; i < clipCount; i++) {
+                    let cyclicalIndex = i % cyclicalCount;
+                    const presetName = cyclicalMotionEffects[cyclicalIndex];
+                    // console.log({cyclicalIndex})
+                    // console.log({presetName})
 
-                const interpolatedScript = getInterpolatedScript(presetName);
-                const header = `Fusion Clip ${i+1}: Apply ${presetName} on ${clipSeconds} seconds clip at ${clipFps} fps`;
-                
-                $("#results").append(`<details class="bg-gray-200 p-4 m-4">
-                    <summary data-name="${presetName}">${header}</summary>
+                    const interpolatedScript = getInterpolatedScript(presetName);
+                    const header = `Fusion Clip ${i+1}: Apply ${presetName} on ${window.clipSeconds} seconds clip at ${window.clipFps} fps`;
+                    
+                    $("#results").append(`<details class="bg-gray-200 p-4 m-4">
+                        <summary data-name="${presetName}">${header}</summary>
 
-                    <div class="container mt-5">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center inline w-fit border border-gray-300 w-fit" style="width:fit-content !important;">
-                                <i onclick="saveToClipboard(event.target)" class="fas fa-copy text-3xl copy-icon" style="cursor: pointer;" title="Copy to clipboard"></i>
-                                <button onclick="saveAsFile(event.target)" class="ml-4 px-4 py-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700">Save File</button>
-                            </div>
-                            <div class="card-body">
-                                <code id="card-content" class="card-text whitespace-pre-wrap">${interpolatedScript}</code>
+                        <div class="container mt-5">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center inline w-fit border border-gray-300 w-fit" style="width:fit-content !important;">
+                                    <i onclick="saveToClipboard(event.target)" class="fas fa-copy text-3xl copy-icon" style="cursor: pointer;" title="Copy to clipboard"></i>
+                                    <button onclick="saveAsFile(event.target)" class="ml-4 px-4 py-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700">Save File</button>
+                                </div>
+                                <div class="card-body">
+                                    <code id="card-content" class="card-text whitespace-pre-wrap">${interpolatedScript}</code>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                </details>
-                `); // append
-                
-            } // for
+                    </details>
+                    `); // append
+                    
+                } // for
 
-        })
-        .catch(error => {
-            // Handle errors
-            console.error('An error occurred:', error);
-        });
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('An error occurred:', error);
+            });
 
+        }
 
         function saveToClipboard(el) {
             event.stopPropagation();
@@ -312,35 +386,5 @@
         }
 
     </script>
-</head>
-<body>
-    <div class="container mt-4">
-        <h1>DaVinci Resolve Scripter</h1>
-
-        <div class="author-line mv-2">
-            <b>By Weng (Weng Fei Fung)</b>
-            <a class="px-1" href="https://github.com/Siphon880gh/" target="_blank"><i class="fab fa-github"></i></a>
-            <a class="px-1" href="https://www.linkedin.com/in/weng-fung/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a class="px-1" href="https://www.youtube.com/@WayneTeachesCode/" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
-
-        <p class="my-4">Script that automates zoom and pan effects. You can copy to paste into Fusion screen (which then requires you to manually re-connect the MediaIn and MediaOut). Or you can save as fusion script files and adjust the fusion effect applier script that automatically applies the fusion scripts to timeline clip(s).</p>
-
-        <div class="mv-2">
-
-        </div>
-
-        <main id="results"></main>
-    </div>
-
-    <!-- Notification -->
-    <div id="copy-notification" class="hidden fixed bottom-4 right-4 bg-green-100 text-green-600 px-4 py-2 rounded shadow-lg opacity-70">
-        Copied to clipboard!<br/>
-        Please paste into a Fusion Page
-    </div>
-    <div id="file-notification" class="hidden fixed bottom-4 right-4 bg-green-100 text-green-600 px-4 py-2 rounded shadow-lg opacity-70">
-        As as file!<br/>
-        Please adjust motion effects applier
-    </div>
 </body>
 </html>
