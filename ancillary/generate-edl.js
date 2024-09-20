@@ -10,7 +10,7 @@ const IMAGE_FILES = [
 ];
 DESIRED_CLIP_SECONDS = 10; // Desired duration of each clip in seconds
 
-const startTimeCode = "01:00:00:00"; // User-defined start timecode for the timeline
+const startTimeCode = "00:00:00:00"; // User-defined start timecode for the timeline
 let frame_rate = 24;
 let outputPath = "./generated_edl/generated.edl"
 

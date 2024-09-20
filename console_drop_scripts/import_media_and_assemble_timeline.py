@@ -13,6 +13,10 @@ if resolve is None:
     exit()
 
 
+# Choose the desired start time (format is HH:MM:SS:FF)
+START_TIMECODE = "00:00:00:00"  # Set to "00:00:00:00" if needed
+# Not doable in free DaVinci
+
 # Setting clip duration fails on free. Just set options in Preferences as a workflow.
 DESIRED_CLIP_SECONDS = 10 # Desired duration of each clip in seconds
 
@@ -56,6 +60,8 @@ if timeline is None:
     timeline = media_pool.CreateEmptyTimeline("Image Sequence Timeline")
     project.SetCurrentTimeline(timeline)
 timeline.SetSetting('timelineFrameRate', str(frame_rate))
+timeline.SetSetting("timelineStartFrame", START_TIMECODE) # Not doable in free DaVinci
+timeline.SetCurrentTimecode(START_TIMECODE) # Not doable in free DaVinci
 
 # Import the images to the media pool
 media_storage = resolve.GetMediaStorage()

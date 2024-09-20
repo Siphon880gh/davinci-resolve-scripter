@@ -11,11 +11,14 @@ IMAGE_FILES = [
     "clip04.jpg", 
     "clip05.jpg"
 ]
+# Path to the folder where the media files are stored
+MEDIA_FOLDER = "/Users/wengffung/Downloads/DaVinci Assets 2"
+
 DEFAULT_CLIP_DURATION = 10  # Default duration of each clip in seconds
 FRAME_RATE = 24
 
 # Start timecode (user-defined)
-start_time_code = "01:00:00:00"
+start_time_code = "00:00:00:00"
 
 # Clip settings: slide indexes, transition types (D = Dissolve, C = Cut, WipeUp = Wipe at 0 degrees, etc.)
 # Optional: Provide custom transition duration using tDuration and clip duration using cDuration
@@ -35,10 +38,24 @@ timeline = otio.schema.Timeline(name="Enhanced Timeline")
 video_track = otio.schema.Track(name="Video Track", kind=otio.schema.TrackKind.Video)
 timeline.tracks.append(video_track)
 
-# Create a clip with a specified or default duration
-def create_clip(name, duration):
+# Create a clip with a specified or default duration and a full path
+def create_clip(file_name, duration):
+    # Construct the full path to the media file
+    full_file_path = os.path.join(MEDIA_FOLDER, file_name)
+
+    # Create an ExternalReference for the media file
+    media_reference = otio.schema.ExternalReference(
+        target_url=f"file://{full_file_path}",
+        available_range=otio.opentime.TimeRange(
+            start_time=otio.opentime.RationalTime(0, FRAME_RATE),
+            duration=otio.opentime.RationalTime(duration * FRAME_RATE, FRAME_RATE)
+        )
+    )
+
+    # Create the clip with the media reference
     return otio.schema.Clip(
-        name=name,
+        name=file_name,
+        media_reference=media_reference,
         source_range=otio.opentime.TimeRange(
             start_time=otio.opentime.RationalTime(0, FRAME_RATE),
             duration=otio.opentime.RationalTime(duration * FRAME_RATE, FRAME_RATE)
