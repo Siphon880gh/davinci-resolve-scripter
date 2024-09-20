@@ -1,7 +1,7 @@
 import opentimelineio as otio
 import os
 
-# Configuration for clips, duration, transitions, and frame rate
+# Configuration for clips, transition settings, and frame rate
 IMAGE_FILES = [
     "clip01.jpg", 
     "clip02.jpg", 
@@ -9,29 +9,31 @@ IMAGE_FILES = [
     "clip04.jpg", 
     "clip05.jpg"
 ]
-DESIRED_CLIP_SECONDS = 10  # Desired duration of each clip in seconds
+DEFAULT_CLIP_DURATION = 10  # Default duration of each clip in seconds
 FRAME_RATE = 24
 
 # Start timecode (user-defined)
 start_time_code = "01:00:00:00"
 
-# Transitions: slide indexes and transition types (D = Dissolve, C = Cut, Wipe = Wipe90)
-# Optional: Provide custom transition duration in frames
-transition_positions = [
-    { "index": 1, "type": "D", "duration": 24 },  # Dissolve with custom duration
-    { "index": 2, "type": "D" },                  # Dissolve with default duration
-    { "index": 3, "type": "wipe90", "duration": 24 }  # Edge Wipe with angle 90
+# Clip settings: slide indexes, transition types (D = Dissolve, C = Cut, Wipe90 = Wipe at 90 degrees)
+# Optional: Provide custom transition duration using tDuration and clip duration using cDuration
+clips_settings = [
+    { "index": 0, "type": None, "cDuration": 10 },   # First clip with default duration, no transition
+    { "index": 1, "type": "D", "tDuration": 24, "cDuration": 12 },  # Dissolve with custom duration for clip 2
+    { "index": 2, "type": "D", "cDuration": 8 },                   # Dissolve with default transition duration for clip 3
+    { "index": 3, "type": "Wipe90", "tDuration": 24, "cDuration": 15 },  # Wipe with custom duration for clip 4
+    { "index": 4, "type": "C", "cDuration": 10 }                    # Regular cut with default clip duration
 ]
 
 # Default transition settings
 DEFAULT_DISSOLVE_DURATION = 24  # Default dissolve duration (frames)
 
 # Create a timeline
-timeline = otio.schema.Timeline(name="Example Timeline")
+timeline = otio.schema.Timeline(name="Improved Timeline")
 video_track = otio.schema.Track(name="Video Track", kind=otio.schema.TrackKind.Video)
 timeline.tracks.append(video_track)
 
-# Create a clip with a specified duration
+# Create a clip with a specified or default duration
 def create_clip(name, duration):
     return otio.schema.Clip(
         name=name,
@@ -55,7 +57,7 @@ def create_transition(transition_type, in_offset=None, out_offset=None):
     elif transition_type == "C":
         # Cut transition (no need to define an actual transition)
         return None
-    elif transition_type == "wipe90":
+    elif transition_type == "Wipe90":
         # Create an edge wipe transition with metadata for DaVinci Resolve
         transition = otio.schema.Transition(
             transition_type="Custom_Transition",  # Custom type for wipe
@@ -108,32 +110,22 @@ def create_transition(transition_type, in_offset=None, out_offset=None):
         return None
 
 # Initialize clips and transitions
-clips = []
-for i, clip_name in enumerate(IMAGE_FILES):
-    clip = create_clip(clip_name, DESIRED_CLIP_SECONDS)
-    clips.append(clip)
+for clip_data in clips_settings:
+    clip_index = clip_data["index"]
+    clip_name = IMAGE_FILES[clip_index]
+    clip_duration = clip_data.get("cDuration", DEFAULT_CLIP_DURATION)
+    
+    clip = create_clip(clip_name, clip_duration)
+    video_track.append(clip)
 
-# Append first clip to the timeline (no transition before the first clip)
-video_track.append(clips[0])
-
-# Iterate through clips and apply transitions where specified
-for i in range(1, len(clips)):
-    # Find the transition type for this clip
-    transition_data = next((t for t in transition_positions if t["index"] == i), None)
-
-    if transition_data:
-        # Create transition based on specified type and duration
-        transition_type = transition_data.get("type", "C")
-        transition_duration = transition_data.get("duration", DEFAULT_DISSOLVE_DURATION)
+    # For all clips after the first, add a transition if specified
+    if clip_index > 0:
+        transition_type = clip_data.get("type", "C")
+        transition_duration = clip_data.get("tDuration", DEFAULT_DISSOLVE_DURATION)
         transition = create_transition(transition_type, in_offset=transition_duration)
-    else:
-        # Default to cut if no transition specified
-        transition = None
-
-    # Add transition (if any) and the next clip
-    if transition:
-        video_track.append(transition)
-    video_track.append(clips[i])
+        
+        if transition:
+            video_track.append(transition)
 
 # Ensure the directory exists
 output_directory = "generated_otio"
