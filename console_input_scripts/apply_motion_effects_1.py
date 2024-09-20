@@ -10,7 +10,7 @@ def addMotionsTo(track, positionalData):
         for datum in positionalData:
             index = datum["index"]
             fusion_path = datum["fusion_path"]
-            print("Creating nodes and connecting to media in and out: " + str(index) + ":" + fusion_path);
+            print("Creating nodes and connecting to media in and out: " + str(index) + ":" + fusion_path)
         
             clip = track[index]
             clip.ImportFusionComp(fusion_path)

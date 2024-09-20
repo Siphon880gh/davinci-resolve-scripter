@@ -209,12 +209,13 @@
                 const header = `Fusion Clip ${i+1}: Apply ${presetName} on ${clipSeconds} seconds clip at ${clipFps} fps`;
                 
                 $("#results").append(`<details class="bg-gray-200 p-4 m-4">
-                    <summary>${header}</summary>
+                    <summary data-name="${presetName}">${header}</summary>
 
                     <div class="container mt-5">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center inline w-fit border border-gray-300 w-fit" style="width:fit-content !important;">
-                                <i class="fas fa-copy text-3xl copy-icon" style="cursor: pointer;" title="Copy to clipboard"></i>
+                                <i onclick="saveToClipboard(event.target)" class="fas fa-copy text-3xl copy-icon" style="cursor: pointer;" title="Copy to clipboard"></i>
+                                <button onclick="saveAsFile(event.target)" class="ml-4 px-4 py-2 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700">Save File</button>
                             </div>
                             <div class="card-body">
                                 <code id="card-content" class="card-text whitespace-pre-wrap">${interpolatedScript}</code>
@@ -226,7 +227,6 @@
                 `); // append
                 
             } // for
-            hydrate();
 
         })
         .catch(error => {
@@ -235,49 +235,81 @@
         });
 
 
-    
-        function hydrate() {
-            document.querySelectorAll('.copy-icon').forEach(function(icon) {
-                icon.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
+        function saveToClipboard(el) {
+            event.stopPropagation();
+            event.preventDefault();
 
-                    // Get the corresponding content
-                    var content = this.closest(".card").querySelector(".card-text").textContent;
-                    console.log({contentInspect:content})
+            // Get the corresponding content
+            var content = el.closest(".card").querySelector(".card-text").textContent;
+            console.log({contentInspect:content})
 
-                    // Create a temporary input element to hold the content
-                    var tempInput = document.createElement('textarea');
-                    tempInput.value = content;
-                    document.body.appendChild(tempInput);
+            // Create a temporary input element to hold the content
+            var tempInput = document.createElement('textarea');
+            tempInput.value = content;
+            document.body.appendChild(tempInput);
 
-                    // Select the text and copy it
-                    tempInput.select();
-                    document.execCommand('copy');
+            // Select the text and copy it
+            tempInput.select();
+            document.execCommand('copy');
 
-                    // Remove the temporary input element
-                    document.body.removeChild(tempInput);
-                    
-                    // Close the details element
-                    const details = this.closest("details")
-                    details.open = false;
-                    $(details).removeClass("bg-gray-200").addClass("bg-gray-100");
+            // Remove the temporary input element
+            document.body.removeChild(tempInput);
+            
+            // Close the details element
+            const details = el.closest("details")
+            details.open = false;
+            $(details).removeClass("bg-gray-200").addClass("bg-gray-100");
 
-                    // Provide feedback (optional)
-                    // alert('Content copied to clipboard!');
+            // Show the "Copied to clipboard" notification
+            var notification = document.getElementById('copy-notification');
+            notification.classList.remove('hidden');
 
-                    // Show the "Copied to clipboard" notification
-                    var notification = document.getElementById('copy-notification');
-                    notification.classList.remove('hidden');
+            // Hide the notification after 2 seconds
+            setTimeout(function() {
+                notification.classList.add('hidden');
+            }, 2000);
+        }
+        function saveAsFile(el) {
+            event.stopPropagation();
+            event.preventDefault();
 
-                    // Hide the notification after 2 seconds
-                    setTimeout(function() {
-                        notification.classList.add('hidden');
-                    }, 2000);
+            const filename = el.closest("details").querySelector("summary").getAttribute("data-name")
+            console.log({filename})
 
-                }); // click
-            }); // forEach
-        } // hydrate
+            // Get the text content from the nearby element (you can change the selector as needed)
+            const textToSave = el.closest(".card").querySelector(".card-text").textContent;
+
+            // Create a Blob with the text content
+            const blob = new Blob([textToSave], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create a temporary link element
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${filename}.txt`;  // Set the desired file name
+
+            // Programmatically click the link to trigger the download
+            document.body.appendChild(a);
+            a.click();
+
+            // Clean up the URL and remove the temporary link element
+            URL.revokeObjectURL(url);
+            a.remove();
+
+            // Close the details element
+            const details = el.closest("details")
+            details.open = false;
+            $(details).removeClass("bg-gray-200").addClass("bg-gray-100");
+
+            // Show the "Copied to clipboard" notification
+            var notification = document.getElementById('file-notification');
+            notification.classList.remove('hidden');
+
+            // Hide the notification after 2 seconds
+            setTimeout(function() {
+                notification.classList.add('hidden');
+            }, 2000);
+        }
 
     </script>
 </head>
@@ -292,7 +324,7 @@
             <a class="px-1" href="https://www.youtube.com/@WayneTeachesCode/" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
 
-        <p class="my-4">Script that automates zoom and pan effects.</p>
+        <p class="my-4">Script that automates zoom and pan effects. You can copy to paste into Fusion screen (which then requires you to manually re-connect the MediaIn and MediaOut). Or you can save as fusion script files and adjust the fusion effect applier script that automatically applies the fusion scripts to timeline clip(s).</p>
 
         <main id="results"></main>
     </div>
@@ -300,7 +332,11 @@
     <!-- Notification -->
     <div id="copy-notification" class="hidden fixed bottom-4 right-4 bg-green-100 text-green-600 px-4 py-2 rounded shadow-lg opacity-70">
         Copied to clipboard!<br/>
-        Paste into Fusion Editor
+        Please paste into a Fusion Page
+    </div>
+    <div id="file-notification" class="hidden fixed bottom-4 right-4 bg-green-100 text-green-600 px-4 py-2 rounded shadow-lg opacity-70">
+        As as file!<br/>
+        Please adjust motion effects applier
     </div>
 </body>
 </html>
