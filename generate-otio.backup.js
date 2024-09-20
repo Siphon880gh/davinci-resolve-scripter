@@ -9,7 +9,7 @@ const IMAGE_FILES = [
 ];
 const DESIRED_CLIP_SECONDS = 10; // Desired duration of each clip in seconds
 const startTimeCode = "01:00:00:00"; // User-defined start timecode for the timeline
-let frame_rate = 23;
+let frame_rate = 24;
 let outputPath = "./generated_otio/example_timeline.otio";
 
 // Array of slide indexes where you want specific transitions applied

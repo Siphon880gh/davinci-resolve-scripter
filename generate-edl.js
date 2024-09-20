@@ -8,7 +8,7 @@ const IMAGE_FILES = [
 DESIRED_CLIP_SECONDS = 10; // Desired duration of each clip in seconds
 
 const startTimeCode = "01:00:00:00"; // User-defined start timecode for the timeline
-let frame_rate = 23;
+let frame_rate = 24;
 let outputPath = "./generated_edl/generated.edl"
 
 // Array of slide indexes where you want specific transitions applied
@@ -27,7 +27,7 @@ function generateEDL(clipNames, durationPerClip, startTimeCode = "00:00:00:00", 
     // Helper function to convert timecode in HH:MM:SS:FF format to seconds
     function timecodeToSeconds(timecode) {
         const [hours, mins, secs, frames] = timecode.split(":").map(Number);
-        const fps = typeof frame_rate !== "undefined" ? frame_rate : 23; 
+        const fps = typeof frame_rate !== "undefined" ? frame_rate : 24; 
         return hours * 3600 + mins * 60 + secs + frames / fps;
     }
 

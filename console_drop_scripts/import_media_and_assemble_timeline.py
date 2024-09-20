@@ -40,7 +40,7 @@ if project is None:
 # Get the frame rate from the project settings
 frame_rate = project.GetSetting("timelineFrameRate")
 if frame_rate is None:
-    frame_rate = 23  # Default to 23 fps if not set
+    frame_rate = 24  # Default to 24 fps if not set
 
 # Duration in frames for X seconds (Multiplies frame rate by X seconds)
 duration_in_frames = int(DESIRED_CLIP_SECONDS * float(frame_rate))
