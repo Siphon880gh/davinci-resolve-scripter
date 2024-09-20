@@ -1,3 +1,6 @@
+// Works but note that EDL Timelines in DaVinci only supports cuts (C) and dissolves (D) aka crossfades
+// OTIO Timelines in DaVinci supports the Edge wipes of different angles.
+
 const IMAGE_FILES = [
     "clip01.jpg", 
     "clip02.jpg", 

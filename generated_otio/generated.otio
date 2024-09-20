@@ -1,299 +1,271 @@
 {
     "OTIO_SCHEMA": "Timeline.1",
-    "metadata": {
-        "Resolve_OTIO": {
-            "Resolve OTIO Meta Version": "1.0"
-        }
-    },
-    "name": "Generated Timeline",
-    "global_start_time": {
-        "OTIO_SCHEMA": "RationalTime.1",
-        "value": 86400,
-        "rate": 24
-    },
-    "tracks": [
-        {
-            "OTIO_SCHEMA": "Track.1",
-            "name": "Video Track",
-            "kind": "Video",
-            "children": [
-                {
-                    "OTIO_SCHEMA": "Clip.1",
-                    "name": "clip01.jpg",
-                    "available_range": {
-                        "OTIO_SCHEMA": "TimeRange.1",
-                        "start_time": {
-                            "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 0,
-                            "rate": 24
-                        },
-                        "duration": {
-                            "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 10,
-                            "rate": 24
-                        }
-                    },
-                    "type": "Clip"
-                },
-                {
-                    "OTIO_SCHEMA": "Clip.1",
-                    "name": "clip02.jpg",
-                    "available_range": {
-                        "OTIO_SCHEMA": "TimeRange.1",
-                        "start_time": {
-                            "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 0,
-                            "rate": 24
-                        },
-                        "duration": {
-                            "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 10,
-                            "rate": 24
-                        }
-                    },
-                    "type": "Clip"
-                },
-                {
-                    "OTIO_SCHEMA": "Transition.1",
-                    "name": "Dissolve",
-                    "transition_type": "Dissolve",
-                    "in_offset": {
-                        "OTIO_SCHEMA": "RationalTime.1",
-                        "value": 12,
-                        "rate": 24
-                    },
-                    "out_offset": {
-                        "OTIO_SCHEMA": "RationalTime.1",
-                        "value": 12,
-                        "rate": 24
-                    },
-                    "type": "Transition"
-                },
-                {
-                    "OTIO_SCHEMA": "Clip.1",
-                    "name": "clip03.jpg",
-                    "available_range": {
-                        "OTIO_SCHEMA": "TimeRange.1",
-                        "start_time": {
-                            "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 0,
-                            "rate": 24
-                        },
-                        "duration": {
-                            "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 10,
-                            "rate": 24
-                        }
-                    },
-                    "type": "Clip"
-                },
-                {
-                    "OTIO_SCHEMA": "Transition.1",
-                    "name": "Edge Wipe",
-                    "transition_type": "Custom_Transition",
-                    "in_offset": {
-                        "OTIO_SCHEMA": "RationalTime.1",
-                        "value": 12,
-                        "rate": 24
-                    },
-                    "out_offset": {
-                        "OTIO_SCHEMA": "RationalTime.1",
-                        "value": 12,
-                        "rate": 24
-                    },
-                    "metadata": {
-                        "Resolve_OTIO": {
-                            "Effects": {
-                                "Effect Name": "Edge Wipe",
-                                "Enabled": true,
-                                "Name": "Edge Wipe",
-                                "Parameters": [
-                                    {
-                                        "Default Parameter Value": 0,
-                                        "Key Frames": {},
-                                        "Parameter ID": "angle",
-                                        "Parameter Value": 90,
-                                        "Variant Type": "Int",
-                                        "maxValue": 360,
-                                        "minValue": -360
-                                    },
-                                    {
-                                        "Default Parameter Value": 0,
-                                        "Key Frames": {
-                                            "0": {
-                                                "Value": 0,
-                                                "Variant Type": "Double"
-                                            },
-                                            "24": {
-                                                "Value": 1,
-                                                "Variant Type": "Double"
-                                            }
-                                        },
-                                        "Parameter ID": "transitionCustomCurvesKeyframes",
-                                        "Parameter Value": 0,
-                                        "Variant Type": "Double",
-                                        "maxValue": 1,
-                                        "minValue": 0
-                                    }
-                                ],
-                                "Type": 13
+    "metadata": {},
+    "name": "Example Timeline",
+    "global_start_time": null,
+    "tracks": {
+        "OTIO_SCHEMA": "Stack.1",
+        "metadata": {},
+        "name": "tracks",
+        "source_range": null,
+        "effects": [],
+        "markers": [],
+        "enabled": true,
+        "children": [
+            {
+                "OTIO_SCHEMA": "Track.1",
+                "metadata": {},
+                "name": "Video Track",
+                "source_range": null,
+                "effects": [],
+                "markers": [],
+                "enabled": true,
+                "children": [
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "clip01.jpg",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 240.0
                             },
-                            "Transition Type": "Edge Wipe"
-                        }
-                    },
-                    "type": "Transition"
-                },
-                {
-                    "OTIO_SCHEMA": "Clip.1",
-                    "name": "clip04.jpg",
-                    "available_range": {
-                        "OTIO_SCHEMA": "TimeRange.1",
-                        "start_time": {
-                            "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 0,
-                            "rate": 24
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 0.0
+                            }
                         },
-                        "duration": {
-                            "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 10,
-                            "rate": 24
-                        }
-                    },
-                    "type": "Clip"
-                },
-                {
-                    "OTIO_SCHEMA": "Transition.1",
-                    "name": "Edge Wipe",
-                    "transition_type": "Custom_Transition",
-                    "in_offset": {
-                        "OTIO_SCHEMA": "RationalTime.1",
-                        "value": 12,
-                        "rate": 24
-                    },
-                    "out_offset": {
-                        "OTIO_SCHEMA": "RationalTime.1",
-                        "value": 12,
-                        "rate": 24
-                    },
-                    "metadata": {
-                        "Resolve_OTIO": {
-                            "Effects": {
-                                "Effect Name": "Edge Wipe",
-                                "Enabled": true,
-                                "Name": "Edge Wipe",
-                                "Parameters": [
-                                    {
-                                        "Default Parameter Value": 0,
-                                        "Key Frames": {},
-                                        "Parameter ID": "angle",
-                                        "Parameter Value": 0,
-                                        "Variant Type": "Int",
-                                        "maxValue": 360,
-                                        "minValue": -360
-                                    },
-                                    {
-                                        "Default Parameter Value": 0,
-                                        "Key Frames": {
-                                            "0": {
-                                                "Value": 0,
-                                                "Variant Type": "Double"
-                                            },
-                                            "24": {
-                                                "Value": 1,
-                                                "Variant Type": "Double"
-                                            }
-                                        },
-                                        "Parameter ID": "transitionCustomCurvesKeyframes",
-                                        "Parameter Value": 0,
-                                        "Variant Type": "Double",
-                                        "maxValue": 1,
-                                        "minValue": 0
-                                    }
-                                ],
-                                "Type": 13
-                            },
-                            "Transition Type": "Edge Wipe"
-                        }
-                    },
-                    "type": "Transition"
-                },
-                {
-                    "OTIO_SCHEMA": "Clip.1",
-                    "name": "clip05.jpg",
-                    "available_range": {
-                        "OTIO_SCHEMA": "TimeRange.1",
-                        "start_time": {
-                            "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 0,
-                            "rate": 24
+                        "effects": [],
+                        "markers": [],
+                        "enabled": true,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "MissingReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null
+                            }
                         },
-                        "duration": {
+                        "active_media_reference_key": "DEFAULT_MEDIA"
+                    },
+                    {
+                        "OTIO_SCHEMA": "Transition.1",
+                        "metadata": {},
+                        "name": "",
+                        "in_offset": {
                             "OTIO_SCHEMA": "RationalTime.1",
-                            "value": 10,
-                            "rate": 24
-                        }
+                            "rate": 24.0,
+                            "value": 24.0
+                        },
+                        "out_offset": {
+                            "OTIO_SCHEMA": "RationalTime.1",
+                            "rate": 24.0,
+                            "value": 24.0
+                        },
+                        "transition_type": "SMPTE_Dissolve"
                     },
-                    "type": "Clip"
-                },
-                {
-                    "OTIO_SCHEMA": "Transition.1",
-                    "name": "Edge Wipe",
-                    "transition_type": "Custom_Transition",
-                    "in_offset": {
-                        "OTIO_SCHEMA": "RationalTime.1",
-                        "value": 12,
-                        "rate": 24
-                    },
-                    "out_offset": {
-                        "OTIO_SCHEMA": "RationalTime.1",
-                        "value": 12,
-                        "rate": 24
-                    },
-                    "metadata": {
-                        "Resolve_OTIO": {
-                            "Effects": {
-                                "Effect Name": "Edge Wipe",
-                                "Enabled": true,
-                                "Name": "Edge Wipe",
-                                "Parameters": [
-                                    {
-                                        "Default Parameter Value": 0,
-                                        "Key Frames": {},
-                                        "Parameter ID": "angle",
-                                        "Parameter Value": -90,
-                                        "Variant Type": "Int",
-                                        "maxValue": 360,
-                                        "minValue": -360
-                                    },
-                                    {
-                                        "Default Parameter Value": 0,
-                                        "Key Frames": {
-                                            "0": {
-                                                "Value": 0,
-                                                "Variant Type": "Double"
-                                            },
-                                            "24": {
-                                                "Value": 1,
-                                                "Variant Type": "Double"
-                                            }
-                                        },
-                                        "Parameter ID": "transitionCustomCurvesKeyframes",
-                                        "Parameter Value": 0,
-                                        "Variant Type": "Double",
-                                        "maxValue": 1,
-                                        "minValue": 0
-                                    }
-                                ],
-                                "Type": 13
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "clip02.jpg",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 240.0
                             },
-                            "Transition Type": "Edge Wipe"
-                        }
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 0.0
+                            }
+                        },
+                        "effects": [],
+                        "markers": [],
+                        "enabled": true,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "MissingReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null
+                            }
+                        },
+                        "active_media_reference_key": "DEFAULT_MEDIA"
                     },
-                    "type": "Transition"
-                }
-            ],
-            "type": "Track"
-        }
-    ],
-    "type": "Timeline.1"
+                    {
+                        "OTIO_SCHEMA": "Transition.1",
+                        "metadata": {},
+                        "name": "",
+                        "in_offset": {
+                            "OTIO_SCHEMA": "RationalTime.1",
+                            "rate": 24.0,
+                            "value": 24.0
+                        },
+                        "out_offset": {
+                            "OTIO_SCHEMA": "RationalTime.1",
+                            "rate": 24.0,
+                            "value": 24.0
+                        },
+                        "transition_type": "SMPTE_Dissolve"
+                    },
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "clip03.jpg",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 240.0
+                            },
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 0.0
+                            }
+                        },
+                        "effects": [],
+                        "markers": [],
+                        "enabled": true,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "MissingReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null
+                            }
+                        },
+                        "active_media_reference_key": "DEFAULT_MEDIA"
+                    },
+                    {
+                        "OTIO_SCHEMA": "Transition.1",
+                        "metadata": {
+                            "Resolve_OTIO": {
+                                "Effects": {
+                                    "Effect Name": "Edge Wipe",
+                                    "Enabled": true,
+                                    "Name": "Edge Wipe",
+                                    "Parameters": [
+                                        {
+                                            "Default Parameter Value": 0,
+                                            "Key Frames": {},
+                                            "Parameter ID": "angle",
+                                            "Parameter Value": 90,
+                                            "Variant Type": "Int",
+                                            "maxValue": 360.0,
+                                            "minValue": -360.0
+                                        },
+                                        {
+                                            "Default Parameter Value": 0.0,
+                                            "Key Frames": {
+                                                "0": {
+                                                    "Value": 0.0,
+                                                    "Variant Type": "Double"
+                                                },
+                                                "24": {
+                                                    "Value": 1.0,
+                                                    "Variant Type": "Double"
+                                                }
+                                            },
+                                            "Parameter ID": "transitionCustomCurvesKeyframes",
+                                            "Parameter Value": 0.0,
+                                            "Variant Type": "Double",
+                                            "maxValue": 1.0,
+                                            "minValue": 0.0
+                                        }
+                                    ],
+                                    "Type": 13
+                                },
+                                "Transition Type": "Edge Wipe"
+                            }
+                        },
+                        "name": "",
+                        "in_offset": {
+                            "OTIO_SCHEMA": "RationalTime.1",
+                            "rate": 24.0,
+                            "value": 24.0
+                        },
+                        "out_offset": {
+                            "OTIO_SCHEMA": "RationalTime.1",
+                            "rate": 24.0,
+                            "value": 24.0
+                        },
+                        "transition_type": "Custom_Transition"
+                    },
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "clip04.jpg",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 240.0
+                            },
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 0.0
+                            }
+                        },
+                        "effects": [],
+                        "markers": [],
+                        "enabled": true,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "MissingReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null
+                            }
+                        },
+                        "active_media_reference_key": "DEFAULT_MEDIA"
+                    },
+                    {
+                        "OTIO_SCHEMA": "Clip.2",
+                        "metadata": {},
+                        "name": "clip05.jpg",
+                        "source_range": {
+                            "OTIO_SCHEMA": "TimeRange.1",
+                            "duration": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 240.0
+                            },
+                            "start_time": {
+                                "OTIO_SCHEMA": "RationalTime.1",
+                                "rate": 24.0,
+                                "value": 0.0
+                            }
+                        },
+                        "effects": [],
+                        "markers": [],
+                        "enabled": true,
+                        "media_references": {
+                            "DEFAULT_MEDIA": {
+                                "OTIO_SCHEMA": "MissingReference.1",
+                                "metadata": {},
+                                "name": "",
+                                "available_range": null,
+                                "available_image_bounds": null
+                            }
+                        },
+                        "active_media_reference_key": "DEFAULT_MEDIA"
+                    }
+                ],
+                "kind": "Video"
+            }
+        ]
+    }
 }
