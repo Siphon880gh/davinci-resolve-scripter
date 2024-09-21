@@ -25,6 +25,8 @@ media_pool = project.GetMediaPool()
 # Get all clips on video track 1
 track1_clips = timeline.GetItemListInTrack("video", 1)
 
+print("GetStartTimecode:", timeline.GetStartTimecode())
+
 # Iterate through each clip on video track 1 and copy it to video track 2
 for clip in track1_clips:
     # Get the media pool item associated with the clip
@@ -45,7 +47,9 @@ for clip in track1_clips:
     clip_info = {
         "mediaPoolItem": media_pool_item,
         "startFrame": 0,
-        "endFrame": end_frame,
+        "endFrame": 115,
+        "trackIndex" : 2,
+        "recordFrame" : 86400,
         "mediaType": ENUM_MEDIA_TYPES["VIDEO"]
     }
 

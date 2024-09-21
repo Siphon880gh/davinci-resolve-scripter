@@ -58,6 +58,9 @@ for clip_index, clip in track.items():
             "StartFrame": start_frame,
             "EndFrame": end_frame
         })
+        fusion_comp.GetAttrs('TOOLB_Name', 0)
+        # fusion_comp.SetStartFrame(0)
+        # fusion_comp.SetEndFrame(clip.GetEnd())
 
         media_in_node = fusion_comp.FindTool("MediaIn1")
         media_out_node = fusion_comp.FindTool("MediaOut1")
