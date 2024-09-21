@@ -5,7 +5,7 @@
 <a target="_blank" href="https://www.linkedin.com/in/weng-fung/" rel="nofollow"><img src="https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin&labelColor=blue" alt="Linked-In" data-canonical-src="https://img.shields.io/badge/LinkedIn-blue?style=flat&amp;logo=linkedin&amp;labelColor=blue" style="max-width:10ch;"></a>
 <a target="_blank" href="https://www.youtube.com/@WayneTeachesCode/" rel="nofollow"><img src="https://img.shields.io/badge/Youtube-red?style=flat&logo=youtube&labelColor=red" alt="Youtube" data-canonical-src="https://img.shields.io/badge/Youtube-red?style=flat&amp;logo=youtube&amp;labelColor=red" style="max-width:10ch;"></a>
 
-By Weng (Weng Fei Fung). Script that automates video editing by automatically importing media, creating time line, adding zoom and pan motion effects and adding transitions.
+By Weng (Weng Fei Fung). Script that automates video editing in DaVinci Resolve by automatically importing media, creating time line, adding zoom and pan motion effects and adding transitions.
 
 ## Requirement
 
@@ -17,8 +17,9 @@ Although my scripts allows you to change the starting time code to 01:00:00:00 o
 I cannot have a single script that runs to create a project because of how DaVinci made certain API's unavailable on the free version DaVinci Resolve v19.0.1 build 6 20024. I would like my API available to all DaVinci versions. Here is a breakdown of how DaVinci created this limit:
 
 - My script can import media then place them as clips into a timeline video track, however the script cannot adjust the duration of each clip to your liking. 
-- The workaround is to import a timeline and there are various formats, from the most plain EDL format (which supports cut and dissolve transitions) and the more complicated format OTIO (that supports cut, dissolve, AND wipes from different edges). While importing can bring in specified durations AND transitions, as of the current version, Fusion clips will have large negative frames, breaking fusion effects.
+- The workaround is to import a timeline and there are various formats, from the most plain EDL format (which supports cut and dissolve transitions) and the more complicated format OTIO (that supports cut, dissolve, AND wipes from different edges). While importing can bring in specified durations AND transitions, as of the current version, Fusion clips will have large negative frames, breaking fusion effects, and the free DaVinci API does not allow changing start frames.
 - If you apply your own fusion or the fusion presets my repo provides, it will fail because of the negative frames. You can right click the timeline imported clips -> New Fusion Clip, BUT that removes all the imported transitions! 
+- But not to worry, I have a fix that involves manually adding Adjustment Clips in a second video track. This will be the workaround until DaVinci fixes the negative frames bug.
 
 In addition, free DaVinci doesnt allow you to run scripts outside of the editor. You have to run the script either by pasting it into the DaVinci console (Workspace -> Console), or dropping a file into the console.
 
