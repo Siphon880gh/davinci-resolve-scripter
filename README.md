@@ -25,10 +25,10 @@ In addition, free DaVinci doesnt allow you to run scripts outside of the editor.
 
 Keep in mind certain APIs cannot run as a drop-in script, but they can run in the console, which is another limitation placed on free versions. AddFusionComp that makes sure your timeline item will have a fusion for you to programatically add nodes or to load a fusion comp file, that will fail as a drop-in script but yet the console accepts and executes if it were inputted in.
 
-Summary of limitations:
+Summary of limitations (not comprehensive):
 - SetCurrentTimecode not available on free API
-- SetSetting not available
-- SetEnd disabled so you can’t programmatically adjust clip durations
+- SetSetting, SetProperty, and similar are not available
+- SetStart, SetEnd, SetDuration disabled so you can’t programmatically adjust clip durations
 - ImportFusionComp fails to work as a drop into the DaVinci console script, but you can input directly into the DaVinci console and it works
 - ImportFusionComp and AddFusionComp sometimes fails if you’re not on the Fusion screen. Last two limitations are discussed https://www.steakunderwater.com/wesuckless/viewtopic.php?t=4317&start=15
 
@@ -44,6 +44,7 @@ Summary of limitations:
 3. Drag and drop import_media_and_assemble_timeline.py into DaVinci Console (Workspace -> Console). This will import into the media pool and assemble each image as a clip into the timeline.
 
 **Transition Effects:**
+
 4. Adjust generate-otio.py to make sure the same filenames and consider the settings (all caps variables). Run the python script in your computer's terminal (`python generate-itio.py`). This will generate and replace if necessary `generated_otio/generated.otio` (exported.otio is for when I exported otio from DaVinci to test things).
 
 5. Import the timeline `generated_otio/generated.otio` going to File -> Import -> Timeline. Best to have the timecode at 00:00:00:00 at the import dialog. This imports in transitions.
@@ -51,6 +52,7 @@ Summary of limitations:
 Explanation: Why not skip running import_media_assemble_timeline.py because importing the timeline file also imports media and assembles clips into the timeline. This is because if you've skipped that step which imports images as individual clips, then importing the timeline file will automatically create clips from images sufficed with 01, 02, 03. For example, image01.jpg and image02.jpg would've become a image[01-02] video clip and give you less control over them.
 
 **Motion Effects:**
+
 5. Make sure snap is on in the timeline (Magnet icon). Create a new video track above the current video track. Look on the left sidebar Effects for "Adjustment Clip" and drag that to the first clip position of the new track.
 
 6. Copy and paste the adjustment clip to the other imported clip start positions. Then adjust so that the adjustment clips each cover the duration of each imported clip.
@@ -69,9 +71,15 @@ Running `make hint` will rename folders and files by prefixing a number which hi
 
 Run `make clean` to restore the filenames.
 
+## Ancillary folder?
+
+These are scripts I developed while trying to automate creating video from images with transition and motion effects. However, the scripts ended up being useless for this purpose, but they may be useful for other purposes, so I kept the scripts in this folder.
+
 ## Explanations
 
 ### Explanation of OTIO Timeline (generate-otio.py)
-Code currently works for edl. EDL does not support wipes but supports cuts and dissolves (aka crossfades). Even fcp xml 1.11 does not support it (tested by exporting then reimporting over an undone timeline). EDL and AAF fails saying unrecognized transitions when transitioning out timeline with wipes
+Code currently works for EDL and OTIO timeline. EDL does not support wipes but supports cuts and dissolves (aka crossfades). Even fcp xml 1.11 does not support it (tested by exporting then reimporting into an empty project). EDL and AAF fails saying unrecognized transitions when transitioning out timeline with wipes
 
-But I found otio format works! You can’t easily create OTIO format because it’s very wordy. But there’s a python package opentimelineio that’s developed for the purpose of generating OTIO timeline (if you’re not exporting the timeline as OTIO from DaVinci). There is no such nodejs equivalent as of late 2024
+But I found OTIO format works! You can’t easily create OTIO format because it’s very wordy. But there’s a python package opentimelineio that’s developed for the purpose of generating OTIO timeline (if you’re not exporting the timeline as OTIO from DaVinci). There is no such nodejs equivalent as of late 2024.
+
+Why we generate the OTIO timeline file? It would be too difficult for the user to markup the timeline file themselves because of its high verbosity and transition frames are fussy. Even if you had chosen the more simple EDL (if you’re not doing wipe transitions), you wouldn’t want to figure out the exact time codes for transition to work.
