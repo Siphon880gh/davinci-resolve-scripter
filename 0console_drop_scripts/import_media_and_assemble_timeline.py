@@ -12,13 +12,12 @@ if resolve is None:
     print("Failed to connect to DaVinci Resolve.")
     exit()
 
-
 # Choose the desired start time (format is HH:MM:SS:FF)
 START_TIMECODE = "00:00:00:00"  # Set to "00:00:00:00" if needed
 # Not doable in free DaVinci
 
 # Setting clip duration fails on free. Just set options in Preferences as a workflow.
-DESIRED_CLIP_SECONDS = 10 # Desired duration of each clip in seconds
+DESIRED_CLIP_SECONDS = 40 # Desired duration of each clip in seconds
 
 # Image files (adjust paths if needed)
 IMAGE_FILES = [

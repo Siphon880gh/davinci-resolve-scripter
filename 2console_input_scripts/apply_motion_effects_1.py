@@ -12,17 +12,16 @@ def addMotionsTo(track, positionalData):
         clip = track[index]
         clip.ImportFusionComp(fusion_path)
 
-        # Retrieve the Fusion composition from the clip
-        # clip.AddFusionComp() 
+        # A clip could have multiple fusion clips
         fusion_comp_name_list = clip.GetFusionCompNameList()
-        # fusion_comp = clip.GetFusionCompByName(fusion_comp_name_list[-1])  # Get most top of the stack fusion
 
         fusion_comp = None
         if len(fusion_comp_name_list) == 0:
             clip.AddFusionComp()  
             fusion_comp_name_list = clip.GetFusionCompNameList()
         
-        fusion_comp = clip.GetFusionCompByName(fusion_comp_name_list[-1]) 
+        # Retrieve the Fusion composition from the clip (it's the top recent fusion clip that's active)
+        fusion_comp = clip.GetFusionCompByName(fusion_comp_name_list[-1]) # Get most top of the stack fusion
 
         #     if index > len(track)-1:
         #         continue
@@ -38,9 +37,9 @@ def addMotionsTo(track, positionalData):
         print(media_in_node)
         print(media_out_node)
 
-        # Disconnect MediaIn1 from MediaOut1 (disconnect inputs/outputs)
-        if media_in_node and media_out_node: # Assuming no user manipulation on MediaIn1 and MediaOut1
-            # Disconnect MediaIn1 from MediaOut1
+        # Assuming no user manipulation on MediaIn1 and MediaOut1
+        if media_in_node and media_out_node: #
+            # Skip because inconsistently crash: Disconnect MediaIn1 from MediaOut1
             # print("Disconnected MediaIn1 from MediaOut1")
             # media_out_node.Inputs["Input"].Disconnect() # No need
             print("MediaIn1 and MediaOut1 nodes found.")
