@@ -59,11 +59,13 @@ Explanation: Why not skip running import_media_assemble_timeline.py because impo
 
 Explanation: As of DaVinci 19.0.1 build 6, there is still a bug where all imported timelines will have fusion set to a negative frame (go look into Fusion page), which will make your motion effects fail. Adjustment clips will reset each potential fusion clip to start at 0. Until DaVinci fixed this bug (which started in 2021 as far as know), steps 5 and 6 of adding adjustment clips is necessary
 
-7. Now we apply the code for motion effects which will be done through Fusion. Adjust `apply_motion_effects_2_select` which clip you want to have motion effects. First clip would be index 1. For each clip index, there's a path to the effects .comp file. These fusion composition files are generated from index.html (Make sure to match the fps and clip duration). The fusion comps are zooming and zoom pans to corners and sides. I recommend selecting what makes sense for an image (for example if the focus should be at the top right of a picture, then you zoom and pan there.)
+7. Now we apply the code for motion effects which will be done through Fusion. Adjust `apply_motion_effects_2_select` which clip you want to have which motion effects (look into fusion_compiled for the .comp files that our API will load). First clip would be index 1. For each clip index, there's a path to the effects .comp file. These fusion composition files are generated from index.html based off as few templates as possible at fusion_templates/. If using index.html to generate specific fusion effects by fps and clip duration, make sure to input those settings and click "Refresh Below" before saving the generated .comp files. The fusion comps are zooming, and zoom pans to corners and sides. I recommend selecting what makes sense for an image (for example if the focus should be at the top right of a picture, then you zoom and pan there.)
 
 8. Copying and pasting into console: `apply_motion_effects_1.py`. Then next, copying and pasting into console the script you adjusted: `apply_motion_effects_2_select.py`
 
 Explanation: Free Davinci Resolve nerfed their APIs in various ways. Many Fusion composition related API does not work in a python file, but can be directly inputted into the DaVinco console even though it is using the python language.
+
+9. If you have adjustment clips on Video 2 track, the fusion effects should be applied to the original clips at Video 1 track. If a fusion motion effect fails to apply, you can drag and drop from fusion_drops/ directly into the Fusion screen, then manually make sure the MediaIn and MediaOut nodes are connected to it.
 
 ## Hint Mode
 
