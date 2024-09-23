@@ -4,16 +4,25 @@ timeline = project.GetCurrentTimeline()
 track = timeline.GetItemsInTrack('video', 1)
 
 def addMotionsTo(track, positionalData):
+    print("Timeline is: ", timeline.GetName())
     for datum in positionalData:
         index = datum["index"]
         fusion_path = datum["fusion_path"]
         print("Creating nodes and connecting to media in and out: " + str(index) + ":" + fusion_path)
     
         clip = track[index]
-        clip.ImportFusionComp(fusion_path)
+        print("Clip: ", clip)
+
+        try:
+            clip.ImportFusionComp(fusion_path)
+            print("Imported Fusion comp:", fusion_path)
+        except Exception as e:
+            print("Error importing Fusion comp:", e)
 
         # A clip could have multiple fusion clips
         fusion_comp_name_list = clip.GetFusionCompNameList()
+        print("Fusion comp name list:", fusion_comp_name_list)
+        print("")
 
         fusion_comp = None
         if len(fusion_comp_name_list) == 0:
@@ -21,7 +30,8 @@ def addMotionsTo(track, positionalData):
             fusion_comp_name_list = clip.GetFusionCompNameList()
         
         # Retrieve the Fusion composition from the clip (it's the top recent fusion clip that's active)
-        fusion_comp = clip.GetFusionCompByName(fusion_comp_name_list[-1]) # Get most top of the stack fusion
+        # fusion_comp = clip.GetFusionCompByName(fusion_comp_name_list[-1]) # Get most top of the stack fusion
+        fusion_comp = clip.GetFusionCompByName("Composition 1") # Get most top of the stack fusion
 
         #     if index > len(track)-1:
         #         continue
@@ -29,6 +39,11 @@ def addMotionsTo(track, positionalData):
         #         clip = track[index+1]
 
         print("Converted clip to fusion clip:", fusion_comp)
+
+        if(fusion_comp is None):
+            print("Difficult applying motion effect because this clip has no Fusion comp? Skipping this clip...")
+            continue
+            # fusion_comp.AddFusionComp()
 
         # Find the MediaIn1 and MediaOut1 nodes
         media_in_node = fusion_comp.FindTool("MediaIn1")

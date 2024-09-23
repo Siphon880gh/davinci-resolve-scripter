@@ -5,7 +5,7 @@ positionalData = [
   {"index": 2, "fusion_path": "/Users/wengffung/dev/web/davinci/fusion_compiled/10secs-24fps/zoompan_left.comp"},
   {"index": 3, "fusion_path": "/Users/wengffung/dev/web/davinci/fusion_compiled/10secs-24fps/zoom120to100.comp"},
   {"index": 4, "fusion_path": "/Users/wengffung/dev/web/davinci/fusion_compiled/10secs-24fps/zoompan_top.comp"},
-  {"index": 3, "fusion_path": "/Users/wengffung/dev/web/davinci/fusion_compiled/10secs-24fps/zoompan_tlc.comp"}
+  {"index": 5, "fusion_path": "/Users/wengffung/dev/web/davinci/fusion_compiled/10secs-24fps/zoompan_trc.comp"}
 ]
 
 addMotionsTo(track, positionalData)

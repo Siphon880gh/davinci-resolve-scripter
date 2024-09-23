@@ -19,7 +19,7 @@ I cannot have a single script that runs to create a project because of how DaVin
 - My script can import media then place them as clips into a timeline video track, however the script cannot adjust the duration of each clip to your liking. 
 - The workaround is to import a timeline and there are various formats, from the most plain EDL format (which supports cut and dissolve transitions) and the more complicated format OTIO (that supports cut, dissolve, AND wipes from different edges). While importing can bring in specified durations AND transitions, as of the current version, Fusion clips will have large negative frames, breaking fusion effects, and the free DaVinci API does not allow changing start frames.
 - If you apply your own fusion or the fusion presets my repo provides, it will fail because of the negative frames. You can right click the timeline imported clips -> New Fusion Clip, BUT that removes all the imported transitions! 
-- But not to worry, I have a fix that involves manually moving the transitions from the imported timeline to a cloned timeline (though you have to manually match their clip durations). We'd have those two timelines as tracks in one timeline, to simplify things. This will be the workaround until DaVinci fixes the negative frames bug.
+- But not to worry, I have a fix that involves manually adding Adjustment Clips in a second video track. This will be the workaround until DaVinci fixes the negative frames bug.
 
 In addition, free DaVinci doesnt allow you to run scripts outside of the editor. You have to run the script either by pasting it into the DaVinci console (Workspace -> Console), or dropping a file into the console.
 
@@ -49,22 +49,17 @@ Summary of limitations (not comprehensive):
 
 5. Import the timeline `generated_otio/generated.otio` going to File -> Import -> Timeline. Best to have the timecode at 00:00:00:00 at the import dialog. This imports in transitions.
 
-Explanation: Why not skip running import_media_assemble_timeline.py because importing the timeline file also imports media and assembles clips into the timeline. This is because if you've skipped that step which imports images as individual clips, then importing the timeline file will automatically create image sequences from images sufficed with 01, 02, 03. For example, image01.jpg and image02.jpg would've become a image[01-02] image sequence and give you less control over them. By having ran the python script, it makes sure the media are individually imported unassembled as image01.jpg, image02.jpg etc, then when you import the timeline, then DaVinci can refer to your current media pool and know you don't want automatic assembly.
+Explanation: Why not skip running import_media_assemble_timeline.py because importing the timeline file also imports media and assembles clips into the timeline. This is because if you've skipped that step which imports images as individual clips, then importing the timeline file will automatically create clips from images sufficed with 01, 02, 03. For example, image01.jpg and image02.jpg would've become a image[01-02] video clip and give you less control over them.
 
 **Motion Effects:**
 
-5. You now have created two timelines. On the python generated timeline, copy all the clips of the track to your clipboard. Then on the imported timeline, create a new video track and paste the clips there.
+5. Make sure snap is on in the timeline (Magnet icon). Create a new video track above the current video track. Look on the left sidebar Effects for "Adjustment Clip" and drag that to the first clip position of the new track.
 
-- Tip: You may want to isolate the new video track in order to select that video track to paste into (Option click the Audio Track Selector if on Mac). I suggest you are pasting into a Video Track 2.
-- Tip: You may want to click Magnet icon to turn on snap mode.
+6. Copy and paste the adjustment clip to the other imported clip start positions. Then adjust so that the adjustment clips each cover the duration of each imported clip.
 
-6. Adjust the durations of V2 clips to match the imported clips. Then drag and drop the transitions from the V1 clips to the V2 clips. Then you may delete the imported timeline so the new adjusted python timeline remains. You will notice that the V2 track gets turned into a V1 track by name, important because the next step of applying the code lets you select the video track, and we'll keep it as video track 1.
+Explanation: As of DaVinci 19.0.1 build 6, there is still a bug where all imported timelines will have fusion set to a negative frame (go look into Fusion page), which will make your motion effects fail. Adjustment clips will reset each potential fusion clip to start at 0. Until DaVinci fixed this bug (which started in 2021 as far as know), steps 5 and 6 of adding adjustment clips is necessary
 
-- Tip: You can adjust the durations of all clips on the track simultaneously by selecting all thoes clips, then turning on Trim mode (T), and then changing one of the clip's duration (Either right click -> Change Clip Duration, or CMD+D on Mac)
-
-Explanation: As of DaVinci 19.0.1 build 6, there is still a bug where all imported timelines will have fusion set to a negative frame (go look into Fusion page), which will make your motion effects fail. Until DaVinci fixed this bug (which started in 2021 as far as I know), this workaround of manipulating two tracks is required.
-
-7. Now we apply the code for motion effects which will be done through Fusion's engine. Adjust `apply_motion_effects_2_select` firstly which video track - and we'll keep it video track 1 - and then which clip you want to have which motion effects. Look into fusion_compiled for the .comp files that our API will load. First clip would be index 1, second clip would be index 2, etc. For each clip index, there needs to be a path to the effects .comp file. These fusion composition files are generated from index.html based off as few templates as possible at fusion_templates/.
+7. Now we apply the code for motion effects which will be done through Fusion's engine. Adjust `apply_motion_effects_2_select` which clip you want to have which motion effects (look into fusion_compiled for the .comp files that our API will load). First clip would be index 1. For each clip index, there needs to be a path to the effects .comp file. These fusion composition files are generated from index.html based off as few templates as possible at fusion_templates/. 
 
 If using index.html to generate specific fusion effect .comp files by fps and clip duration, make sure to input those settings and click "Refresh Below" button before saving the generated .comp files from the index.html dashboard. The fusion comps are zoom effects, as well as zoom pans to corners and sides. 
 
@@ -74,7 +69,7 @@ I recommend matching motion effects to what images make sense (for example if th
 
 Explanation: Free Davinci Resolve nerfed their APIs in various ways. Many Fusion composition related API does not work in a python file, but can be directly inputted into the DaVinco console even though it is using the python language.
 
-9. If a fusion motion effect fails to apply (The console outputted `Difficult applying motion effect because this clip has no Fusion comp? Skipping this clip...`), you can drag and drop from fusion_drops/ directly into the Fusion screen, then manually make sure the MediaIn and MediaOut nodes are connected to it.
+9. If you have adjustment clips on Video 2 track, the fusion effects should be applied to the original clips at Video 1 track. If a fusion motion effect fails to apply, you can drag and drop from fusion_drops/ directly into the Fusion screen, then manually make sure the MediaIn and MediaOut nodes are connected to it.
 
 ## Hint Mode
 
