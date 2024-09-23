@@ -168,13 +168,13 @@
 		TransformZoomInPositionX = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 222 },
 			KeyFrames = {
-				[115] = { 0 }
+				[300] = { 0 }
 			}
 		},
 		TransformZoomInPositionY = BezierSpline {
 			SplineColor = { Red = 237, Green = 132, Blue = 54 },
 			KeyFrames = {
-				[115] = { 0 }
+				[300] = { 0 }
 			}
 		},
 		TransformZoomInZoom = BezierSpline {
@@ -182,7 +182,7 @@
 			CtrlWZoom = false,
 			KeyFrames = {
 				[0] = { 1.4, RH = { 50, 1.14822133333333 }, Flags = { Linear = true } },
-				[115] = { 1, LH = { 100, 1.08525466666667 }, Flags = { Linear = true } }
+				[300] = { 1, LH = { 100, 1.08525466666667 }, Flags = { Linear = true } }
 			}
 		}
 	},
