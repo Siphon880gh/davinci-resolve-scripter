@@ -76,6 +76,10 @@ Explanation: Free Davinci Resolve nerfed their APIs in various ways. Many Fusion
 
 9. If a fusion motion effect fails to apply (The console outputted `Difficult applying motion effect because this clip has no Fusion comp? Skipping this clip...`), you can drag and drop from fusion_drops/ directly into the Fusion screen, then manually make sure the MediaIn and MediaOut nodes are connected to it.
 
+10. That's it. You can now render your video. 
+
+- I recommend templatizing what you have: Bear in mind the named files. Your next project you can have the same filenames. If in the next project you delete the media pool files then upload your new media with the same filenames, you can conform the timeline clips to relink to the current assets! You'd have to right click the timeline clips -> Untick "Conform Lock Enabled". Then you can right click the current timeline asset in the media pool -> Timelines -> Reconform From Bins. You could simplify things even further by using this same project but having different bins, which are just folders you create under "Master" to the left of the media pool. This works very well if you have the same types of videos you make (eg. shorts video with 5 second images that zoom/pan as you speak on top of it).
+
 ## Hint Mode
 
 Running `make hint` will rename folders and files by prefixing a number which hints to you the sequence you should run the scripts in order to create a video in DaVinci.
