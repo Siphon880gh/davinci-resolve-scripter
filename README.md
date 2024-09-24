@@ -39,6 +39,10 @@ Summary of limitations (not comprehensive):
 
 1. First have your images and video clips and audio ready. We will automate creating a DaVinci project with timeline of your clips. There will be zoom/pan effects and transitions automated into the timeline.
 
+2. Make sure your images are the same dimensions or reasonably similar dimensions so there won't be visually unappealing black bars. Since you probably want the zoom and pan effects that my scripts offer, you wouldn't want black bars and instead would prefer blurred background padding (the same picture at where the black bars would be to keep a similar tone of the picture, however is blurred and zoomed so is an appropriate background). 
+
+If that applies to you, adjust this NodeJS script then run it to find the max dimensions among the piture, then apply blurred background padding to smaller dimension pictures: letterbox.js
+
 2. Adjust import_media_and_assemble_timeline.py to your clips and desired settings (all caps variables).
 
 3. Drag and drop import_media_and_assemble_timeline.py into DaVinci Console (Workspace -> Console). This will import into the media pool and assemble each image as a clip into the timeline.
