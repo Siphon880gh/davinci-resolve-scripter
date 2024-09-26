@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Fusion Generator -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -101,7 +102,7 @@
 
             // Templates convert to scripts after interpolation of values
             let templates = [
-                {presetName:'zoom140to100', path:'./fusion_templates/zoomzoom.comp', scriptTemplate: '', script: '',
+                {presetName:'zoom140to100', path:'./fusion_zgen/zoomzoom.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -112,7 +113,7 @@
                             .replaceAll("_ZOOM1_", 1.0);
                     }
                 },
-                {presetName:'zoom120to100', path:'./fusion_templates/zoomzoom.comp', scriptTemplate: '', script: '',
+                {presetName:'zoom120to100', path:'./fusion_zgen/zoomzoom.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -123,7 +124,7 @@
                             .replaceAll("_ZOOM1_", 1.0);
                     }
                 },
-                {presetName:'zoom120', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoom120', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -135,7 +136,7 @@
                             .replaceAll("_ZOOM_", 1.2);
                     }
                 },
-                {presetName:'zoom140', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoom140', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -147,7 +148,7 @@
                             .replaceAll("_ZOOM_", 1.4);
                     }
                 },
-                {presetName:'zoompan_top', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoompan_top', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -159,7 +160,7 @@
                             .replaceAll("_ZOOM_", 1.4);
                     }
                 },
-                {presetName:'zoompan_right', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoompan_right', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -171,7 +172,7 @@
                             .replaceAll("_ZOOM_", 1.4);
                     }
                 },
-                {presetName:'zoompan_bottom', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoompan_bottom', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -183,7 +184,7 @@
                             .replaceAll("_ZOOM_", 1.4);
                     }
                 },
-                {presetName:'zoompan_left', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoompan_left', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -195,7 +196,7 @@
                             .replaceAll("_ZOOM_", 1.4);
                     }
                 },
-                {presetName:'zoompan_tlc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoompan_tlc', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -207,7 +208,7 @@
                             .replaceAll("_ZOOM_", 1.4);
                     }
                 },
-                {presetName:'zoompan_trc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoompan_trc', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -219,7 +220,7 @@
                             .replaceAll("_ZOOM_", 1.4);
                     }
                 },            
-                {presetName:'zoompan_brc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoompan_brc', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate
@@ -231,7 +232,7 @@
                             .replaceAll("_ZOOM_", 1.4);
                     }
                 },
-                {presetName:'zoompan_blc', path:'./fusion_templates/zoompan.comp', scriptTemplate: '', script: '',
+                {presetName:'zoompan_blc', path:'./fusion_zgen/zoompan.comp', scriptTemplate: '', script: '',
                     interpolate: (scriptTemplate, params) =>{
                         const {presetName, clipFps, clipSeconds} = params;
                         return scriptTemplate

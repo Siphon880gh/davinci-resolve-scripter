@@ -1,16 +1,60 @@
-import os
+# Init Resolve
+# ------------------------------------------------
+import importlib.util
+resolve = None
+
 import sys
 sys.path.append(r'/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Modules')
 sys.path.append(r'/Library/Application Support/Blackmagic Design/DaVinci Resolve/Developer/Scripting/Examples')
 
-from constants import ENUM_MEDIA_TYPES, ENUM_IMPORT_MODE
+if resolve == None:
+    resolve = None
+    if importlib.util.find_spec("DaVinciResolveScript") is not None:
+        import DaVinciResolveScript as dvr_script
+        test_init = dvr_script.scriptapp("Resolve")
+        if(test_init is not None):
+            resolve = test_init
+        else:
+            if app is not None:
+                resolve = app.GetResolve()
+    else:
+        # app is available during runtime with DaVinci Resolve's console
+        if app is not None:
+            resolve = app.GetResolve()
+    globals()['resolve'] = resolve
 
-from python_get_resolve import GetResolve
-resolve = app.GetResolve()
 
 if resolve is None:
-    print("Failed to connect to DaVinci Resolve.")
-    exit()
+	print("Failed to connect to DaVinci Resolve.")
+	exit()
+else:
+    print("Connected to DaVinci Resolve API...")
+
+# _OTHER IMPORTS
+# ------------------------------------------------
+
+import os
+from constants import ENUM_MEDIA_TYPES, ENUM_IMPORT_MODE
+
+# Common Objects
+# ------------------------------------------------
+project_manager = resolve.GetProjectManager()
+project = project_manager.GetCurrentProject()
+media_pool = project.GetMediaPool()
+
+# Remove timeline block if not applicable
+try: 
+    timeline = project.GetCurrentTimeline()
+except Exception as e: # Comment/Uncomment as needed
+    # print("No timeline is currently open.")
+    # print(e)
+    # exit()
+    media_pool.CreateEmptyTimeline("Timeline 1")
+    timeline = project.GetCurrentTimeline()
+    pass
+
+# _SCRIPT:
+# ------------------------------------------------
 
 # Choose the desired start time (format is HH:MM:SS:FF)
 START_TIMECODE = "00:00:00:00"  # Set to "00:00:00:00" if needed
@@ -21,17 +65,17 @@ DESIRED_CLIP_SECONDS = 40 # Desired duration of each clip in seconds
 
 # Image files (adjust paths if needed)
 IMAGE_FILES = [
-    "/Users/wengffung/Downloads/DaVinci Assets 2/clip01.jpg",
-    "/Users/wengffung/Downloads/DaVinci Assets 2/clip02.jpg",
-    "/Users/wengffung/Downloads/DaVinci Assets 2/clip03.jpg",
-    "/Users/wengffung/Downloads/DaVinci Assets 2/clip04.jpg",
-    "/Users/wengffung/Downloads/DaVinci Assets 2/clip05.jpg",
-    "/Users/wengffung/Downloads/DaVinci Assets 2/clip06.jpg",
-    "/Users/wengffung/Downloads/DaVinci Assets 2/clip07.jpg"
+    "/Users/wengffung/dev/web/davinci/images/clip01.jpg",
+    "/Users/wengffung/dev/web/davinci/images/clip02.jpg",
+    "/Users/wengffung/dev/web/davinci/images/clip03.jpg",
+    "/Users/wengffung/dev/web/davinci/images/clip04.jpg",
+    "/Users/wengffung/dev/web/davinci/images/clip05.jpg",
+    "/Users/wengffung/dev/web/davinci/images/clip06.jpg",
+    "/Users/wengffung/dev/web/davinci/images/clip07.jpg"
 ]
-IMAGE_FOLDERS = ["/Users/wengffung/Downloads/DaVinci Assets 2/"]
+IMAGE_FOLDERS = ["/Users/wengffung/dev/web/davinci/images/"]
 
-DESIRED_MODE = ENUM_IMPORT_MODE["IMAGE_FOLDERS"] # IMAGE_FILES or IMAGES_FOLDERS
+DESIRED_MODE = ENUM_IMPORT_MODE["IMAGE_FILES"] # IMAGE_FILES or IMAGES_FOLDERS
 
 project_manager = resolve.GetProjectManager()
 project = project_manager.GetCurrentProject()
