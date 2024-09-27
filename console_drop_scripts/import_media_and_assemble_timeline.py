@@ -15,12 +15,12 @@ if resolve == None:
         if(test_init is not None):
             resolve = test_init
         else:
-            if app is not None:
-                resolve = app.GetResolve()
+            if app is not None: # type: ignore
+                resolve = app.GetResolve() # type: ignore
     else:
         # app is available during runtime with DaVinci Resolve's console
-        if app is not None:
-            resolve = app.GetResolve()
+        if app is not None: # type: ignore
+            resolve = app.GetResolve() # type: ignore
     globals()['resolve'] = resolve
 
 

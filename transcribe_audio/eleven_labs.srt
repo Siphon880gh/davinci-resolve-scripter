@@ -1,0 +1,35 @@
+1
+00:00:00,000 --> 00:00:00,860
+Make sure this
+is
+
+2
+00:00:00,860 --> 00:00:02,360
+grammatically
+correct, so the
+
+3
+00:00:02,360 --> 00:00:03,360
+artificial
+intelligence
+
+4
+00:00:03,360 --> 00:00:04,240
+can add the
+correct
+
+5
+00:00:04,240 --> 00:00:06,060
+emphasis. And
+your text will
+
+6
+00:00:06,060 --> 00:00:07,180
+match with your
+video for
+
+7
+00:00:07,180 --> 00:00:07,960
+dramatic
+effects.
+

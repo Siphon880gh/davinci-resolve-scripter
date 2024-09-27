@@ -1,0 +1,6 @@
+tiny_model="tiny"
+base_model="base"
+small_model="small"
+medium_model="medium"
+large_model="large"
+large_v2_model="large-v2"
