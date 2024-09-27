@@ -1,6 +1,6 @@
 
 import torch
-from constants import tiny_model, base_model, small_model, medium_model, large_model, large_v2_model
+from dep_constants import tiny_model, base_model, small_model, medium_model, large_model, large_v2_model
 
 # print("mps available? ", torch.backends.mps.is_available()) #mps is not powerful enough but under development as of 9/2024
 # print("mps is built? ", torch.backends.mps.is_built())

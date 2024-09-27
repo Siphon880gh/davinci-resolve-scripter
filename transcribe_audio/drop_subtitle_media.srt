@@ -1,0 +1,46 @@
+1
+00:00:00,000 --> 00:00:06,140
+To create an <u>effective</u> text prompt
+for text-to-speech, TTS, it's
+important to use clear and concise
+
+2
+00:00:06,140 --> 00:00:11,780
+language that mimics natural speech
+patterns. Structure your sentences
+in a way that allows for smooth
+
+3
+00:00:11,780 --> 00:00:19,580
+intonation and pacing. Avoid overly
+complex sentences or jargon that
+might confuse the TTS engine. Use
+
+4
+00:00:19,580 --> 00:00:26,640
+punctuation strategically, commas,
+periods, and question marks, help
+guide the rhythm of speech. If you
+
+5
+00:00:26,640 --> 00:00:33,320
+need to emphasize certain words,
+consider using capitalization or
+punctuation like dashes or ellipses
+
+6
+00:00:33,320 --> 00:00:40,320
+for pauses. Lastly, ensure that the
+text is free from spelling errors
+or abbreviations that could be
+
+7
+00:00:40,320 --> 00:00:46,180
+mispronounced. By following these
+tips, you'll enhance the clarity
+and natural flow of the speech
+
+8
+00:00:46,180 --> 00:00:46,640
+output.
+
