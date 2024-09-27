@@ -5,7 +5,7 @@
 <a target="_blank" href="https://www.linkedin.com/in/weng-fung/" rel="nofollow"><img src="https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin&labelColor=blue" alt="Linked-In" data-canonical-src="https://img.shields.io/badge/LinkedIn-blue?style=flat&amp;logo=linkedin&amp;labelColor=blue" style="max-width:10ch;"></a>
 <a target="_blank" href="https://www.youtube.com/@WayneTeachesCode/" rel="nofollow"><img src="https://img.shields.io/badge/Youtube-red?style=flat&logo=youtube&labelColor=red" alt="Youtube" data-canonical-src="https://img.shields.io/badge/Youtube-red?style=flat&amp;logo=youtube&amp;labelColor=red" style="max-width:10ch;"></a>
 
-By Weng (Weng Fei Fung). Script that automates video editing in DaVinci Resolve by automatically importing media, creating time line, adding zoom and pan motion effects and adding transitions.
+By Weng (Weng Fei Fung). Script that automates video editing in DaVinci Resolve by automatically importing media, creating time line, adding zoom and pan motion effects, adding transitions, and automatic subtitling (on Free DaVinci Resolve).
 
 ## Requirement
 
@@ -85,6 +85,22 @@ Explanation: Free Davinci Resolve nerfed their APIs in various ways. Many Fusion
 10. That's it. You can now render your video. 
 
 - I recommend templatizing what you have: Bear in mind the named files. Your next project you can have the same filenames. If in the next project you delete the media pool files then upload your new media with the same filenames, you can conform the timeline clips to relink to the current assets! You'd have to right click the timeline clips -> Untick "Conform Lock Enabled". Then you can right click the current timeline asset in the media pool -> Timelines -> Reconform From Bins. You could simplify things even further by using this same project but having different bins, which are just folders you create under "Master" to the left of the media pool. This works very well if you have the same types of videos you make (eg. shorts video with 5 second images that zoom/pan as you speak on top of it).
+
+
+**Automatic Subtitle Track OR Text+ Subtitle Clips:**
+You can from your audio track which is usually AI generated (text-to-speech) or an actual voice recording generate a subtitle SRT file.
+
+With this SRT file, you can have subtitle text at the bottom of your video and it will change as necessary because it syncs with your audio as long as your audio recording and the subtitle aligns to the start of the timeline (aka traditional subtitle track). Or, you can run an additional script that generates Text+ clips into an empty video track and this allows finer control of text visuals, great for IG-styled centered of the video text.
+
+To create that subtitle file, you adjust then run `subtitle_from_audio/generate.py`.
+
+Then decide what you want to do with the SRT file.
+
+To have the traditional subtitle track, drag and drop the SRT file into DaVinci's media pool before creating and filling the subtitle track.
+
+To generate Text+ clips on an empty video track, you adjust and drop the script `subtitle_from_audio/drop_textp.py` into the DaVinci console.
+
+The above are brief instructions. For in-depth instructions, refer to [README_transcribe_audio.md](subtitle_from_audio/README_transcribe_audio.md).
 
 ## Hint Mode
 
