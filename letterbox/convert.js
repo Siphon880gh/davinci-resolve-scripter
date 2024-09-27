@@ -2,6 +2,17 @@ const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
 
+// _ ADJUST HERE
+const IMAGE_PATHS = [
+    './letterbox_test/clip01.jpg',
+    './letterbox_test/clip02.jpg',
+    './letterbox_test/clip03.jpg',
+    './letterbox_test/clip04.jpg',
+    './letterbox_test/clip05.jpg',
+    './letterbox_test/clip06.jpg',
+    './letterbox_test/clip07.jpg'
+];
+
 // Helper function to create letterboxed image
 async function letterboxImage(imagePath, targetWidth, targetHeight, useBlurredBackground) {
     const image = sharp(imagePath);
@@ -90,17 +101,6 @@ async function letterboxAndSaveImages(imagePaths, useBlurredBackground = false) 
     }
 }
 
-// Example usage
-const imagePaths = [
-    './letterbox_test/clip01.jpg',
-    './letterbox_test/clip02.jpg',
-    './letterbox_test/clip03.jpg',
-    './letterbox_test/clip04.jpg',
-    './letterbox_test/clip05.jpg',
-    './letterbox_test/clip06.jpg',
-    './letterbox_test/clip07.jpg'
-];
-
-letterboxAndSaveImages(imagePaths, true)
+letterboxAndSaveImages(IMAGE_PATHS, true)
     .then(() => console.log('All images processed successfully'))
     .catch(err => console.error('Error processing images:', err));

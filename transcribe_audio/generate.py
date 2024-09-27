@@ -1,7 +1,7 @@
 import os
 import whisper
 from whisper.utils import get_writer
-from transcribe_audio.chosen_model_parameters import MODEL, DEVICE
+from chosen_model_parameters import MODEL, DEVICE
 
 INPUT_AUDIO="eleven_labs.mp3"
 OUTPUT_DIR="./" # Eg. ./
@@ -29,4 +29,4 @@ try:
 except Exception as e:
     print("Error transcribing audio:", e)
 else:
-    print(f"Transcription completed. Check the output file: {OUTPUT_DIR}{OUTPUT_FILENAME_W_EXT}")
+    print(f"\nTranscription completed. Check the output file: {OUTPUT_DIR}{OUTPUT_FILENAME_W_EXT}")

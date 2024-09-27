@@ -35,25 +35,27 @@ Summary of limitations (not comprehensive):
 
 ## Usage
 
-**Media imports and timeline assembly (without auto assembling image01.jpg, image02.jpg into a video clip image[01-02]):**
+**Prep the media:**
 
 1. First have your images and video clips and audio ready. We will automate creating a DaVinci project with timeline of your clips. There will be zoom/pan effects and transitions automated into the timeline.
 
 2. Make sure your images are the same dimensions or reasonably similar dimensions so there won't be visually unappealing black bars. Since you probably want the zoom and pan effects that my scripts offer, you wouldn't want black bars and instead would prefer blurred background padding (the same picture at where the black bars would be to keep a similar tone of the picture, however is blurred and zoomed so is an appropriate background). 
 
-If that applies to you, adjust this NodeJS script then run it to find the max dimensions among the picture, then apply blurred background padding to smaller dimension pictures: `letterbox.js`
+If that applies to you, adjust this NodeJS script then run it to find the max dimensions among the picture, then apply blurred background padding to smaller dimension pictures: `cd letterbox && node convert.js`
 
-2. Adjust import_media_and_assemble_timeline.py to your clips and desired settings (all caps variables).
+3. Adjust `unassemble__drop_scripts/import_media_and_assemble_timeline.py` to your clips and desired settings (all caps variables).
 
-3. Drag and drop import_media_and_assemble_timeline.py into DaVinci Console (Workspace -> Console). This will import into the media pool and assemble each image as a clip into the timeline.
+Then drag and drop `unassemble__drop_scripts/import_media_and_assemble_timeline.py` into DaVinci Console (Workspace -> Console). This will import into the media pool and assemble each image as a clip into the timeline. It will do so without automatically assembling an image sequence from filenames with 01, 02, etc suffixes.
 
-**Transition Effects:**
+**Transitions:**
 
-4. Adjust generate-otio.py to make sure the same filenames and consider the settings (all caps variables). Run the python script in your computer's terminal (`python generate-itio.py`). This will generate and replace if necessary `generated_otio/generated.otio` (exported.otio is for when I exported otio from DaVinci to test things).
+4. Adjust `generate_otio/generate.py` to make sure the same filenames and consider the settings (all caps variables). Run the python script in your computer's terminal (`cd generate_otio && python generate.py`). This will generate and replace if necessary `generate_otio/generated_otio/generated.otio` (exported.otio is for when I exported otio from DaVinci to test things).
 
-5. Import the timeline `generated_otio/generated.otio` going to File -> Import -> Timeline. Best to have the timecode at 00:00:00:00 at the import dialog. This imports in transitions.
+Import the timeline `generate_otio/generated_otio/generated.otio` going to File -> Import -> Timeline. Best to have the timecode at 00:00:00:00 at the import dialog. This imports in transitions.
 
-Explanation: Why not skip running import_media_assemble_timeline.py because importing the timeline file also imports media and assembles clips into the timeline. This is because if you've skipped that step which imports images as individual clips, then importing the timeline file will automatically create image sequences from images sufficed with 01, 02, 03. For example, image01.jpg and image02.jpg would've become a image[01-02] image sequence and give you less control over them. By having ran the python script, it makes sure the media are individually imported unassembled as image01.jpg, image02.jpg etc, then when you import the timeline, then DaVinci can refer to your current media pool and know you don't want automatic assembly.
+This will import the clips, their durations, and their transitions.
+
+Explanation: Why not skip running `import_media_assemble_timeline.py` because importing the timeline file also imports media and assembles clips into the timeline. This is because if you've skipped that step which imports images as individual clips, then importing the timeline file will automatically create image sequences from images sufficed with 01, 02, 03. For example, image01.jpg and image02.jpg would've become a image[01-02] image sequence and give you less control over them. By having ran the python script, it makes sure the media are individually imported unassembled as image01.jpg, image02.jpg etc, then when you import the timeline, then DaVinci can refer to your current media pool and know you don't want automatic assembly.
 
 **Motion Effects:**
 
@@ -68,13 +70,13 @@ Explanation: Why not skip running import_media_assemble_timeline.py because impo
 
 Explanation: As of DaVinci 19.0.1 build 6, there is still a bug where all imported timelines will have fusion set to a negative frame (go look into Fusion page), which will make your motion effects fail. Until DaVinci fixed this bug (which started in 2021 as far as I know), this workaround of manipulating two tracks is required.
 
-7. Now we apply the code for motion effects which will be done through Fusion's engine. Adjust `apply_motion_effects_2_select` firstly which video track - and we'll keep it video track 1 - and then which clip you want to have which motion effects. Look into fusion_compiled for the .comp files that our API will load. First clip would be index 1, second clip would be index 2, etc. For each clip index, there needs to be a path to the effects .comp file. These fusion composition files are generated from index.html based off as few templates as possible at fusion_templates/.
+7. Now we apply the code for motion effects which will be done through Fusion's engine. Adjust `motion__input_scripts/apply_motion_effects_2_select.py` firstly which video track - and we'll keep it video track 1 - and then which clip you want to have which motion effects. Look into fusion_compiled for the .comp files that our API will load. First clip would be index 1, second clip would be index 2, etc. For each clip index, there needs to be a path to the effects .comp file. These fusion composition files are generated from `motion__input_scripts/index.html`based off as few templates as possible at fusion_templates/.
 
-If using index.html to generate specific fusion effect .comp files by fps and clip duration, make sure to input those settings and click "Refresh Below" button before saving the generated .comp files from the index.html dashboard. The fusion comps are zoom effects, as well as zoom pans to corners and sides. 
+If using `motion__input_scripts/index.html` to generate specific fusion effect .comp files by fps and clip duration, make sure to input those settings and click "Refresh Below" button before saving the generated .comp files from the index.html dashboard. The fusion comps are zoom effects, as well as zoom pans to corners and sides. Btw, you have to open that index.html with a php server (Eg. MAMP)
 
 I recommend matching motion effects to what images make sense (for example if the focus should be at the top right of a picture, then you zoom-pan to the top right corner - fusion_compiled/10secs-24fps/zoompan_trc.comp). The motion effects needs to match the duration and fps of your clip, which you can see in the filepath (eg. "fusion_compiled/10secs-24fps/..")
 
-8. Copying and pasting into console: `apply_motion_effects_1.py`. Then next, copying and pasting into console the script you adjusted: `apply_motion_effects_2_select.py`
+8. Copying and pasting into console the contents of `unassemble__drop_scripts/apply_motion_effects_1.py`. Then next, copying and pasting into console the script you adjusted from `unassemble__drop_scripts/apply_motion_effects_2_select.py`
 
 Explanation: Free Davinci Resolve nerfed their APIs in various ways. Many Fusion composition related API does not work in a python file, but can be directly inputted into the DaVinco console even though it is using the python language.
 
@@ -86,7 +88,7 @@ Explanation: Free Davinci Resolve nerfed their APIs in various ways. Many Fusion
 
 ## Hint Mode
 
-Running `make hint` will rename folders and files by prefixing a number which hints to you the sequence you should run the scripts in order to create a video in DaVinci.
+Running `make hint` will rename folders and files by prefixing a number which hints to you the sequence you should run the scripts in order to create a video in DaVinci. For example: 01_letterbox, 02_unassemble...
 
 Run `make clean` to restore the filenames.
 
@@ -96,7 +98,7 @@ These are scripts I developed while trying to automate creating video from image
 
 ## Explanations
 
-### Explanation of OTIO Timeline (generate-otio.py)
+### Explanation of OTIO Timeline (generate_otio/generate.py)
 Code currently works for EDL and OTIO timeline. EDL does not support wipes but supports cuts and dissolves (aka crossfades). Even fcp xml 1.11 does not support it (tested by exporting then reimporting into an empty project). EDL and AAF fails saying unrecognized transitions when transitioning out timeline with wipes
 
 But I found OTIO format works! You can’t easily create OTIO format because it’s very wordy. But there’s a python package opentimelineio that’s developed for the purpose of generating OTIO timeline (if you’re not exporting the timeline as OTIO from DaVinci). There is no such nodejs equivalent as of late 2024.

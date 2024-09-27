@@ -1,37 +1,51 @@
-# Makefile for renaming folders/files
+# Makefile for renaming folders/files into names that hint the sequence of scripts to run to automate DaVinci Resolve videos
 
-# Define the rename map
-RENAME_MAP := \
-    console_drop_scripts 0console_drop_scripts \
-    generate-otio.py 1generate-otio.py \
-    console_input_scripts 2console_input_scripts
+# Define the rename pairs
+RENAME_PAIRS := \
+	letterbox 01_letterbox \
+	unassemble__drop_scripts 02_unassemble__drop_scripts \
+	generate_otio 03_generate_otio \
+	motion__input_scripts 04_motion__input_scripts \
+	transcribe_audio 05_transcribe_audio
 
 # Default target: show available options
 .DEFAULT_GOAL := help
 
 help:
 	@echo "Available options:"
-	@echo "  make hint   - Rename folders/files as to names that hint the sequence of scripts to run to automate DaVinci Resolve videos"
-	@echo "  make clean  - Restore folders/files to original names removing the number prefixes"
+	@echo "  make hint   - Rename folders/files to names that hint the sequence of scripts to run to automate DaVinci Resolve videos"
+	@echo "  make clean  - Restore folders/files to original names, removing the number prefixes"
 
 # Target to rename folders/files according to the map
 hint:
 	@echo "Renaming folders/files..."
-	$(foreach orig, $(filter-out 0% 1% 2%, $(RENAME_MAP)), \
-		$(if $(wildcard $(orig)), \
-			mv $(orig) $(word 2, $(RENAME_MAP)); \
-			echo "Hint filled name of $(orig) to $(word 2, $(RENAME_MAP))";, \
-			echo "File/Folder $(orig) not found, not appropriate option at this time or may have been named already, or you manually renamed it.";) \
-		$(eval RENAME_MAP := $(wordlist 3, $(words $(RENAME_MAP)), $(RENAME_MAP))) \
-	)
+	@set -e; \
+	set -- $(RENAME_PAIRS); \
+	while [ "$$#" -gt 0 ]; do \
+		orig="$$1"; \
+		new="$$2"; \
+		if [ -e "$$orig" ]; then \
+			mv "$$orig" "$$new"; \
+			echo "Renamed $$orig to $$new"; \
+		else \
+			echo "File/Folder $$orig not found."; \
+		fi; \
+		shift 2; \
+	done
 
 # Target to undo the renaming (restore original names)
 clean:
 	@echo "Restoring folders/files..."
-	$(foreach new, $(filter 0% 1% 2%, $(RENAME_MAP)), \
-		$(if $(wildcard $(new)), \
-			mv $(new) $(word 1, $(RENAME_MAP)); \
-			echo "Cleaned name of $(new) to $(word 1, $(RENAME_MAP))";, \
-			echo "File/Folder $(new) not found, not appropriate option at this time or may have been named already, or you manually renamed it.";) \
-		$(eval RENAME_MAP := $(wordlist 3, $(words $(RENAME_MAP)), $(RENAME_MAP))) \
-	)
+	@set -e; \
+	set -- $(RENAME_PAIRS); \
+	while [ "$$#" -gt 0 ]; do \
+		orig="$$1"; \
+		new="$$2"; \
+		if [ -e "$$new" ]; then \
+			mv "$$new" "$$orig"; \
+			echo "Restored $$new to $$orig"; \
+		else \
+			echo "File/Folder $$new not found."; \
+		fi; \
+		shift 2; \
+	done
