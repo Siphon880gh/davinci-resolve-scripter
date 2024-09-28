@@ -1,0 +1,23 @@
+{
+    "ATTN_info1_2": "This file is used to store the information of clips",
+    "ATTN_info2_2": "Remember letterbox script will ensure png files. If using letterbox script, its resized clip outputs is what the rest of your scripts should use which means you have to adjust clip names to png's below",
+    "image_abs_path": "/Users/wengffung/dev/web/davinci/sample_clips",
+    "nonletterboxed_clip_basenames": [
+        "clip01.jpg",
+        "clip02.jpg",
+        "clip03.jpg",
+        "clip04.jpg",
+        "clip05.jpg",
+        "clip06.jpg",
+        "clip07.jpg"
+    ],
+    "clip0_basenames": [
+        "clip01.png",
+        "clip02.png",
+        "clip03.png",
+        "clip04.png",
+        "clip05.png",
+        "clip06.png",
+        "clip07.png"
+    ]
+}
