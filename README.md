@@ -5,7 +5,7 @@
 <a target="_blank" href="https://www.linkedin.com/in/weng-fung/" rel="nofollow"><img src="https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin&labelColor=blue" alt="Linked-In" data-canonical-src="https://img.shields.io/badge/LinkedIn-blue?style=flat&amp;logo=linkedin&amp;labelColor=blue" style="max-width:10ch;"></a>
 <a target="_blank" href="https://www.youtube.com/@WayneTeachesCode/" rel="nofollow"><img src="https://img.shields.io/badge/Youtube-red?style=flat&logo=youtube&labelColor=red" alt="Youtube" data-canonical-src="https://img.shields.io/badge/Youtube-red?style=flat&amp;logo=youtube&amp;labelColor=red" style="max-width:10ch;"></a>
 
-By Weng (Weng Fei Fung). Script that automates video editing in DaVinci Resolve by automatically importing media, creating time line, adding zoom and pan motion effects, adding transitions, and automatic subtitling (on Free DaVinci Resolve).
+By Weng (Weng Fei Fung). Script that automates the video editing workflow in DaVinci Resolve. The scripts can import the media, create the timeline, add zoom and pan motion effects, add transitions, and even add automatic subtitles (which is a feature missing in Free DaVinci Resolve). The automatic subtitles come in three flavors.
 
 ## Requirement
 
