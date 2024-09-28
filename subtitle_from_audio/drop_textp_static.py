@@ -149,12 +149,11 @@ print("\nItems matching the pattern:")
 for item in media_pool_items_list:
     print(item.GetName())
 
-
 def generate_text_plus_subtitle_clips(srt_path, video_track_index, frame_rate, transformations=None):
     content = ''
     subs = []
     global media_pool
-
+    
     # Get current timeline. 
     # If no timeline currently opened, get the first timeline, if any, in the project
     timeline = project.GetCurrentTimeline()
@@ -174,13 +173,12 @@ def generate_text_plus_subtitle_clips(srt_path, video_track_index, frame_rate, t
         print("ERROR - Subtitle file can't be read. Either file permission issue or please check the subtitle path you provided in the script's adjustments.")
         return
 
-
     # Split the SRT file content into individual subtitle cues
     # cues = [
     #   "1\n00:00:01,000 --> 00:00:04,000\nHello, world!",
     #   "2\n\n00:00:05,000 --> 00:00:08,000\nThis is a test.",
     #   "3\n00:00:09,000 --> 00:00:12,000\n\nAnother subtitle."
-    # ] 
+    # ]
     cues = re.split(r"\n{2,}", content.strip())
     
     # Prepare the timecodes so can be parsed
@@ -201,7 +199,7 @@ def generate_text_plus_subtitle_clips(srt_path, video_track_index, frame_rate, t
 
             m = time_line.match(times)
             if not m:
-                print(f"Failed to parse timing for cue: {times}")
+                print(f"ERROR - Failed to parse timing for cue: {times}")
                 continue
 
             t_start = list(map(int, m.groups()[0:4]))
@@ -210,11 +208,11 @@ def generate_text_plus_subtitle_clips(srt_path, video_track_index, frame_rate, t
             start_seconds = t_start[0] * 3600 + t_start[1] * 60 + t_start[2] + t_start[3] / 1000.0
             end_seconds = t_end[0] * 3600 + t_end[1] * 60 + t_end[2] + t_end[3] / 1000.0
 
-            posInFrames = int(start_seconds * frame_rate)
-            timeline_pos = timeline_startframe + posInFrames
+            pos_in_frames = int(start_seconds * frame_rate)
+            timeline_pos = timeline_startframe + pos_in_frames
 
-            endPosInFrames = int(end_seconds * frame_rate)
-            duration = endPosInFrames - posInFrames
+            end_pos_in_frames = int(end_seconds * frame_rate)
+            duration = end_pos_in_frames - pos_in_frames
 
             text = "\n".join(text_lines).strip()
 
@@ -259,8 +257,8 @@ def generate_text_plus_subtitle_clips(srt_path, video_track_index, frame_rate, t
         media_pool.AppendToTimeline([new_clip])
 
     # Iterate through the Text+ clips on the track and apply the subtitles to the Text+ clips
-    clipList = timeline.GetItemListInTrack('video', timeline_track)
-    subtitle_clips = [clip for clip in clipList if clip.GetStart() >= subs[0][0]]
+    clip_list = timeline.GetItemListInTrack('video', timeline_track)
+    subtitle_clips = [clip for clip in clip_list if clip.GetStart() >= subs[0][0]]
 
     for i, clip in enumerate(subtitle_clips):
         if i >= len(subs):
@@ -278,13 +276,13 @@ def generate_text_plus_subtitle_clips(srt_path, video_track_index, frame_rate, t
                     tool_found = True
                     break
             if tool_found:
-                clip.SetClipColor('Teal')
+                clip.SetClipColor('Blue')
             else:
-                print(f"No Text+ tool found in composition for clip at {clip.GetStart()}")
+                print(f"ERROR - No Text+ tool found in composition for clip at {clip.GetStart()}")
         else:
-            print(f"No Fusion composition found for clip at {clip.GetStart()}")
+            print(f"ERROR - No Fusion composition found for clip at {clip.GetStart()}")
 
-    print(f"Text+ clips based on subtitle cues from SRT files have been added to video track {video_track_index}.")
+    print(f"Text+ clips based on subtitle cues from SRT files have been added to video track #{video_track_index}.")
     print("\nDone!")
 
 generate_text_plus_subtitle_clips(srt_file_path, TARGET_EMPTY_VIDEO_TRACK, frame_rate, transformations=TRANSFORM_EACH_TEXTP)

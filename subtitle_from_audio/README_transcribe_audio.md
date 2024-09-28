@@ -63,14 +63,36 @@ If instead of using a subtitle track, you want to generate Text+ clips across an
 
 - Add stroke/outline to your text? Refer to my tutorial at [DaVinci Text Plus - Stroke or edge on text](wengindustries.com/app/3dbrain/?open=DaVinci%20Text%20Plus%20-%20Stroke%20or%20edge%20on%20text.md)
 
-2. Then adjust the drop_textp.py: 
+2. Choose between the styles of Text+ clip generator. The style you choose will be the corresponding script that you're adjusting and running.
+
+- Static Text+ Clips (`drop_textp_static.py`): A subtitle cue (SRT file numbered 1, 2, 3, etc are each a subtitle cue) appears on the screen when those words are being spoken.
+- Accumulating Text+ Clips (`drop_textp_accum.py`): Each time a word is said, the word accumulates on the screen until that subtitle cue is finished. On the next subtitle cue, the process starts all over with the first word.
+
+For example, six small Text+ clips in the track could be, in order:
+You
+You wont
+You wont believe
+You wont believe what
+You wont believe what this
+You wont believe what this man
+
+
+And if that was one subtitle cue in the SRT file, then it starts over in the next Text+ clips:
+has
+has done
+has done to
+has done to this
+has done to this great
+has done to this great community
+
+3. After choosing a style of Text+, then adjust the `drop_textp_static.py` or `drop_textp_accum.py`: 
 - See if you need to adjust the path to the SRT file
-- See if you need to adjust SCRIPT_DIR which is the absolute path to the `drop_textp.py`.
+- See if you need to adjust SCRIPT_DIR which is the absolute path to the  `drop_textp_static.py` or `drop_textp_accum.py`.
 Explanation: This is needed because the free DaVinci Resolve does not expose the script's path when drag and dropping into a console, which is needed for the code
 - See if for your current project, you have an empty video track 2. If not, you have to adjust the number at TARGET_EMPTY_VIDEO_TRACK. You are required to have an empty video track for the Text+ clips to insert into from the first frame.
 - See if you want to adjust TRANSFORM_EACH_TEXTP if you want uppercasing presets to run on each Text+ clip. Some uppercasing presets include uppercasing the first word of each Text+ clip, or uppercasing all words.
 
-3. Once you are done adjusting `drop_textp.py`, go ahead and drag and drop the script into the DaVinci console. On success, you will see Text+ clips fill the empty video track and those Text+ clips will have the subtitle that sync with the audio. 
+4. Once you are done adjusting `drop_textp_static.py` or `drop_textp_accum.py`, go ahead and drag and drop the script into the DaVinci console. On success, you will see Text+ clips fill the empty video track and those Text+ clips will have the subtitle that sync with the audio. 
 
 Next you may decide to spice up the Text+ subtitle clips a bit:
 - Add stroke/outline to your text? You might have wanted to do that to the template Text+ clip in the media pool before running the track Text+ generator script, so that all track Text+ clips have the stroke/outline. If that's not the case and you just need a specific Text+ clip to have stroke/outlines: Refer to my tutorial at [DaVinci Text Plus - Stroke or edge on text](wengindustries.com/app/3dbrain/?open=DaVinci%20Text%20Plus%20-%20Stroke%20or%20edge%20on%20text.md)

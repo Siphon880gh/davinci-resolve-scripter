@@ -98,7 +98,7 @@ Then decide what you want to do with the SRT file.
 
 To have the traditional subtitle track, drag and drop the SRT file into DaVinci's media pool before creating and filling the subtitle track.
 
-To generate Text+ clips on an empty video track, you adjust and drop the script `subtitle_from_audio/drop_textp.py` into the DaVinci console.
+To generate Text+ clips on an empty video track, you adjust and drop the script `subtitle_from_audio/drop_textp*.py` into the DaVinci console. There is more than one `drop_textp` script corresponding to different Text+ effects - choose one that you like, and then stick to adjusting and dropping only that script.
 
 The above are brief instructions. For in-depth instructions, refer to [README_transcribe_audio.md](subtitle_from_audio/README_transcribe_audio.md).
 
