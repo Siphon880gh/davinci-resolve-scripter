@@ -73,7 +73,9 @@ SRT_FILENAME = "drop_subtitle_media.srt"
 # Why: `os.path.dirname(os.path.abspath(__name__)) would fail because it's a 
 # drop in script into DaVinci Resolve console which will change __name__ abs pathing 
 # to /Applications/DaVinci Resolve/DaVinci Resolve.app/Contents/Libraries/Fusion/..
-SCRIPT_DIR = "/Users/wengffung/dev/web/davinci/transcribe_audio/"
+SCRIPT_DIR = "/Users/wengffung/dev/web/davinci/subtitle_from_audio/"
+if not os.path.exists(SCRIPT_DIR):
+    SCRIPT_DIR = "/Users/wengffung/dev/web/davinci/05_subtitle_from_audio/"
 srt_file_path = os.path.join(SCRIPT_DIR, SRT_FILENAME)
 print(f"Reading SRT file from: {srt_file_path}")
 

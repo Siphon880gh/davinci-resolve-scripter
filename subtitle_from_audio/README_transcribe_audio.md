@@ -50,6 +50,8 @@ python generate.py
 
 Look for the srt file in the output folder you've set in the script. You can drop this subtitle file (default named `drop_subtitle_media.srt`) into your media pool, then create a Subtitle track in your timeline, then lastly drop the SRT from the media pool into that track.
 
+Subtitle track does not support transitions and custom font styles. If you want these options, go with Option B for Text+ clips generation.
+
 ### Option B: Create Text+ clips on an empty video track
 
 If instead of using a subtitle track, you want to generate Text+ clips across an empty video track so that it can follow IG-styled middle of the screen text. There are two major phases to create this track. 
@@ -66,10 +68,21 @@ Explanation: This is needed because the free DaVinci Resolve does not expose the
 - See if for your current project, you have an empty video track 2. If not, you have to adjust the number at TARGET_EMPTY_VIDEO_TRACK. You are required to have an empty video track for the Text+ clips to insert into from the first frame.
 - See if you want to adjust TRANSFORM_EACH_TEXTP if you want uppercasing presets to run on each Text+ clip. Some uppercasing presets include uppercasing the first word of each Text+ clip, or uppercasing all words.
 
-3. Once you are done adjusting `drop_textp.py`, go ahead and drag and drop the script into the DaVinci console. On success, you will see Text+ clips fill the empty video track and those Text+ clips will have the subtitle that sync with the audio.
+3. Once you are done adjusting `drop_textp.py`, go ahead and drag and drop the script into the DaVinci console. On success, you will see Text+ clips fill the empty video track and those Text+ clips will have the subtitle that sync with the audio. 
+
+4. Transitions for the Text+ clips? You can choose to add transitions or copy the same transitions from the main track. You can use OPT drag on Mac to duplicate transitions between clips on the same track or on different tracks.
 
 ## Some video editing required
 
 You may find that by chance your subtitle could end or start too soon from another video clip starting or ending. This would be jarring. So adjust the video clips as needed.
 
 ![Subtitle should not end or start too soon from another video clip starting or ending](README_subtitle_tip.png)
+
+
+## FAQs
+
+Q: I have different Text+ clips and I would like to copy the style of another Text+ clip to a specific generated Text+ clip in the video track
+A: As of 9/2024 that is currently not possible without scripting. Even right clicking for pasting specific attributes does not have the Text formatting options to paste over. See:
+https://forum.blackmagicdesign.com/viewtopic.php?f=21&t=162862
+
+I may consider implementing the ability to choose from different Text+ clips as templates for different track Text+ clips, but this is practically impossible without a UI UX, and currently we are running individual scripts for the most part because the free DaVinci Resolve limits you from running external scripts or streamlining the scripts.
