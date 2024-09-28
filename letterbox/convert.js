@@ -4,17 +4,20 @@ const fs = require('fs');
 
 // _ ADJUST HERE
 const IMAGE_PATHS = [
-    './letterbox_test/clip01.jpg',
-    './letterbox_test/clip02.jpg',
-    './letterbox_test/clip03.jpg',
-    './letterbox_test/clip04.jpg',
-    './letterbox_test/clip05.jpg',
-    './letterbox_test/clip06.jpg',
-    './letterbox_test/clip07.jpg'
+    './letterbox_test/clip01.png',
+    './letterbox_test/clip02.png',
+    './letterbox_test/clip03.png',
+    './letterbox_test/clip04.png',
+    './letterbox_test/clip05.png',
+    './letterbox_test/clip06.png',
+    './letterbox_test/clip07.png'
 ];
 
 // Helper function to create letterboxed image
-async function letterboxImage(imagePath, targetWidth, targetHeight, useBlurredBackground) {
+// The suffix could be "_letterboxed" or left empty (not passed in letterBoxAndSaveImages function call). 
+// For example, with "_letterboxed", your original images will be saved, regardless if they got letterboxed or not, as: image1_letterboxed.png, etc
+// By default, there is no suffixing. If your original images were png's, they will be overwritten; otherwise, png's will save.
+async function letterboxImage(imagePath, targetWidth, targetHeight, useBlurredBackground, suffix = '') {
     const image = sharp(imagePath);
     const metadata = await image.metadata();
 
@@ -77,10 +80,10 @@ async function letterboxImage(imagePath, targetWidth, targetHeight, useBlurredBa
     }
 
     // Save the image
-    const savePath = path.join(path.dirname(imagePath), `${path.basename(imagePath, path.extname(imagePath))}_letterboxed.png`);
+    const savePath = path.join(path.dirname(imagePath), `${path.basename(imagePath, path.extname(imagePath))}${suffix}.png`);
     await sharp(finalImage).toFile(savePath);
     console.log(`Saved letterboxed image to: ${savePath}`);
-}
+} // letterboxImage
 
 // Function to process a list of images
 async function letterboxAndSaveImages(imagePaths, useBlurredBackground = false) {
