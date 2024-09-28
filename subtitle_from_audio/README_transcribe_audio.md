@@ -50,7 +50,7 @@ python generate.py
 
 Look for the srt file in the output folder you've set in the script. You can drop this subtitle file (default named `drop_subtitle_media.srt`) into your media pool, then create a Subtitle track in your timeline, then lastly drop the SRT from the media pool into that track.
 
-Subtitle track does not support transitions and custom font styles. If you want these options, go with Option B for Text+ clips generation.
+Subtitle track does not support transitions, custom font styles, and character level styling. If you want these options, go with Option B for Text+ clips generation.
 
 ### Option B: Create Text+ clips on an empty video track
 
@@ -61,6 +61,8 @@ If instead of using a subtitle track, you want to generate Text+ clips across an
 
 1. Look into the Effects panel (top left panel), and search for "Text". Drag the "Text+" into any area on a video track. Then drag that "Text+" clip from the video track into the media pool. Now delete the timeline's "Text+" clip. You now have the "Text+" clip in the media pool and no "Text+" clip from this exercise in the timeline. Finally, adjust any font settings at the media pool's Text+ clip because this will be the template used to generate the Text+ subtitle clips into the timeline.
 
+- Add stroke/outline to your text? Refer to my tutorial at [DaVinci Text Plus - Stroke or edge on text](wengindustries.com/app/3dbrain/?open=DaVinci%20Text%20Plus%20-%20Stroke%20or%20edge%20on%20text.md)
+
 2. Then adjust the drop_textp.py: 
 - See if you need to adjust the path to the SRT file
 - See if you need to adjust SCRIPT_DIR which is the absolute path to the `drop_textp.py`.
@@ -70,7 +72,10 @@ Explanation: This is needed because the free DaVinci Resolve does not expose the
 
 3. Once you are done adjusting `drop_textp.py`, go ahead and drag and drop the script into the DaVinci console. On success, you will see Text+ clips fill the empty video track and those Text+ clips will have the subtitle that sync with the audio. 
 
-4. Transitions for the Text+ clips? You can choose to add transitions or copy the same transitions from the main track. You can use OPT drag on Mac to duplicate transitions between clips on the same track or on different tracks.
+Next you may decide to spice up the Text+ subtitle clips a bit:
+- Add stroke/outline to your text? You might have wanted to do that to the template Text+ clip in the media pool before running the track Text+ generator script, so that all track Text+ clips have the stroke/outline. If that's not the case and you just need a specific Text+ clip to have stroke/outlines: Refer to my tutorial at [DaVinci Text Plus - Stroke or edge on text](wengindustries.com/app/3dbrain/?open=DaVinci%20Text%20Plus%20-%20Stroke%20or%20edge%20on%20text.md)
+- Transitions for the Text+ clips? You can choose to add transitions or copy the same transitions from the main track. You can use OPT drag on Mac to duplicate transitions between clips on the same track or on different tracks.
+- Character level styling? As in you want specific characters in a different style? Refer to my tutorial at [DaVinci Text Plus - Edit specific character style in Text Plus](https://wengindustries.com/app/3dbrain/?open=DaVinci%20Text%20Plus%20-%20Edit%20specific%20character%20style%20in%20Text%20Plus.md)
 
 ## Some video editing required
 
