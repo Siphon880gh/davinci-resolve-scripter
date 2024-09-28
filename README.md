@@ -35,7 +35,7 @@ Summary of limitations (not comprehensive):
 
 ## Usage
 
-**Prep the media:**
+### **Prep the media:**
 
 1. First have your images and video clips and audio ready. We will automate creating a DaVinci project with timeline of your clips. There will be zoom/pan effects and transitions automated into the timeline.
 
@@ -47,7 +47,7 @@ If that applies to you, adjust this NodeJS script then run it to find the max di
 
 Then drag and drop `unassemble__drop_scripts/import_media_and_assemble_timeline.py` into DaVinci Console (Workspace -> Console). This will import into the media pool and assemble each image as a clip into the timeline. It will do so without automatically assembling an image sequence from filenames with 01, 02, etc suffixes.
 
-**Transitions:**
+### **Transitions:**
 
 4. Adjust `generate_otio/generate.py` to make sure the same filenames and consider the settings (all caps variables). Run the python script in your computer's terminal (`cd generate_otio && python generate.py`). This will generate and replace if necessary `generate_otio/generated_otio/generated.otio` (exported.otio is for when I exported otio from DaVinci to test things).
 
@@ -57,7 +57,7 @@ This will import the clips, their durations, and their transitions.
 
 Explanation: Why not skip running `import_media_assemble_timeline.py` because importing the timeline file also imports media and assembles clips into the timeline. This is because if you've skipped that step which imports images as individual clips, then importing the timeline file will automatically create image sequences from images sufficed with 01, 02, 03. For example, image01.jpg and image02.jpg would've become a image[01-02] image sequence and give you less control over them. By having ran the python script, it makes sure the media are individually imported unassembled as image01.jpg, image02.jpg etc, then when you import the timeline, then DaVinci can refer to your current media pool and know you don't want automatic assembly.
 
-**Motion Effects:**
+### **Motion Effects:**
 
 5. You now have created two timelines. On the python generated timeline, copy all the clips of the track to your clipboard. Then on the imported timeline, create a new video track and paste the clips there.
 
@@ -86,9 +86,10 @@ Explanation: Free Davinci Resolve nerfed their APIs in various ways. Many Fusion
 
 - I recommend templatizing what you have: Bear in mind the named files. Your next project you can have the same filenames. If in the next project you delete the media pool files then upload your new media with the same filenames, you can conform the timeline clips to relink to the current assets! You'd have to right click the timeline clips -> Untick "Conform Lock Enabled". Then you can right click the current timeline asset in the media pool -> Timelines -> Reconform From Bins. You could simplify things even further by using this same project but having different bins, which are just folders you create under "Master" to the left of the media pool. This works very well if you have the same types of videos you make (eg. shorts video with 5 second images that zoom/pan as you speak on top of it).
 
+### **Automatic Subtitle Track OR Text+ Subtitle Clips:**
+You have audio and you want subtitles or centered text to help the reader read along the narration. Either your audio is a voice recording or speech-to-text (Hint if you are creating faceless youtube videos at mass).
 
-**Automatic Subtitle Track OR Text+ Subtitle Clips:**
-You can from your audio track which is usually AI generated (text-to-speech) or an actual voice recording generate a subtitle SRT file.
+You can generate subtitles from your audio clip in the media pool. On the free DaVinci, you do NOT have audio transcription feature (Box select -> Right click -> Audio Transcription). If you're on the free version, you can use my script at `subtitle_from_audio/generate.py` to generate a SRT subtitle file.
 
 With this SRT file, you can have subtitle text at the bottom of your video and it will change as necessary because it syncs with your audio as long as your audio recording and the subtitle aligns to the start of the timeline (aka traditional subtitle track). Or, you can run an additional script that generates Text+ clips into an empty video track and this allows finer control of text visuals, great for IG-styled centered of the video text.
 
@@ -101,6 +102,10 @@ To have the traditional subtitle track, drag and drop the SRT file into DaVinci'
 To generate Text+ clips on an empty video track, you adjust and drop the script `subtitle_from_audio/drop_textp*.py` into the DaVinci console. There is more than one `drop_textp` script corresponding to different Text+ effects - choose one that you like, and then stick to adjusting and dropping only that script.
 
 The above are brief instructions. For in-depth instructions, refer to [README_transcribe_audio.md](subtitle_from_audio/README_transcribe_audio.md).
+
+### **LUTS**
+
+Optionally, you can add LUTs (color grading) to all your clips to have a consistent vibe. Refer to my list LUTs: [LUTs for Genre, Theme, Dramatic Effect, or Giving Off the Vibe of a Specific Movie](wengindustries.com/app/3dbrain/?open=LUTs%20for%20Genre,%20Theme,%20Dramatic%20Effect,%20or%20Giving%20Off%20the%20Vibe%20of%20a%20Specific%20Movie.md)
 
 ## Hint Mode
 

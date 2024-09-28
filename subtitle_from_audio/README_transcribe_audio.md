@@ -1,8 +1,12 @@
 ### Description
 
-This script takes in an audio file and outputs a subtitle file in the SRT format. Your SRT format could be imported as a subtitle track in DaVinci, OR you can have the script generate IG-styled Text+ clips for a more dramatic text.
+You have audio and you want subtitles or centered text to help the reader read along the narration. Either your audio is a voice recording or speech-to-text (Hint if you are creating faceless youtube videos at mass).
 
-## Installation
+You can generate subtitles from your audio clip in the media pool. On the free DaVinci, you do NOT have audio transcription feature (Box select -> Right click -> Audio Transcription). If you're on the free version, you can use my script at `subtitle_from_audio/generate.py` to generate a SRT subtitle file.
+
+Regardless of how you obtained your SRT file, you can use it to create a traditional subtitle track or use it to create Text+ clips. There are two flavors of Text+ clips that will be discussed in the instructions.
+
+## Installation of SRT generator
 
 To install the required package, run:
 
@@ -12,7 +16,7 @@ pip install openai-whisper torch
 
 Make sure ffmpeg is installed on your machine. You can google installation instructions for ffmpeg on your particular OS.
 
-## Usage (Adjustment)
+## Usage of SRT generator
 
 You can choose the model and device to use in the `chosen_processor.py` file.
 
@@ -33,11 +37,7 @@ OUTPUT_DIR="./" # Eg. ./
 OUTPUT_FILENAME_W_EXT="eleven_labs.srt"
 ```
 
-## Usage
-
-### Generate the SRT file
-
-To transcribe audio into a subtitle SRT file, adjust the `subtitle_from_audio/generate.py` file for the audio wav or mp3 file (you could have generated it from text-to-speech or is an actual audio recording of your narration). You may adjust the srt output path but is not recommended because the title plus generator at `drop_textp.py` if you choose to use it, would have to be adjusted to at its SRT path.
+Adjust `subtitle_from_audio/generate.py` to transcribe the audio wav or mp3 file into a subtitle SRT file. You may adjust the script's srt output path but is not recommended because the Text+ generator at `drop_textp.py` if you choose to use it, would need its SRT path adjusted.
 
 Finally, you may adjust `max_line_count` and `max_line_width`. If you will use the SRT file to create Text+ clips, your width is limited between 30 and 35 unless you change the font and/or font size of the Text+ clip template (to be discussed later). If you will use the traditional subtitle track instead of Text+ track clips generation, you are not really limited on the width.
 
@@ -45,6 +45,8 @@ Generate the SRT with this:
 ```bash
 python generate.py
 ```
+
+## Use SRT Subtitle File
 
 ### Option A: Create synced subtitle track
 

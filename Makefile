@@ -6,7 +6,8 @@ RENAME_PAIRS := \
 	unassemble__drop_scripts 02_unassemble__drop_scripts \
 	generate_otio 03_generate_otio \
 	motion__input_scripts 04_motion__input_scripts \
-	subtitle_from_audio 05_subtitle_from_audio
+	subtitle_from_audio 05_subtitle_from_audio \
+	luts 06_luts
 
 # Default target: show available options
 .DEFAULT_GOAL := help
