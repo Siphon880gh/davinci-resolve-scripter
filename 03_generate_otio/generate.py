@@ -2,24 +2,52 @@
 
 import opentimelineio as otio
 import os
+import json
 
-# Configuration for clips, transition settings, and frame rate
-IMAGE_FILES = [
-    "clip01.jpg", 
-    "clip02.jpg", 
-    "clip03.jpg", 
-    "clip04.jpg", 
-    "clip05.jpg"
-]
-# Path to the folder where the media files are stored
-MEDIA_FOLDER = "/Users/wengffung/Downloads/DaVinci Assets 2"
+# _ADJUST the abs path to the app.clips.json, due to limitation of free DaVinci - 1 of 7
+APP_CLIPS_JSON_ABS_PATH = "/Users/wengffung/dev/web/davinci/app.clips.json"
 
-DEFAULT_CLIP_DURATION = 10  # Default duration of each clip in seconds
-FRAME_RATE = 24
+# _ADJUST ../app.clips.json instead - 2 of 7
+# Clip file names
+# IMAGE_FILES = [
+#     "clip01.jpg", 
+#     "clip02.jpg"
+#     ..
+# ]
+def get_image_paths():
+    global APP_CLIPS_JSON_ABS_PATH
+    with open(APP_CLIPS_JSON_ABS_PATH, 'r') as f:
+        clips_config = json.load(f)
 
-# Start timecode (user-defined)
-start_time_code = "00:00:00:00"
+    image_abs_path = clips_config['image_abs_path']
+    
+    # Ensure the path ends with a forward slash
+    if not image_abs_path.endswith('/'):
+        image_abs_path += '/'
 
+    clip_basenames = clips_config['clip_basenames']
+    clip_basenames = [os.path.join(image_abs_path, clip_basename) for clip_basename in clip_basenames]
+
+    return clip_basenames
+IMAGE_FILES = get_image_paths()
+
+# _ADJUST ../app.clips.json instead - 3 of 7
+# Path to the folder where the clip files are stored
+def get_image_folder():
+    global APP_CLIPS_JSON_ABS_PATH
+    with open(APP_CLIPS_JSON_ABS_PATH, 'r') as f:
+        clips_config = json.load(f)
+
+    image_abs_path = clips_config['image_abs_path']
+    
+    # Ensure the path ends with a forward slash
+    if not image_abs_path.endswith('/'):
+        image_abs_path += '/'
+
+    return image_abs_path
+MEDIA_FOLDER = get_image_folder()
+
+# _ADJUST the transitions you want at after which clip - 4 of 7
 # Clip settings: slide indexes, transition types (D = Dissolve, C = Cut, WipeUp = Wipe at 0 degrees, etc.)
 # Optional: Provide custom transition duration using tDuration and clip duration using cDuration
 clips_settings = [
@@ -30,7 +58,17 @@ clips_settings = [
     { "index": 4, "type": "WipeUp", "tDuration": 24, "cDuration": 10 }    # WipeUp (0 degrees)
 ]
 
-# Default transition settings
+
+# _ADJUST each clip duration and frame rate - 5 of 7
+DEFAULT_CLIP_DURATION = 10  # Default duration of each clip in seconds
+FRAME_RATE = 24
+
+# _ADJUST starting timecode - 6 of 7
+# Recommend start at 0 if you will run motion effects script
+start_time_code = "00:00:00:00"
+
+# _ADJUST default transition settings - 7 of 7
+# If cDuration not defined in a clip's clip_settings, this setting applies.
 DEFAULT_DISSOLVE_DURATION = 24  # Default dissolve duration (frames)
 
 # Create a timeline

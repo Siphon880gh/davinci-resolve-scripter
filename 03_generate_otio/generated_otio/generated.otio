@@ -24,7 +24,7 @@
                     {
                         "OTIO_SCHEMA": "Clip.2",
                         "metadata": {},
-                        "name": "clip01.jpg",
+                        "name": "/Users/wengffung/dev/web/davinci/sample_clips/clip01.png",
                         "source_range": {
                             "OTIO_SCHEMA": "TimeRange.1",
                             "duration": {
@@ -60,7 +60,7 @@
                                     }
                                 },
                                 "available_image_bounds": null,
-                                "target_url": "file:///Users/wengffung/Downloads/DaVinci Assets 2/clip01.jpg"
+                                "target_url": "file:///Users/wengffung/dev/web/davinci/sample_clips/clip01.png"
                             }
                         },
                         "active_media_reference_key": "DEFAULT_MEDIA"
@@ -68,7 +68,7 @@
                     {
                         "OTIO_SCHEMA": "Clip.2",
                         "metadata": {},
-                        "name": "clip02.jpg",
+                        "name": "/Users/wengffung/dev/web/davinci/sample_clips/clip02.png",
                         "source_range": {
                             "OTIO_SCHEMA": "TimeRange.1",
                             "duration": {
@@ -104,7 +104,7 @@
                                     }
                                 },
                                 "available_image_bounds": null,
-                                "target_url": "file:///Users/wengffung/Downloads/DaVinci Assets 2/clip02.jpg"
+                                "target_url": "file:///Users/wengffung/dev/web/davinci/sample_clips/clip02.png"
                             }
                         },
                         "active_media_reference_key": "DEFAULT_MEDIA"
@@ -128,7 +128,7 @@
                     {
                         "OTIO_SCHEMA": "Clip.2",
                         "metadata": {},
-                        "name": "clip03.jpg",
+                        "name": "/Users/wengffung/dev/web/davinci/sample_clips/clip03.png",
                         "source_range": {
                             "OTIO_SCHEMA": "TimeRange.1",
                             "duration": {
@@ -164,7 +164,7 @@
                                     }
                                 },
                                 "available_image_bounds": null,
-                                "target_url": "file:///Users/wengffung/Downloads/DaVinci Assets 2/clip03.jpg"
+                                "target_url": "file:///Users/wengffung/dev/web/davinci/sample_clips/clip03.png"
                             }
                         },
                         "active_media_reference_key": "DEFAULT_MEDIA"
@@ -227,7 +227,7 @@
                     {
                         "OTIO_SCHEMA": "Clip.2",
                         "metadata": {},
-                        "name": "clip04.jpg",
+                        "name": "/Users/wengffung/dev/web/davinci/sample_clips/clip04.png",
                         "source_range": {
                             "OTIO_SCHEMA": "TimeRange.1",
                             "duration": {
@@ -263,7 +263,7 @@
                                     }
                                 },
                                 "available_image_bounds": null,
-                                "target_url": "file:///Users/wengffung/Downloads/DaVinci Assets 2/clip04.jpg"
+                                "target_url": "file:///Users/wengffung/dev/web/davinci/sample_clips/clip04.png"
                             }
                         },
                         "active_media_reference_key": "DEFAULT_MEDIA"
@@ -326,7 +326,7 @@
                     {
                         "OTIO_SCHEMA": "Clip.2",
                         "metadata": {},
-                        "name": "clip05.jpg",
+                        "name": "/Users/wengffung/dev/web/davinci/sample_clips/clip05.png",
                         "source_range": {
                             "OTIO_SCHEMA": "TimeRange.1",
                             "duration": {
@@ -362,7 +362,7 @@
                                     }
                                 },
                                 "available_image_bounds": null,
-                                "target_url": "file:///Users/wengffung/Downloads/DaVinci Assets 2/clip05.jpg"
+                                "target_url": "file:///Users/wengffung/dev/web/davinci/sample_clips/clip05.png"
                             }
                         },
                         "active_media_reference_key": "DEFAULT_MEDIA"

@@ -2,15 +2,12 @@ const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
 
-// ADJUST ../app.clips.json instead
+// _ADJUST ../app.clips.json instead
+// Clip file names
 // const IMAGE_PATHS = [
 //     './letterbox_test/clip01.png',
 //     './letterbox_test/clip02.png',
-//     './letterbox_test/clip03.png',
-//     './letterbox_test/clip04.png',
-//     './letterbox_test/clip05.png',
-//     './letterbox_test/clip06.png',
-//     './letterbox_test/clip07.png'
+//      ...
 // ];
 const IMAGE_PATHS = (() => {
     const clipsConfig = require('../app.clips.json');
@@ -22,10 +19,6 @@ const IMAGE_PATHS = (() => {
 
     return nonletterboxed_clip_basenames;
 })();
-
-console.log(IMAGE_PATHS)
-
-process.exit()
 
 // Helper function to create letterboxed image
 // The suffix could be "_letterboxed" or left empty (not passed in letterBoxAndSaveImages function call). 

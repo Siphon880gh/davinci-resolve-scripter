@@ -9,6 +9,12 @@ By Weng (Weng Fei Fung). Script that automates the video editing workflow in DaV
 
 ## Requirement
 
+### DaVinci Version
+
+Please note this is for DaVinci Resolve free version, 19.0.1 build version. If it were the paid Studio version, it would not have been multiple disjointed scripts. The free versions make it impossible to streamline into one unified script or UI UX.
+
+DaVinci changes the API quite a lot and their documentation can be incomplete and outdated. Keep this in mind and have a copy of 19.0.1 installation if scripting and automation is important to you.
+
 ### Start timecode at 00:00:00:00 if using my fusion scripts
 
 Although my scripts allows you to change the starting time code to 01:00:00:00 or 00:00:00:00, you should keep it at 00:00:00:00. The fusion motion effects are based off frame numbers starting from 00:00:00:00, which cannot change on the FREE DaVinci Resolve's API, so your timelines must start at 00:00:00:00. So before applying fusion effects script, you should right click the timeline in the media pool -> Timelines -> Starting Timecode... The only exception to this requirement is if you don't use my fusion scripts, then you're free to adjust the timestart variable in my code.
@@ -37,7 +43,9 @@ Summary of limitations (not comprehensive):
 
 ### **Prep the media:**
 
-1. First have your images and video clips and audio ready. We will automate creating a DaVinci project with timeline of your clips. There will be zoom/pan effects and transitions automated into the timeline.
+1. First have your images and video clips and audio ready. If you do not have clips, a script, or audio, you can generate them with AI, or do the old fashion way of collecting assets and writing and narrating your script. If generating pictures with AI, Midjourney can be prompted to generate images with specific dimensions, or aspect ratios. 
+
+We will automate creating a DaVinci project with timeline of your clips. There will be zoom/pan effects and transitions automated into the timeline. We will also have automatic subtitles even if you are on the free DaVinci. The subtitles could be Text+ clips or a subtitle track.
 
 2. Make sure your images are the same dimensions or reasonably similar dimensions so there won't be visually unappealing black bars. Since you probably want the zoom and pan effects that my scripts offer, you wouldn't want black bars and instead would prefer blurred background padding (the same picture at where the black bars would be to keep a similar tone of the picture, however is blurred and zoomed so is an appropriate background). 
 
@@ -45,11 +53,13 @@ If that applies to you, adjust this NodeJS script then run it to find the max di
 
 3. Adjust `unassemble__drop_scripts/import_media_and_assemble_timeline.py` to your clips and desired settings (all caps variables).
 
-Then drag and drop `unassemble__drop_scripts/import_media_and_assemble_timeline.py` into DaVinci Console (Workspace -> Console). This will import into the media pool and assemble each image as a clip into the timeline. It will do so without automatically assembling an image sequence from filenames with 01, 02, etc suffixes.
+DaVinci does not need a timeline opened. But you do need the console opened (Workspace -> Console). Make sure the console is set to Python 3.
+
+Then drag and drop `unassemble__drop_scripts/import_media_and_assemble_timeline.py` into the DaVinci Console. This will import into the media pool and assemble each image as a clip into the timeline. It will do so without automatically assembling an image sequence from filenames with 01, 02, etc suffixes.
 
 ### **Transitions:**
 
-4. Adjust `generate_otio/generate.py` to make sure the same filenames and consider the settings (all caps variables). Run the python script in your computer's terminal (`cd generate_otio && python generate.py`). This will generate and replace if necessary `generate_otio/generated_otio/generated.otio` (exported.otio is for when I exported otio from DaVinci to test things).
+4. Adjust `generate_otio/generate.py` to make sure the same filenames and consider the settings (all caps variables). Run the python script in your computer's terminal (`cd generate_otio && python generate.py`). This will generate and replace if necessary `generate_otio/generated_otio/generated.otio`.
 
 Import the timeline `generate_otio/generated_otio/generated.otio` going to File -> Import -> Timeline. Best to have the timecode at 00:00:00:00 at the import dialog. This imports in transitions.
 
@@ -59,35 +69,39 @@ Explanation: Why not skip running `import_media_assemble_timeline.py` because im
 
 ### **Motion Effects:**
 
-5. You now have created two timelines. On the python generated timeline, copy all the clips of the track to your clipboard. Then on the imported timeline, create a new video track and paste the clips there.
+5. You now have created two timelines in the Media Pool. You need to do some things with these two timelines until DaVinci fixes the fusion negative frames bug that prevents motion effects (Zooms and Pans) from working on imported timelines.
+
+Open the python generated timeline, and copy all track's clips into your clipboard. Then open the imported timeline, create a new video track, and finally paste the clips there.
 
 - Tip: You may want to isolate the new video track in order to select that video track to paste into (Option click the Audio Track Selector if on Mac). I suggest you are pasting into a Video Track 2.
 - Tip: You may want to click Magnet icon to turn on snap mode.
 
-6. Adjust the durations of V2 clips to match the imported clips. Then drag and drop the transitions from the V1 clips to the V2 clips. Then you may delete the imported timeline so the new adjusted python timeline remains. You will notice that the V2 track gets turned into a V1 track by name, important because the next step of applying the code lets you select the video track, and we'll keep it as video track 1.
+6. Adjust the durations of each V2 track's generated clips to match each V1 track's imported clips. 
+
+Then drag and drop the transitions from the V1 clips to the V2 clips. 
+
+Then you may delete the imported track (V1) so that the modified generated timeline remains. You'll notice the remaining video track changes label from V2 to V1.
 
 - Tip: You can adjust the durations of all clips on the track simultaneously by selecting all thoes clips, then turning on Trim mode (T), and then changing one of the clip's duration (Either right click -> Change Clip Duration, or CMD+D on Mac)
 
 Explanation: As of DaVinci 19.0.1 build 6, there is still a bug where all imported timelines will have fusion set to a negative frame (go look into Fusion page), which will make your motion effects fail. Until DaVinci fixed this bug (which started in 2021 as far as I know), this workaround of manipulating two tracks is required.
 
-7. Now we apply the code for motion effects which will be done through Fusion's engine. Adjust `motion__input_scripts/apply_motion_effects_2_select.py` firstly which video track - and we'll keep it video track 1 - and then which clip you want to have which motion effects. Look into fusion_compiled for the .comp files that our API will load. First clip would be index 1, second clip would be index 2, etc. For each clip index, there needs to be a path to the effects .comp file. These fusion composition files are generated from `motion__input_scripts/index.html`based off as few templates as possible at fusion_templates/.
+7. Now we apply the code for motion effects which will be done through Fusion's engine. Adjust `motion__input_scripts/apply_motion_effects_2_select.py` firstly which video track - and we'll keep it video track 1 - and then which clip you want to have which motion effects. Look into fusion_loads/ for the .comp files that our API will load. First clip would be index 1, second clip would be index 2, etc. For each clip index, there needs to be a path to the effects .comp file. These fusion composition files are generated from `motion__input_scripts/index.html`based off as few templates as possible at fusion_templates/.
 
 If using `motion__input_scripts/index.html` to generate specific fusion effect .comp files by fps and clip duration, make sure to input those settings and click "Refresh Below" button before saving the generated .comp files from the index.html dashboard. The fusion comps are zoom effects, as well as zoom pans to corners and sides. Btw, you have to open that index.html with a php server (Eg. MAMP)
 
-I recommend matching motion effects to what images make sense (for example if the focus should be at the top right of a picture, then you zoom-pan to the top right corner - fusion_compiled/10secs-24fps/zoompan_trc.comp). The motion effects needs to match the duration and fps of your clip, which you can see in the filepath (eg. "fusion_compiled/10secs-24fps/..")
+I recommend matching motion effects to what images make sense (for example if the focus should be at the top right of a picture, then you zoom-pan to the top right corner - fusion_loads/10secs-24fps/zoompan_trc.comp). The motion effects needs to match the duration and fps of your clip, which you can see in the filepath (eg. "fusion_loads/10secs-24fps/..")
 
-8. Copying and pasting into console the contents of `unassemble__drop_scripts/apply_motion_effects_1.py`. Then next, copying and pasting into console the script you adjusted from `unassemble__drop_scripts/apply_motion_effects_2_select.py`
+8. Copying and pasting into console the contents of `unassemble__drop_scripts/apply_motion_effects_1.py` - no need to adjust any values in that script. Then next, copying and pasting into console the script you adjusted from `unassemble__drop_scripts/apply_motion_effects_2_select.py`
 
 Explanation: Free Davinci Resolve nerfed their APIs in various ways. Many Fusion composition related API does not work in a python file, but can be directly inputted into the DaVinco console even though it is using the python language.
 
 9. If a fusion motion effect fails to apply (The console outputted `Difficult applying motion effect because this clip has no Fusion comp? Skipping this clip...`), you can drag and drop from fusion_drops/ directly into the Fusion screen, then manually make sure the MediaIn and MediaOut nodes are connected to it.
 
-10. That's it. You can now render your video. 
-
-- I recommend templatizing what you have: Bear in mind the named files. Your next project you can have the same filenames. If in the next project you delete the media pool files then upload your new media with the same filenames, you can conform the timeline clips to relink to the current assets! You'd have to right click the timeline clips -> Untick "Conform Lock Enabled". Then you can right click the current timeline asset in the media pool -> Timelines -> Reconform From Bins. You could simplify things even further by using this same project but having different bins, which are just folders you create under "Master" to the left of the media pool. This works very well if you have the same types of videos you make (eg. shorts video with 5 second images that zoom/pan as you speak on top of it).
-
 ### **Automatic Subtitle Track OR Text+ Subtitle Clips:**
-You have audio and you want subtitles or centered text to help the reader read along the narration. Either your audio is a voice recording or speech-to-text (Hint if you are creating faceless youtube videos at mass).
+10. If you have audio and you want subtitles or centered text to help the reader read along the narration, this section applies to you. Otherwise, you can skip this section. 
+
+Either your audio is a voice recording or speech-to-text (Hint if you are creating faceless youtube videos at mass).
 
 You can generate subtitles from your audio clip in the media pool. On the free DaVinci, you do NOT have audio transcription feature (Box select -> Right click -> Audio Transcription). If you're on the free version, you can use my script at `subtitle_from_audio/generate.py` to generate a SRT subtitle file.
 
@@ -102,6 +116,13 @@ To have the traditional subtitle track, drag and drop the SRT file into DaVinci'
 To generate Text+ clips on an empty video track, you adjust and drop the script `subtitle_from_audio/drop_textp*.py` into the DaVinci console. There is more than one `drop_textp` script corresponding to different Text+ effects - choose one that you like, and then stick to adjusting and dropping only that script.
 
 The above are brief instructions. For in-depth instructions, refer to [README_transcribe_audio.md](subtitle_from_audio/README_transcribe_audio.md).
+
+### **Render and Templatize:**
+
+11. That's it. You can now render your video. 
+
+- If you will be making videos with a similar format, I recommend templatizing what you have: Bear in mind the named files. Your next project you can have the same filenames. If in the next project you delete the media pool files then upload your new media with the same filenames, you can conform the timeline clips to relink to the current assets! You'd have to right click the timeline clips -> Untick "Conform Lock Enabled". Then you can right click the current timeline asset in the media pool -> Timelines -> Reconform From Bins. You could simplify things even further by using this same project but having different bins, which are just folders you create under "Master" to the left of the media pool. This works very well if you have the same types of videos you make (eg. shorts video with 5 second images that zoom/pan as you speak on top of it).
+
 
 ### **LUTS**
 

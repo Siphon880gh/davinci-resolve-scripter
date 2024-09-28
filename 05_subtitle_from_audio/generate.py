@@ -3,7 +3,7 @@ import whisper
 from whisper.utils import get_writer
 from chosen_model_parameters import MODEL, DEVICE
 
-# ADJUST 1,2,3 of 4
+# _ADJUST relative input audio, desired output directory, and desired output basename with file extension 1 of 2
 INPUT_AUDIO="eleven_labs.mp3"
 OUTPUT_DIR="./" # Eg. ./
 OUTPUT_FILENAME_W_EXT="drop_subtitle_media.srt"
@@ -15,7 +15,7 @@ try:
     print(f"Read {INPUT_AUDIO} and create the subtitle file {OUTPUT_DIR}{OUTPUT_FILENAME_W_EXT}")
     transcription_result = whisper_model.transcribe(audio=INPUT_AUDIO, initial_prompt="prompt", word_timestamps=True)
 
-    # ADJUST 4 of 4: max_line_count and max_line_width
+    # _ADJUST 2 of 2: max_line_count and max_line_width
     # Word formatting options
     # highlight_words: Underline each word as it is spoken in srt and vtt
     # More options at: https://github.com/openai/whisper/blob/main/whisper/transcribe.py

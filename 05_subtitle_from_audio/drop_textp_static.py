@@ -64,11 +64,11 @@ except Exception as e:
 # _SCRIPT:
 # ------------------------------------------------
 
-# ADJUST 1 of 4
+# _ADJUST 1 of 4
 SRT_FILENAME = "drop_subtitle_media.srt"
 
 
-# ADJUST 2 of 4
+# _ADJUST 2 of 4
 # Note you have to write the absolute path to the SRT file
 # Why: `os.path.dirname(os.path.abspath(__name__)) would fail because it's a 
 # drop in script into DaVinci Resolve console which will change __name__ abs pathing 
@@ -80,12 +80,12 @@ srt_file_path = os.path.join(SCRIPT_DIR, SRT_FILENAME)
 print(f"Reading SRT file from: {srt_file_path}")
 
 
-# ADJUST 3 of 4
+# _ADJUST 3 of 4
 # Make sure you have an empty video track to insert the Text+ based off subtitles
 TARGET_EMPTY_VIDEO_TRACK = 2
 
 
-# ADJUST 4 of 4
+# _ADJUST 4 of 4
 # Adjust text transformations, if any, to apply to each Text+ clip's text
 # Eg. TRANSFORM_EACH_TEXTP = [uppercase_all]
 # Eg. TRANSFORM_EACH_TEXTP = [uppercase_first_word]

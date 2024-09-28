@@ -154,3 +154,5 @@ def addMotionsTo(track, positionalData):
         if exit_comp and media_out_node:
             media_out_node.ConnectInput("Input", exit_comp, "Output")
             print("Connected exit_comp to MediaOut1")
+
+print("\nOK! Ready to receive part 2 input script for motion effects.\nReminder: Make sure to adjust values in part 2 before pasting it here.")

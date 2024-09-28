@@ -34,6 +34,7 @@ else:
 # ------------------------------------------------
 
 import os
+import json
 from constants import ENUM_MEDIA_TYPES, ENUM_IMPORT_MODE
 
 # Common Objects
@@ -56,26 +57,59 @@ except Exception as e: # Comment/Uncomment as needed
 # _SCRIPT:
 # ------------------------------------------------
 
-# Choose the desired start time (format is HH:MM:SS:FF)
+# _ADJUST the abs path to the app.clips.json, due to limitation of free DaVinci - 1 of 6
+APP_CLIPS_JSON_ABS_PATH = "/Users/wengffung/dev/web/davinci/app.clips.json"
+
+# _ADJUST ../app.clips.json instead - 2 of 6
+# Clip file names
+# IMAGE_FILES = [
+#     "/Users/wengffung/dev/web/davinci/images/clip01.jpg",
+#     "/Users/wengffung/dev/web/davinci/images/clip02.jpg",
+#     ..
+# ]
+def get_image_paths():
+    global APP_CLIPS_JSON_ABS_PATH
+    with open(APP_CLIPS_JSON_ABS_PATH, 'r') as f:
+        clips_config = json.load(f)
+
+    image_abs_path = clips_config['image_abs_path']
+    
+    # Ensure the path ends with a forward slash
+    if not image_abs_path.endswith('/'):
+        image_abs_path += '/'
+
+    clip_basenames = clips_config['clip_basenames']
+    clip_basenames = [os.path.join(image_abs_path, clip_basename) for clip_basename in clip_basenames]
+
+    return clip_basenames
+IMAGE_FILES = get_image_paths()
+
+# _ADJUST ../app.clips.json instead - 3 of 6
+# Path to the folder where the clip files are stored
+def get_image_folder():
+    global APP_CLIPS_JSON_ABS_PATH
+    with open(APP_CLIPS_JSON_ABS_PATH, 'r') as f:
+        clips_config = json.load(f)
+
+    image_abs_path = clips_config['image_abs_path']
+    
+    # Ensure the path ends with a forward slash
+    if not image_abs_path.endswith('/'):
+        image_abs_path += '/'
+
+    return image_abs_path
+IMAGE_FOLDERS = [ get_image_folder() ]
+
+# _ADJUST whether to read a folder path for clips or the list of clips  - 4 of 6
+DESIRED_MODE = ENUM_IMPORT_MODE["IMAGE_FILES"] # IMAGE_FILES or IMAGES_FOLDERS
+
+
+# _ADJUST the desired start time (format is HH:MM:SS:FF) - 5 of 6
 START_TIMECODE = "00:00:00:00"  # Set to "00:00:00:00" if needed
 # Not doable in free DaVinci
 
-# Setting clip duration fails on free. Just set options in Preferences as a workflow.
-DESIRED_CLIP_SECONDS = 40 # Desired duration of each clip in seconds
-
-# Image files (adjust paths if needed)
-IMAGE_FILES = [
-    "/Users/wengffung/dev/web/davinci/images/clip01.jpg",
-    "/Users/wengffung/dev/web/davinci/images/clip02.jpg",
-    "/Users/wengffung/dev/web/davinci/images/clip03.jpg",
-    "/Users/wengffung/dev/web/davinci/images/clip04.jpg",
-    "/Users/wengffung/dev/web/davinci/images/clip05.jpg",
-    "/Users/wengffung/dev/web/davinci/images/clip06.jpg",
-    "/Users/wengffung/dev/web/davinci/images/clip07.jpg"
-]
-IMAGE_FOLDERS = ["/Users/wengffung/dev/web/davinci/images/"]
-
-DESIRED_MODE = ENUM_IMPORT_MODE["IMAGE_FILES"] # IMAGE_FILES or IMAGES_FOLDERS
+# _ADJUST every clip's initial duration (Does not matter if you will follow timeline OTIO step) - 6 of 6
+DESIRED_CLIP_SECONDS = 40
 
 project_manager = resolve.GetProjectManager()
 project = project_manager.GetCurrentProject()
