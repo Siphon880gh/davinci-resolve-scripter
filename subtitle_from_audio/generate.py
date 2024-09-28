@@ -46,8 +46,8 @@ try:
     # 3/65 = 11-13 secs per subtitle screen
     word_formatting = {
         "highlight_words": False,
-        "max_line_count": 3,
-        "max_line_width": 35
+        "max_line_count": 1,
+        "max_line_width": 30
     }
 
     write_to_dir = get_writer("srt", os.path.dirname(OUTPUT_DIR))

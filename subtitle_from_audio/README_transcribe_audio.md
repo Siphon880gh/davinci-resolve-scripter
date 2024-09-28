@@ -65,25 +65,13 @@ If instead of using a subtitle track, you want to generate Text+ clips across an
 
 2. Choose between the styles of Text+ clip generator. The style you choose will be the corresponding script that you're adjusting and running.
 
-- Static Text+ Clips (`drop_textp_static.py`): A subtitle cue (SRT file numbered 1, 2, 3, etc are each a subtitle cue) appears on the screen when those words are being spoken.
+- Static Text+ Clips (`drop_textp_static.py`): An entire subtitle cue (SRT file with contents grouped with numbers 1, 2, 3, etc are each a subtitle cue) appears on the screen when those words are being spoken.
+
+![Text+ Static Text Clips](README_tip_textp_static.gif)
+
 - Accumulating Text+ Clips (`drop_textp_accum.py`): Each time a word is said, the word accumulates on the screen until that subtitle cue is finished. On the next subtitle cue, the process starts all over with the first word.
 
-For example, six small Text+ clips in the track could be, in order:
-You
-You wont
-You wont believe
-You wont believe what
-You wont believe what this
-You wont believe what this man
-
-
-And if that was one subtitle cue in the SRT file, then it starts over in the next Text+ clips:
-has
-has done
-has done to
-has done to this
-has done to this great
-has done to this great community
+![Text+ Accumulative Text Clips](README_tip_textp_accum.gif)
 
 3. After choosing a style of Text+, then adjust the `drop_textp_static.py` or `drop_textp_accum.py`: 
 - See if you need to adjust the path to the SRT file
@@ -101,10 +89,11 @@ Next you may decide to spice up the Text+ subtitle clips a bit:
 
 ## Some video editing required
 
+Depending on edge cases, you may find some gap between Text+ clips on the track. This should be minimum. But if you find gaps, go ahead and multi-select and close up the gaps. In the future, the algorithm will be improved to cover more cases.
+
 You may find that by chance your subtitle could end or start too soon from another video clip starting or ending. This would be jarring. So adjust the video clips as needed.
 
-![Subtitle should not end or start too soon from another video clip starting or ending](README_subtitle_tip.png)
-
+![Subtitle should not end or start too soon from another video clip starting or ending](README_tip_alignment.png)
 
 ## FAQs
 

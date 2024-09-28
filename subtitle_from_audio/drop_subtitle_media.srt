@@ -1,46 +1,104 @@
 1
-00:00:00,000 --> 00:00:06,140
-To create an <u>effective</u> text prompt
-for text-to-speech, TTS, it's
-important to use clear and concise
+00:00:00,000 --> 00:00:01,520
+To create an effective text
 
 2
-00:00:06,140 --> 00:00:11,780
-language that mimics natural speech
-patterns. Structure your sentences
-in a way that allows for smooth
+00:00:01,520 --> 00:00:03,080
+prompt for text-to-speech,
 
 3
-00:00:11,780 --> 00:00:19,580
-intonation and pacing. Avoid overly
-complex sentences or jargon that
-might confuse the TTS engine. Use
+00:00:03,460 --> 00:00:05,280
+TTS, it's important to use
 
 4
-00:00:19,580 --> 00:00:26,640
-punctuation strategically, commas,
-periods, and question marks, help
-guide the rhythm of speech. If you
+00:00:05,280 --> 00:00:06,700
+clear and concise language
 
 5
-00:00:26,640 --> 00:00:33,320
-need to emphasize certain words,
-consider using capitalization or
-punctuation like dashes or ellipses
+00:00:06,700 --> 00:00:08,100
+that mimics natural speech
 
 6
-00:00:33,320 --> 00:00:40,320
-for pauses. Lastly, ensure that the
-text is free from spelling errors
-or abbreviations that could be
+00:00:08,100 --> 00:00:09,740
+patterns. Structure your
 
 7
-00:00:40,320 --> 00:00:46,180
-mispronounced. By following these
-tips, you'll enhance the clarity
-and natural flow of the speech
+00:00:09,740 --> 00:00:11,200
+sentences in a way that allows
 
 8
-00:00:46,180 --> 00:00:46,640
-output.
+00:00:11,200 --> 00:00:12,700
+for smooth intonation and
+
+9
+00:00:12,700 --> 00:00:14,940
+pacing. Avoid overly complex
+
+10
+00:00:14,940 --> 00:00:16,980
+sentences or jargon that might
+
+11
+00:00:16,980 --> 00:00:19,580
+confuse the TTS engine. Use
+
+12
+00:00:19,580 --> 00:00:20,900
+punctuation strategically,
+
+13
+00:00:21,680 --> 00:00:23,400
+commas, periods, and question
+
+14
+00:00:23,400 --> 00:00:24,980
+marks, help guide the rhythm
+
+15
+00:00:24,980 --> 00:00:26,980
+of speech. If you need to
+
+16
+00:00:26,980 --> 00:00:28,200
+emphasize certain words,
+
+17
+00:00:28,680 --> 00:00:30,240
+consider using capitalization
+
+18
+00:00:30,240 --> 00:00:32,900
+or punctuation like dashes or
+
+19
+00:00:32,900 --> 00:00:35,380
+ellipses for pauses. Lastly,
+
+20
+00:00:35,940 --> 00:00:37,280
+ensure that the text is free
+
+21
+00:00:37,280 --> 00:00:38,840
+from spelling errors or
+
+22
+00:00:38,840 --> 00:00:40,320
+abbreviations that could be
+
+23
+00:00:40,320 --> 00:00:42,440
+mispronounced. By following
+
+24
+00:00:42,440 --> 00:00:44,220
+these tips, you'll enhance the
+
+25
+00:00:44,220 --> 00:00:45,800
+clarity and natural flow of
+
+26
+00:00:45,800 --> 00:00:46,640
+the speech output.
 
