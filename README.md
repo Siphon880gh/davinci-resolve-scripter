@@ -5,7 +5,7 @@
 <a target="_blank" href="https://www.linkedin.com/in/weng-fung/" rel="nofollow"><img src="https://img.shields.io/badge/LinkedIn-blue?style=flat&logo=linkedin&labelColor=blue" alt="Linked-In" data-canonical-src="https://img.shields.io/badge/LinkedIn-blue?style=flat&amp;logo=linkedin&amp;labelColor=blue" style="max-width:10ch;"></a>
 <a target="_blank" href="https://www.youtube.com/@WayneTeachesCode/" rel="nofollow"><img src="https://img.shields.io/badge/Youtube-red?style=flat&logo=youtube&labelColor=red" alt="Youtube" data-canonical-src="https://img.shields.io/badge/Youtube-red?style=flat&amp;logo=youtube&amp;labelColor=red" style="max-width:10ch;"></a>
 
-By Weng (Weng Fei Fung). Script that automates the video editing workflow in DaVinci Resolve. The scripts can import the media, create the timeline, add zoom and pan motion effects, add transitions, and even add automatic subtitles (which is a feature missing in Free DaVinci Resolve). The automatic subtitles come in three flavors.
+By Weng (Weng Fei Fung). Scripts that automate the video editing workflow in DaVinci Resolve. The scripts can import the media, create the timeline, add zoom and pan motion effects, add transitions, and even add automatic subtitles (which is a feature missing in Free DaVinci Resolve). The automatic subtitles come in three flavors.
 
 ## Requirement
 
@@ -117,9 +117,15 @@ To generate Text+ clips on an empty video track, you adjust and drop the script 
 
 The above are brief instructions. For in-depth instructions, refer to [README_transcribe_audio.md](subtitle_from_audio/README_transcribe_audio.md).
 
+
+### **LUTS:**
+
+11. Optionally, you can add LUTs (color grading) to all your clips to have a consistent vibe. Refer to my list of LUTs: [LUTs for Genre, Theme, Dramatic Effect, or Giving Off the Vibe of a Specific Movie](wengindustries.com/app/3dbrain/?open=LUTs%20for%20Genre,%20Theme,%20Dramatic%20Effect,%20or%20Giving%20Off%20the%20Vibe%20of%20a%20Specific%20Movie.md)
+
+
 ### **Render and Templatize:**
 
-11. That's it. Now you can prep it, then render it; and then decide whether to templatize the project.
+12. That's it. Now you can prep it, then render it; and then decide whether to templatize the project.
 
 #### Prep
 Normalize the audio clips. Select all audio clips in the track -> Normalize Audio Levels -> 
@@ -131,16 +137,15 @@ Consider making several videos then having them scheduled for release on multipl
 #### Templatize
 If you will be making videos with a similar format, I recommend templatizing what you have: Bear in mind the named files. Your next project you can have the same filenames. If in the next project you delete the media pool files then upload your new media with the same filenames, you can conform the timeline clips to relink to the current assets! You'd have to right click the timeline clips -> Untick "Conform Lock Enabled". Then you can right click the current timeline asset in the media pool -> Timelines -> Reconform From Bins. You could simplify things even further by using this same project but having different bins, which are just folders you create under "Master" to the left of the media pool. This works very well if you have the same types of videos you make (eg. shorts video with 5 second images that zoom/pan as you speak on top of it).
 
-
-### **LUTS**
-
-Optionally, you can add LUTs (color grading) to all your clips to have a consistent vibe. Refer to my list of LUTs: [LUTs for Genre, Theme, Dramatic Effect, or Giving Off the Vibe of a Specific Movie](wengindustries.com/app/3dbrain/?open=LUTs%20for%20Genre,%20Theme,%20Dramatic%20Effect,%20or%20Giving%20Off%20the%20Vibe%20of%20a%20Specific%20Movie.md)
+---
 
 ## Hint Mode
 
 Running `make hint` will rename folders and files by prefixing a number which hints to you the sequence you should run the scripts in order to create a video in DaVinci. For example: 01_letterbox, 02_unassemble...
 
 Run `make clean` to restore the filenames.
+
+---
 
 ## Utilities
 
