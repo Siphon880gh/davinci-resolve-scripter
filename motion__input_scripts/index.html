@@ -96,10 +96,18 @@
 
         window.generalDescription = "BY Weng (Weng Fei Fung)\\nhttps://github.com/Siphon880gh/davinci-resolve-scripter\\nINSTRUCTIONS:\\nAfter pasting into Fusion screen, connect MediaIn to INPUT_MED_IN and connect OUTPUT_MED_OUT to MediaOut.";
 
+        console.log("Information: URL accepts parameters: Eg. ?clip-duration=5&fps=24")
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('clip-duration')) {
+            document.querySelector("#clip-duration").value = urlParams.get('clip-duration');
+        }
+        if (urlParams.has('fps')) {
+            document.querySelector("#fps").value = urlParams.get('fps');
+        }
+
 
         updateSettings();
         function updateSettings() {
-
             window.clipSeconds = parseInt(document.querySelector("#clip-duration").value);
             window.clipFps = parseInt(document.querySelector("#fps").value);
             
