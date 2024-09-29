@@ -4,7 +4,7 @@
 			CtrlWZoom = false,
 			NameSet = true,
 			Inputs = ordered() {
-				Comments = Input { Value = "By Weng (Weng Fei Fung)\nhttps://github.com/Siphon880gh/davinci-resolve-scripter\nInstructions: \nAdjust your text at node Text1\nIf your MediaIn is text, move that text to Text1\nDon't forget to connect the MediaIn1 and MediaOut1 to this group", },
+				Comments = Input { Value = "BY Weng (Weng Fei Fung)\nhttps://github.com/Siphon880gh/davinci-resolve-scripter\nINSTRUCTIONS: \nAdjust your text at node Text1\nIf your MediaIn is text, move that text to Text1\nDon't forget to connect the MediaIn1 and MediaOut1 to this group", },
 				Input1 = InstanceInput {
 					SourceOp = "INPUT_MED_IN",
 					Source = "Foreground",

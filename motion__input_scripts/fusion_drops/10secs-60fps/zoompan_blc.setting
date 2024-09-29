@@ -3,7 +3,7 @@
 		zoompan_blc = GroupOperator {
 			CtrlWZoom = false,
 			Inputs = ordered() {
-				Comments = Input { Value = "After pasting into Fusion screen, connect MediaIn to INPUT_MED_IN and connect OUTPUT_MED_OUT to MediaOut.", },
+				Comments = Input { Value = "BY Weng (Weng Fei Fung)\nhttps://github.com/Siphon880gh/davinci-resolve-scripter\nINSTRUCTIONS:\nAfter pasting into Fusion screen, connect MediaIn to INPUT_MED_IN and connect OUTPUT_MED_OUT to MediaOut.", },
 				Input1 = InstanceInput {
 					SourceOp = "INPUT_MED_IN",
 					Source = "Background",
