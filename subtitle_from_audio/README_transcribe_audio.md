@@ -59,11 +59,12 @@ Subtitle track does not support transitions, custom font styles, and character l
 If instead of using a subtitle track, you want to generate Text+ clips across an empty video track so that it can follow IG-styled middle of the screen text. There are two major phases to create this track. 
 
 - First, you need to prep your project so there's a Text+ clip in the media pool whose font settings will be used as a basis to create those Text+ clips into the video traack. Also you need an empty video track. 
-- Second, after adjusting `drop_textp.py`, you will need to drop the script into the DaVinci console. 
+- Second, after adjusting `drop_textp*.py`, you will need to drop the script into the DaVinci console. 
 
 1. Look into the Effects panel (top left panel), and search for "Text". Drag the "Text+" into any area on a video track. Then drag that "Text+" clip from the video track into the media pool. Now delete the timeline's "Text+" clip. You now have the "Text+" clip in the media pool and no "Text+" clip from this exercise in the timeline. Finally, adjust any font settings at the media pool's Text+ clip because this will be the template used to generate the Text+ subtitle clips into the timeline.
 
 - Add stroke/outline to your text? Refer to my tutorial at [DaVinci Text Plus - Stroke or edge on text](wengindustries.com/app/3dbrain/?open=DaVinci%20Text%20Plus%20-%20Stroke%20or%20edge%20on%20text.md)
+- Do you want gravity styled Text+? Drag and drop from `utils/fusion_text_plus_effects/gravity.setting` into Fusion screen which will import in a Group of Fusion nodes. Read the Group's comments for further instructions. On how I created this effect, you can read [DaVinci - Easing Effects with Gravity Text Plus.md](wengindustries.com/app/3dbrain/?open=DaVinci%20-%20Easing%20Effects%20with%20Gravity%20Text%20Plus.md)
 
 2. Choose between the styles of Text+ clip generator. The style you choose will be the corresponding script that you're adjusting and running.
 
