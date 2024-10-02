@@ -132,10 +132,10 @@ Normalize the audio clips. Select all audio clips in the track -> Normalize Audi
 
 
 #### Render
-Consider making several videos then having them scheduled for release on multiple platform (Youtube, Tiktok, etc). I might be creating scripts for this in the future.
+Consider making several videos then having them scheduled for release on multiple platform (Youtube, Tiktok, etc). This is so you can leverage their algorithm. I might be creating scripts for this in the future.
 
 #### Templatize
-If you will be making videos with a similar format, I recommend templatizing what you have: Bear in mind the named files. Your next project you can have the same filenames. If in the next project you delete the media pool files then upload your new media with the same filenames, you can conform the timeline clips to relink to the current assets! You'd have to right click the timeline clips -> Untick "Conform Lock Enabled". Then you can right click the current timeline asset in the media pool -> Timelines -> Reconform From Bins. You could simplify things even further by using this same project but having different bins, which are just folders you create under "Master" to the left of the media pool. This works very well if you have the same types of videos you make (eg. shorts video with 5 second images that zoom/pan as you speak on top of it).
+If you will be making videos with a similar format, I recommend templatizing what you have: Bear in mind the named files. Your next project you can have the same filenames. If in the next project you delete the media pool files then upload your new media with the same filenames, you can conform the timeline clips to relink to the current assets! You'd have to right click the timeline clips -> Untick "Conform Lock Enabled". Then you can right click the current timeline asset in the media pool -> Timelines -> Reconform From Bins. You could simplify things even further by using this same project but having different bins, which are just folders you create under "Master" to the left of the media pool. This works very well if you plan to make the same types of videos (eg. shorts video with 5 second images that zoom/pan as you speak on top of it).
 
 ---
 

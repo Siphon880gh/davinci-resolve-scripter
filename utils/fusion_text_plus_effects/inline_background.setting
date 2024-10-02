@@ -1,0 +1,170 @@
+{
+	Tools = ordered() {
+		InlineBackgroundText = GroupOperator {
+			CtrlWZoom = false,
+			NameSet = true,
+			Inputs = ordered() {
+				Comments = Input { Value = "BY Weng (Weng Fei Fung)\nhttps://github.com/Siphon880gh/davinci-resolve-scripter\nINSTRUCTIONS: \nAdjust your text at node Text1\nIf your MediaIn is text, move that text to Text1\nDon't forget to connect the MediaIn1 and MediaOut1 to this group", },
+				Input1 = InstanceInput {
+					SourceOp = "INPUT_MED_IN",
+					Source = "Foreground",
+				}
+			},
+			Outputs = {
+				Output1 = InstanceOutput {
+					SourceOp = "OUTPUT_MED_OUT",
+					Source = "Output",
+				}
+			},
+			ViewInfo = GroupInfo {
+				Pos = { 440, 115.5 },
+				Flags = {
+					Expanded = true,
+					AllowPan = false,
+					GridSnap = true,
+					AutoSnap = true,
+					RemoveRouters = true
+				},
+				Size = { 467.137, 132.364, 283, 24.2424 },
+				Direction = "Horizontal",
+				PipeStyle = "Direct",
+				Scale = 1,
+				Offset = { -385, 91.1364 }
+			},
+			Tools = ordered() {
+				Text1 = TextPlus {
+					Inputs = {
+						GlobalOut = Input { Value = 119, },
+						Width = Input { Value = 1920, },
+						Height = Input { Value = 1080, },
+						UseFrameFormatSettings = Input { Value = 1, },
+						SelectElement = Input { Value = 1, },
+						Select = Input { Value = 1, },
+						Enabled2 = Input { Value = 1, },
+						Opacity1 = Input {
+							SourceOp = "Text1Opacity1",
+							Source = "Value",
+						},
+						Red1 = Input {
+							SourceOp = "Text1Red1",
+							Source = "Value",
+						},
+						Green1 = Input {
+							SourceOp = "Text1Green1",
+							Source = "Value",
+						},
+						Blue1 = Input {
+							SourceOp = "Text1Blue1",
+							Source = "Value",
+						},
+						Alpha1 = Input {
+							SourceOp = "Text1Alpha1",
+							Source = "Value",
+						},
+						StyledText = Input { Value = "Custom Title", },
+						Font = Input { Value = "Open Sans", },
+						Style = Input { Value = "Semibold", },
+						Size = Input { Value = 0.09, },
+						VerticalJustificationNew = Input { Value = 3, },
+						HorizontalJustificationNew = Input { Value = 3, },
+						AdvancedFontControls = Input { Value = 1, },
+						Opacity2 = Input {
+							SourceOp = "Text1Opacity2",
+							Source = "Value",
+						},
+						ElementShape2 = Input { Value = 2, },
+						Thickness2 = Input { Value = 0.0709, },
+						OutsideOnly2 = Input { Value = 1, },
+						ExtendHorizontal2 = Input { Value = 1.08, },
+						ExtendVertical2 = Input { Value = -0.32, },
+						Red2 = Input { Value = 0, },
+						Softness2 = Input { Value = 1, },
+						Softness3 = Input { Value = 1, },
+						Path = Input {
+							SourceOp = "Text1Path",
+							Source = "Value",
+						}
+					},
+					ViewInfo = OperatorInfo { Pos = { 165, -49.5 } },
+				},
+				INPUT_MED_IN = Merge {
+					NameSet = true,
+					Inputs = {
+						Background = Input {
+							SourceOp = "Text1",
+							Source = "Output",
+						},
+						PerformDepthMerge = Input { Value = 0, }
+					},
+					ViewInfo = OperatorInfo { Pos = { 165, -16.5 } },
+				},
+				OUTPUT_MED_OUT = Merge {
+					CtrlWShown = false,
+					NameSet = true,
+					Inputs = {
+						Background = Input {
+							SourceOp = "INPUT_MED_IN",
+							Source = "Output",
+						},
+						PerformDepthMerge = Input { Value = 0, }
+					},
+					ViewInfo = OperatorInfo { Pos = { 495, -16.5 } },
+				}
+			},
+		},
+		Text1Opacity1 = BezierSpline {
+			SplineColor = { Red = 179, Green = 28, Blue = 244 },
+			KeyFrames = {
+				[0] = { 1, RH = { 18.3333333333333, 1 }, Flags = { Linear = true } },
+				[55] = { 1, LH = { 36.6666666666667, 1 }, RH = { 61, 0.666666666666667 }, Flags = { Linear = true } },
+				[73] = { 0, LH = { 67, 0.333333333333333 }, Flags = { Linear = true } }
+			}
+		},
+		Text1Red1 = BezierSpline {
+			SplineColor = { Red = 255, Green = 0, Blue = 0 },
+			KeyFrames = {
+				[0] = { 0.964705882352941, RH = { 17.6666666666667, 0.976470588235294 }, Flags = { Linear = true } },
+				[53] = { 1, LH = { 35.3333333333333, 0.988235294117647 }, Flags = { Linear = true } }
+			}
+		},
+		Text1Green1 = BezierSpline {
+			SplineColor = { Red = 0, Green = 255, Blue = 0 },
+			KeyFrames = {
+				[0] = { 1, RH = { 17.6666666666667, 1 }, Flags = { Linear = true } },
+				[53] = { 1, LH = { 35.3333333333333, 1 }, Flags = { Linear = true } }
+			}
+		},
+		Text1Blue1 = BezierSpline {
+			SplineColor = { Red = 0, Green = 0, Blue = 255 },
+			KeyFrames = {
+				[0] = { 0.145098039215686, RH = { 17.6666666666667, 0.430065359477124 }, Flags = { Linear = true } },
+				[53] = { 1, LH = { 35.3333333333333, 0.715032679738562 }, Flags = { Linear = true } }
+			}
+		},
+		Text1Alpha1 = BezierSpline {
+			SplineColor = { Red = 180, Green = 180, Blue = 180 },
+			KeyFrames = {
+				[0] = { 1, Flags = { Linear = true } }
+			}
+		},
+		Text1Opacity2 = BezierSpline {
+			SplineColor = { Red = 244, Green = 28, Blue = 244 },
+			CtrlWZoom = false,
+			KeyFrames = {
+				[0] = { 1, RH = { 18.3333333333333, 1 }, Flags = { Linear = true } },
+				[55] = { 1, LH = { 36.6666666666667, 1 }, RH = { 61, 0.666666666666667 }, Flags = { Linear = true } },
+				[73] = { 0, LH = { 67, 0.333333333333333 }, Flags = { Linear = true } }
+			}
+		},
+		Text1Path = BezierSpline {
+			SplineColor = { Red = 186, Green = 244, Blue = 89 },
+			CtrlWZoom = false,
+			NameSet = true,
+			KeyFrames = {
+				[53] = { 0, Flags = { Linear = true, LockedY = true }, Value = Polyline {
+					} }
+			}
+		}
+	},
+	ActiveTool = "InlineBackgroundText"
+}
